@@ -9,7 +9,7 @@ const {generateToken} = require('../utils/generateToken')
 // @desc Route pour créer un utilisateur (inscription sur le frontend)
 // @access Public
 const register = handler(async (req, res) => {
-    //On récupère les infos du frontend (formulaire d'inscription) | on déstrucutre afin de ne pas avoir à écrire individualement chaque champs
+    //On récupère les infos du frontend (formulaire d'inscription) | on déstructure afin de ne pas avoir à écrire individualement chaque champs
     const {firstName, lastName, email, password, role, sector} = req.body
 
     //On check si les infos "required" sont présents et pas vides

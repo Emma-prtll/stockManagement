@@ -8,6 +8,7 @@ import Admin from "./pages/Admin.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import StockDetails from "./pages/StockDetails.jsx";
+import EmployeeEdit from "./pages/EmployeeEdit.jsx";
 
 
 
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/addItem" element={<AddItem />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/employeeEdit" element={<EmployeeEdit/>} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
             </Routes>

@@ -1,5 +1,6 @@
 import {Button, Card, CardBody, CardFooter, CardHeader, Input, Select, Typography, Option, Stepper, Step} from "@material-tailwind/react";
 import React, {useState} from "react";
+import {useUserStore} from "../store/userStore.js";
 
 
 const Register = () => {
@@ -19,16 +20,29 @@ const Register = () => {
     const [password, setPassword] = useState("")
     const [role, setRole] = useState("")
     const [sector, setSector] = useState("")
+    const register = useUserStore((state) => state.register)
+    // const user = useUserStore((state) => state.user)
 
     //SEND BUTTON
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(`Firstname: ${firstName}`)
-        console.log(`Lastname: ${lastName}`)
-        console.log(`Email: ${email}`)
-        console.log(`Password: ${password}`)
-        console.log(`Role: ${role}`)
-        console.log(`Sector: ${sector}`)
+
+        const data = {
+            firstName,
+            lastName,
+            email,
+            password,
+            role,
+            sector
+        };
+
+        //On appelle le store et la fonction
+        //On capture l'erreur s'il y en a une
+        try {
+            await register(data) //On transmet les infos d'inscription au store
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
