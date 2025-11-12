@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const connectDB = require('./config/dbConnection')
 const corsOptions = require('./config/corsOptions')
-//Variable de configuration | certain nécessite d'èetre configurer
+//Variable de configuration | certain nécessite d'être configuré
 const app = express()
 const PORT = process.env.PORT || 8000 //Si le port définit dans le .env est boucher, on lui donne un autre
 require('dotenv').config()
