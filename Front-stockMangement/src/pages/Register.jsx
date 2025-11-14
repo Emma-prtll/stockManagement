@@ -1,6 +1,8 @@
 import {Button, Card, CardBody, CardFooter, CardHeader, Input, Select, Typography, Option, Stepper, Step} from "@material-tailwind/react";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useUserStore} from "../store/userStore.js";
+import navigation from "../components/Navigation.jsx";
+import {useNavigate} from "react-router-dom";
 
 
 const Register = () => {
@@ -21,7 +23,16 @@ const Register = () => {
     const [role, setRole] = useState("")
     const [sector, setSector] = useState("")
     const register = useUserStore((state) => state.register)
-    // const user = useUserStore((state) => state.user)
+    const user = useUserStore((state) => state.user)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        //Si on a un user
+        if(user) {
+            //Naviguer vers une autre page
+            navigate('/')
+        }
+    }, [user, navigate])
 
     //SEND BUTTON
     const handleSubmit = async (e) => {

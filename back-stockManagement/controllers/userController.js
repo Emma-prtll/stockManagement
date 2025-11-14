@@ -3,6 +3,7 @@ const handler = require('express-async-handler')
 const User = require('../models/userModel')
 //Import du token
 const {generateToken} = require('../utils/generateToken')
+const {compare} = require("bcrypt");
 
 
 // @route Route User (POST) /api/user/register
@@ -128,17 +129,31 @@ const updateProfile = handler(async (req, res) => {
 
     //Ici, on a un utilisateur qui existe
     //On peut le mettre à jours | (écriture en ternaire)
-    user.firstName = req.body.firstName ? req.body.firstName : user.firstName //Si un firstName est fournis dans le formulaire on prend celui la, sinon on garde ce qu'on a
-    user.lastName = req.body.lastName ? req.body.lastName : user.lastName
-    user.email = req.body.email ? req.body.email : user.email
-    user.password = req.body.password ? req.body.password : user.password
+    user.firstName = req.body.input.firstName ? req.body.input.firstName : user.firstName //Si un firstName est fournis dans le formulaire on prend celui la, sinon on garde ce qu'on a
+    user.lastName = req.body.input.lastName ? req.body.input.lastName : user.lastName
+    user.email = req.body.input.email ? req.body.input.email : user.email
     user.role = req.body.role ? req.body.role : user.role
     user.sector = req.body.sector ? req.body.sector : user.sector
+
+    if(req.body.password) { //écrit en "if" classic
+        process.exit(1)
+        //Vérifier si oldPassword (formulaire) === user.password (bdd)
+        let compare = await compare(req.body.input.oldPassword, user.password)
+        console.log(compare)
+        //Si oui, on modifie le mot de passe de l'utilisateur avec req.body.input.newPassword
+        //si non, on renvoie une erreur
+    }
 
     //Ici, on a toutes les données qui doivent être modifiées | on enregistre les modifications
     const updatedUser = await user.save()
 
-    res.status(200).json({"Message : " : `L'utilisateur.trice ${updatedUser._id} | ${updatedUser.firstName} ${updatedUser.lastName} à bien été modifié`})
+    res.status(200).json({
+        _id: updatedUser._id,
+        email: updatedUser.email,
+        username: updatedUser.username,
+        lastName: updatedUser.lastName,
+        firstName: updatedUser.firstName,
+    })
 })
 
 module.exports = {

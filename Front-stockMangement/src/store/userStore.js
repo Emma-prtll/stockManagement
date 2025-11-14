@@ -14,6 +14,20 @@ export const useUserStore = create((set) => ({
     message: "", //Utilisé pour afficher les messages d'erreur ou de succès
     userLoading: false, //Utilisé pour activer ou désactiver un loader
 
+    login: async(data) => {
+        set((state) => ({userLoading: !state.userLoading}))
+        const response = await axios.post('http://localhost:8000/api/user/login', data)
+        set(() => ({user: response.data}))
+        set((state) => ({userLoading: !state.userLoading}))
+    },
+
+    userLogout: async(data) => {
+        set((state) => ({userLoading: !state.userLoading}))
+        const response = await axios.post('http://localhost:8000/api/user/logout', data)
+        set(() => ({user: response.data}))
+        set((state) => ({userLoading: !state.userLoading}))
+    },
+
     //Pour enregister un utilisateur en backend
     //data vient du formulaire
     register: async (data) => {
@@ -22,6 +36,13 @@ export const useUserStore = create((set) => ({
         const response = await axios.post('http://localhost:8000/api/user/register', data) //2. J'appelle mon serveur sur la bonne route en passant les données //axios.post car notre route et en post et on met notre route + ce que l'on veut envoyer -> data
         set(() => ({user: response.data})) //3. Je stock les données de l'utilisateur qui viennent du backend dans mon state "user"
         set((state) => ({userLoading: !state.userLoading})) //4. J'arrête mon loader | quand le front à reçu les infos du back -> ça repasse à false
+    },
+
+    updateUser: async (data) => {
+        set((state) => ({userLoading: !state.userLoading}))
+        const response = await axios.put('http://localhost:8000/api/user/profile', data)
+        set(() => ({user: response.data}))
+        set((state) => ({userLoading: !state.userLoading}))
     }
 
 

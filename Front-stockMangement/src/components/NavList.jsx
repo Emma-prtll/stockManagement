@@ -1,8 +1,13 @@
 import { Typography } from "@material-tailwind/react";
+import {useAuthStore} from "../store/authStore.js";
 
 const NavList = () => {
+
+    const userInfo = useAuthStore((state) => state.userInfo)
+
     return (
         <nav className="flex flex-col gap-2">
+
             <Typography
                 as="a"
                 href="/home"
@@ -59,14 +64,12 @@ const NavList = () => {
                 Register (admin only)
             </Typography>
 
-            <Typography
-                as="a"
-                href="/login"
-                color="red"
-                className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer bg-amber-50 text-center font-black"
-            >
-                Logout
-            </Typography>
+            {userInfo && (
+                <Typography
+                    color="red"
+                    className="font-bold bg-gray-300 m-2 text-center rounded-lg"
+                >You are connected</Typography>
+            )}
 
         </nav>
     );
