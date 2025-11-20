@@ -4,7 +4,7 @@ import {FaArrowRightLong} from "react-icons/fa6";
 
 const StockInfos = () => {
     return (
-        <Card className="my-6 w-86 bg-amber-400">
+        <Card className="my-6 w-86 bg-gray-600">
             <CardHeader color="blue-gray" className="relative h-56">
                 <img
                     src="https://media.audi.com/is/image/audi/country/ch/assets/models/r8/Audi-R8-5589-1920x1080-2.jpg"

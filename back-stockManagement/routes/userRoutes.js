@@ -24,7 +24,7 @@ router.route('/logout').post(userController.logout)
 router.route('/profile:_id').get(userController.getProfile)
 
 // @route Route User (PUT) /api/user/profile
-// @desc Route pour modifer les informations d'un utilisateur (onglet profile sur le frontend)
+// @desc Route pour modifier les informations d'un utilisateur (onglet profile sur le frontend)
 // @access Private
 router.route('/profile').put(userController.updateProfile)
 

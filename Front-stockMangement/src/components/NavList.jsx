@@ -37,6 +37,7 @@ const NavList = () => {
 
             <hr className="my-3 border-amber-800" />
 
+            {userInfo && (
             <Typography
                 as="a"
                 href="/profile"
@@ -45,6 +46,8 @@ const NavList = () => {
             >
                 Profile
             </Typography>
+            )}
+
 
             <Typography
                 as="a"

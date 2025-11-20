@@ -9,6 +9,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import StockDetails from "./pages/StockDetails.jsx";
 import EmployeeEdit from "./pages/EmployeeEdit.jsx";
+import {ToastContainer} from "react-toastify"
 
 
 
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
             </Routes>
+            <ToastContainer theme="dark"/>
         </BrowserRouter>
     )
 }

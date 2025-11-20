@@ -3,7 +3,7 @@ const handler = require('express-async-handler')
 const User = require('../models/userModel')
 //Import du token
 const {generateToken} = require('../utils/generateToken')
-const {compare} = require("bcrypt");
+const bcrypt = require('bcrypt')
 
 
 // @route Route User (POST) /api/user/register
@@ -77,7 +77,7 @@ const login = handler(async (req, res) => {
         })
     } else {
         res.status(400)
-        throw new Error("Email ou mot de passe incorrect.")
+        res.status(400).json({message: "Email ou mot de passe incorrect."})
     }
 })
 
@@ -120,6 +120,7 @@ const getProfile = handler (async (req, res) => {
 // @access Private
 const updateProfile = handler(async (req, res) => {
     //On vérifie si le profile existe
+    console.log(req.body)
     const user = await User.findById(req.body._id)
 
     if(!user){
@@ -135,13 +136,17 @@ const updateProfile = handler(async (req, res) => {
     user.role = req.body.role ? req.body.role : user.role
     user.sector = req.body.sector ? req.body.sector : user.sector
 
-    if(req.body.password) { //écrit en "if" classic
-        process.exit(1)
-        //Vérifier si oldPassword (formulaire) === user.password (bdd)
-        let compare = await compare(req.body.input.oldPassword, user.password)
-        console.log(compare)
-        //Si oui, on modifie le mot de passe de l'utilisateur avec req.body.input.newPassword
-        //si non, on renvoie une erreur
+    if(req.body.input.oldPassword) {
+        //Verifier si oldPassword (formulaire) === user.password (bdd)
+        let compare = await bcrypt.compare(req.body.input.oldPassword, user.password)
+        if(!compare) {
+            //si non, on renvoie une erreur
+            res.status(400)
+            throw new Error("Le mot de passe n'existe pas.")
+        } else {
+            //Si oui, on modifie le mot de passe de l'utilisateur avec req.body.input.newPassword
+            user.password = req.body.input.newPassword
+        }
     }
 
     //Ici, on a toutes les données qui doivent être modifiées | on enregistre les modifications

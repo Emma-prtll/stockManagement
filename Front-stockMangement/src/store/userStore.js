@@ -16,9 +16,15 @@ export const useUserStore = create((set) => ({
 
     login: async(data) => {
         set((state) => ({userLoading: !state.userLoading}))
-        const response = await axios.post('http://localhost:8000/api/user/login', data)
-        set(() => ({user: response.data}))
-        set((state) => ({userLoading: !state.userLoading}))
+
+        try {
+            const response = await axios.post('http://localhost:8000/api/user/login', data)
+            set(() => ({user: response.data}))
+        } catch (error) {
+            set(() => ({message: error.response.data}))
+        } finally {
+            set((state) => ({userLoading: !state.userLoading}))
+        }
     },
 
     userLogout: async(data) => {

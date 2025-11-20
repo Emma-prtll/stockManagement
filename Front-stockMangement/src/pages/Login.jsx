@@ -1,8 +1,19 @@
-import {Card, CardHeader, CardBody, CardFooter, Typography, Input, Checkbox, Button} from "@material-tailwind/react";
+import {
+    Card,
+    CardHeader,
+    CardBody,
+    CardFooter,
+    Typography,
+    Input,
+    Checkbox,
+    Button,
+    Spinner
+} from "@material-tailwind/react";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useAuthStore} from "../store/authStore.js";
 import {useUserStore} from "../store/userStore.js";
+import {toast} from "react-toastify";
 
 const Login = () => {
 
@@ -16,6 +27,7 @@ const Login = () => {
 
     //Import des states et méthode du userStore
     const user = useUserStore((state) => state.user)
+    const message = useUserStore((state) => state.message)
     const loading = useUserStore((state) => state.userLoading)
     const login = useUserStore((state) => state.login)
 
@@ -24,7 +36,7 @@ const Login = () => {
 
     useEffect(() => {
         if(userInfo) {
-            navigate('/')
+            navigate('/home')
         }
     }, [navigate, userInfo])
 
@@ -35,6 +47,11 @@ const Login = () => {
             if(user) {
                 setCredentials({user})
                 navigate('/')
+            } else {
+                toast.dismiss() //Ferme-le toaste actif avant d'en activer un autre
+                toast.error(message.message)
+                setEmail("")
+                setPassword("")
             }
         } catch (e) {
             console.log(e)
@@ -73,10 +90,17 @@ const Login = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </CardBody>
-                <CardFooter className="pt-0">
-                    <Button variant="gradient" fullWidth onClick={handleSubmit}>
-                        Sign In
-                    </Button>
+                <CardFooter className="pt-0 flex justify-center">
+                    {loading ? (
+                        <>
+                            <Spinner className="h-8 w-8"/>
+                        </>
+                    ) : (
+                        <Button variant="gradient" className="focus:outline-none" fullWidth onClick={handleSubmit}>
+                            Sign In
+                        </Button>
+                    )}
+
                 </CardFooter>
             </Card>
                 </section>

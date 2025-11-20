@@ -1,7 +1,7 @@
 {
   "name": "stockmanagement",
   "version": "1.0.0",
-  "description": "Application de gsetion de stock",
+  "description": "Application de gestion de stock",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js"

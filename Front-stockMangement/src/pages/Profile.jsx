@@ -21,8 +21,8 @@ const Profile = () => {
     const toggleOpenCollaps = () => setOpenCollaps((openCollaps) => !openCollaps)
 
     //State pour les inputs
-    const [firstname, setFirstname] = useState("")
-    const [lastname, setLastname] = useState("")
+    const [firstName, setFirstname] = useState("")
+    const [lastName, setLastname] = useState("")
     const [email, setEmail] = useState("")
     const [oldPassword, setOldPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
@@ -46,10 +46,13 @@ const Profile = () => {
     const handleSubmit = async (e, data) => {
         e.preventDefault()
         try {
-            await updateUser(data)
+            let update = {
+                _id: userInfo.user._id,
+                input: data
+            }
+            await updateUser(update)
         } catch (e) {
             console.log(e)
-
         }
     }
 
@@ -212,10 +215,10 @@ const Profile = () => {
                                             variant="outlined"
                                             label="Firstname"
                                             name="firstName"
-                                            value={firstname}
+                                            value={firstName}
                                             onChange={(e) => setFirstname(e.target.value)}
                                         />
-                                        <Button color="orange">Save</Button>
+                                        <Button color="orange" onClick={(e) => handleSubmit(e, {firstName})}>Save</Button>
                                     </CardBody>
                                 </Card>
                             {/*</div>*/}
@@ -238,10 +241,10 @@ const Profile = () => {
                                             variant="outlined"
                                             label="Lastname"
                                             name="lastName"
-                                            value={lastname}
+                                            value={lastName}
                                             onChange={(e) => setLastname(e.target.value)}
                                         />
-                                        <Button color="orange">Save</Button>
+                                        <Button color="orange" onClick={(e) => handleSubmit(e, {lastName})}>Save</Button>
                                     </CardBody>
                                 </Card>
                             </Collapse>
@@ -270,7 +273,7 @@ const Profile = () => {
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                         />
-                                        <Button color="orange">Save</Button>
+                                        <Button color="orange" onClick={(e) => handleSubmit(e, {email})}>Save</Button>
                                     </CardBody>
                                 </Card>
                             </Collapse>
@@ -290,7 +293,7 @@ const Profile = () => {
                                         <Input
                                             type="password"
                                             variant="outlined"
-                                            label="Odl password"
+                                            label="Old password"
                                             name="old_password"
                                             value={oldPassword}
                                             onChange={(e) => setOldPassword(e.target.value)}
@@ -303,7 +306,7 @@ const Profile = () => {
                                             value={newPassword}
                                             onChange={(e) => setNewPassword(e.target.value)}
                                         />
-                                        <Button color="orange">Save</Button>
+                                        <Button color="orange" onClick={(e) => handleSubmit(e, {oldPassword, newPassword})}>Save</Button>
                                     </CardBody>
                                 </Card>
                             </Collapse>
