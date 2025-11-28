@@ -1,9 +1,22 @@
 import {Button, Card, CardBody, CardFooter, CardHeader, Typography} from "@material-tailwind/react";
 import React from 'react';
 import {FaArrowRightLong} from "react-icons/fa6";
+import {useCarStore} from "../store/carStore.js";
 
 const StockInfos = () => {
+
+    // const car = useCarStore((state) => state.cars())
+
     return (
+        // <div className="stock-item">
+        //     <h3>{car.brand} {car.model}</h3>
+        //     <p>Type : {car.type}</p>
+        //     <p>Année : {car.year}</p>
+        //     <p>Stock actuel : {car.currentStock}</p>
+        //     <p>Stock désiré : {car.wishStock}</p>
+        //     <p>Stock danger : {car.dangerStock}</p>
+        // </div>
+
         <Card className="my-6 w-86 bg-gray-600">
             <CardHeader color="blue-gray" className="relative h-56">
                 <img
@@ -15,8 +28,10 @@ const StockInfos = () => {
             <CardBody className="flex flex-row">
                 <section className="w-2/3">
                     <Typography variant="h3" color="blue-gray" className="mb-2">
-                        CarName
+                        CarName :
+                        {/*{car.brand}*/}
                     </Typography>
+                    {/*<Typography color="white" className="text-xl pl-4">{car.data.brand}</Typography>*/}
                     <Typography variant="h5" color="blue-gray" className="mb-2">
                         CarModel - year
                     </Typography>

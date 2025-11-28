@@ -21,6 +21,18 @@ const carShema = mongoose.Schema({
         type: Number,
         required: true,
     },
+    currentStock:{
+        type: Number,
+        required: true,
+    },
+    wishStock:{
+        type: Number,
+        required: true,
+    },
+    dangerStock:{
+        type: Number,
+        required: true,
+    }
 }, {timestamps: true})
 
 module.exports = mongoose.model('Car', carShema)

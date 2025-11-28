@@ -3,12 +3,17 @@ import StockInfos from "../components/StockInfos.jsx";
 import {Button, Card, CardBody, CardFooter, Typography} from "@material-tailwind/react";
 import {FaArrowRightLong} from "react-icons/fa6";
 import React from "react";
+import {Helmet} from "react-helmet";
 
 
 
 const Admin = () => {
     return (
         <>
+            <Helmet>
+                <title>Admin</title>
+            </Helmet>
+
             <section className=" fixed end-0 w-5/6 p-4 min-h-screen bg-gray-100">
                 <section className="h-screen p-6 rounded-xl bg-blue-gray-300 overflow-y-auto ">
 

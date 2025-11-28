@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {useUserStore} from "../store/userStore.js";
 import navigation from "../components/Navigation.jsx";
 import {useNavigate} from "react-router-dom";
+import {Helmet} from "react-helmet";
 
 
 const Register = () => {
@@ -26,13 +27,13 @@ const Register = () => {
     const user = useUserStore((state) => state.user)
     const navigate = useNavigate()
 
-    useEffect(() => {
-        //Si on a un user
-        if(user) {
-            //Naviguer vers une autre page
-            navigate('/')
-        }
-    }, [user, navigate])
+    // useEffect(() => {
+    //     //Si on a un user
+    //     if(user) {
+    //         //Naviguer vers une autre page
+    //         navigate('/')
+    //     }
+    // }, [user, navigate])
 
     //SEND BUTTON
     const handleSubmit = async (e) => {
@@ -51,6 +52,14 @@ const Register = () => {
         //On capture l'erreur s'il y en a une
         try {
             await register(data) //On transmet les infos d'inscription au store
+
+            setPassword("")
+            setFirstName("")
+            setLastName("")
+            setEmail("")
+            setRole("")
+            setSector("")
+
         } catch (error) {
             console.log(error)
         }
@@ -58,6 +67,9 @@ const Register = () => {
 
     return (
         <section className=" fixed end-0 w-5/6 p-4 h-screen bg-blue-100 ">
+            <Helmet>
+                <title>Register</title>
+            </Helmet>
             <section className="h-full p-2 rounded-xl bg-blue-500 flex items-center gap-8">
     {/*TITLE*/}
                 <div className="w-5/6 pl-40 absolute top-20 ">

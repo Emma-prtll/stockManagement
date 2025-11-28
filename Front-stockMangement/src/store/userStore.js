@@ -1,6 +1,6 @@
 //Import des librairies
-import axios from "axios";
-import {create} from "zustand";
+import axios from "axios"
+import {create} from "zustand"
 
 //On configure axios pour qu'il accepte les "credentials"
 axios.defaults.withCredentials = true

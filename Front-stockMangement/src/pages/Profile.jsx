@@ -3,6 +3,8 @@ import {FaRegEdit} from "react-icons/fa";
 import {useEffect, useState} from "react";
 import {useAuthStore} from "../store/authStore.js";
 import {useUserStore} from "../store/userStore.js";
+import {Helmet} from "react-helmet";
+
 
 const Profile = () => {
 
@@ -179,6 +181,10 @@ const Profile = () => {
         // </section>
 
         <section className="fixed end-0 w-5/6 p-4 h-screen  overflow-y-auto">
+            <Helmet>
+                <title>Profile</title>
+            </Helmet>
+
             {/*background*/}
             <div className="p-10 rounded-l-xl border  h-full rounded-xl bg-gray-300 ">
 

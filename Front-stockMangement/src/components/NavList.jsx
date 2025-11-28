@@ -7,7 +7,6 @@ const NavList = () => {
 
     return (
         <nav className="flex flex-col gap-2">
-
             <Typography
                 as="a"
                 href="/home"

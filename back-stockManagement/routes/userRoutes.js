@@ -5,7 +5,7 @@ const userController = require('../controllers/userController')
 
 // @route Route User (POST) /api/user/register
 // @desc Route pour créer un utilisateur (inscription sur le frontend)
-// @access Public
+// @access Private (admin)
 router.route('/register').post(userController.register)
 
 // @route Route User (POST) /api/user/login
