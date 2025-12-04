@@ -27,12 +27,15 @@ const Stock = () => {
                     <title>Stock</title>
                 </Helmet>
 
-                <section className="h-screen p-2 rounded-xl overflow-auto bg-yellow-700 flex flex-row flex-wrap gap-4 pl-6 py-8">
+                <section className="h-full rounded-xl bg-blue-500 overflow-auto flex justify-center ">
+
+                    <section className="h-screen rounded-xl flex flex-row flex-wrap gap-4 w-5/6 pt-14  justify-center">
                         {cars?.map((car) => (
-                            <div className="w-96">
+                            <div className="w-96 pb-16">
                                 <StockInfos key={car._id} car={car} />
                             </div>
                         ))}
+                    </section>
                 </section>
             </section>
         </>
