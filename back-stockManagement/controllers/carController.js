@@ -79,7 +79,8 @@ const getCars =  handler (async (req, res) => {
 
 const getACar = handler (async (req, res) => {
     //On vérifie si l'item existe
-    const car = await Car.findById(req.params._id)
+    const car = await Car.findById(req.params.id)
+
     if(car) {
         //Ici, on a un item qui existe, on le retourne au frontend
         res.status(200).json({

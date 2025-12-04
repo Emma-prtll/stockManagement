@@ -1,9 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import StockInfos from "../components/StockInfos.jsx";
 import {Button, ButtonGroup, Typography} from "@material-tailwind/react";
 import {Helmet} from "react-helmet";
+import {useCarStore} from "../store/carStore.js";
+import {useParams} from "react-router-dom";
 
 const StockDetails = () => {
+
+    const car = useCarStore((state) => state.cars);
+    const getACar = useCarStore((state) => state.getACar)
+    const car_id = useParams().id
+
+    useEffect(() => {
+        getACar(car_id)
+    }, [])
+
+    console.log(car)
+
+
     return (
         <>
             <Helmet>
@@ -16,14 +30,14 @@ const StockDetails = () => {
                             <section className=" h-1/2 flex">
                                 <section className=" w-1/2 pt-3">
                                     <Typography variant="h3" color="blue-gray" className="mb-5">
-                                        CarName
+                                        {car?.brand}
                                     </Typography>
                                     {/*<Typography color="white" className="text-xl pl-4">{car.data.brand}</Typography>*/}
                                     <Typography variant="h5" color="blue-gray" className="mb-2">
-                                        CarModel - year
+                                        {car?.model} - {car?.year}
                                     </Typography>
                                     <Typography variant="h5" color="blue-gray" className="mb-2">
-                                        CarType
+                                        {car?.type}
                                     </Typography>
                                 </section>
                                 <section className=" w-1/2 flex justify-center items-center">
@@ -37,7 +51,7 @@ const StockDetails = () => {
                                 <section className=" w-full flex justify-evenly bg-gray-400 rounded-xl">
                                     <section className=" w-64 flex justify-center items-center flex-col">
                                         <Typography variant="h1" color="blue-gray" >
-                                            04
+                                            {car?.currentStock}
                                         </Typography>
                                         <Typography variant="h4" color="blue-gray" >
                                             Current stock
@@ -45,7 +59,7 @@ const StockDetails = () => {
                                     </section>
                                     <section className=" w-64 flex justify-center items-center flex-col">
                                         <Typography variant="h1" color="blue-gray" >
-                                            60%
+                                            {car?.wishStock}
                                         </Typography>
                                         <Typography variant="h4" color="blue-gray" className="text-center">
                                             Percentage of the wish
@@ -53,7 +67,7 @@ const StockDetails = () => {
                                     </section>
                                     <section className=" w-64 flex justify-center items-center flex-col">
                                         <Typography variant="h1" color="blue-gray" >
-                                            02
+                                            {car?.dangerStock}
                                         </Typography>
                                         <Typography variant="h4" color="blue-gray" >
                                             From danger

@@ -1,11 +1,11 @@
-import {Button, Card, CardBody, CardFooter, CardHeader, Typography} from "@material-tailwind/react";
-import React from 'react';
+import {Card, CardBody, CardFooter, CardHeader, Typography} from "@material-tailwind/react";
 import {FaArrowRightLong} from "react-icons/fa6";
-import {useCarStore} from "../store/carStore.js";
+import {useNavigate} from "react-router-dom";
 
-const StockInfos = () => {
+const StockInfos = ({car}) => {
 
-    // const car = useCarStore((state) => state.cars())
+    const navigate = useNavigate();
+
 
     return (
         // <div className="stock-item">
@@ -28,20 +28,19 @@ const StockInfos = () => {
             <CardBody className="flex flex-row">
                 <section className="w-2/3">
                     <Typography variant="h3" color="blue-gray" className="mb-2">
-                        CarName :
-                        {/*{car.brand}*/}
+                        {car?.brand}
                     </Typography>
                     {/*<Typography color="white" className="text-xl pl-4">{car.data.brand}</Typography>*/}
                     <Typography variant="h5" color="blue-gray" className="mb-2">
-                        CarModel - year
+                        {car?.model} - {car?.year}
                     </Typography>
                     <Typography variant="h5" color="blue-gray" className="mb-2">
-                        CarType
+                        {car?.type}
                     </Typography>
                 </section>
                 <section className="w-1/3">
                     <Typography variant="h1" color="blue-gray" >
-                        04
+                        {car?.currentStock}
                     </Typography>
                     <Typography variant="h4" color="blue-gray" >
                         Current stock
@@ -51,8 +50,7 @@ const StockInfos = () => {
             <CardFooter className="pt-0">
                 <section className="flex items-center justify-center">
                     <Typography
-                        as="a"
-                        href="/stockDetails"
+                       onClick={() => navigate(`/stockDetails/${car._id}`)}
                         color="black"
                         className="flex items-center bg-gray-300 gap-2 py-3 px-8 rounded-lg font-bold text-sm">
                         MORE INFOS

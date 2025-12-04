@@ -5,6 +5,14 @@ import {Helmet} from "react-helmet";
 
 const Stock = () => {
 
+    const cars = useCarStore((state) => state.cars);
+    const getCars = useCarStore((state) => state.getCars)
+
+    useEffect(() => {
+        getCars()
+    }, [])
+
+
     // const { getCars, cars, carLoading } = useCarStore()
     //
     // useEffect(() => {
@@ -19,17 +27,12 @@ const Stock = () => {
                     <title>Stock</title>
                 </Helmet>
 
-                <section className="h-screen p-2 rounded-xl bg-blue-gray-300 overflow-y-auto grid grid-cols-4 gap-6">
-                    <StockInfos />
-                    <StockInfos />
-                    <StockInfos />
-                    <StockInfos />
-                    <StockInfos />
-                    {/*<div >*/}
-                    {/*    {cars.map((car) => (*/}
-                    {/*        <StockInfos key={car._id} car={car} />*/}
-                    {/*    ))}*/}
-                    {/*</div>*/}
+                <section className="h-screen p-2 rounded-xl overflow-auto bg-yellow-700 flex flex-row flex-wrap gap-4 pl-6 py-8">
+                        {cars?.map((car) => (
+                            <div className="w-96">
+                                <StockInfos key={car._id} car={car} />
+                            </div>
+                        ))}
                 </section>
             </section>
         </>

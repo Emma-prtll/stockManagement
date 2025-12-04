@@ -28,7 +28,7 @@ router.route('/getCars').get(carController.getCars)
 // @route Route Car (GET)
 // @desc Route pour obtenir un produit de la BDD via son ID
 // @access Public
-router.route('/getACar:_id').get(carController.getACar)
+router.route('/getACar/:id').get(carController.getACar)
 
 
 //Export des routes

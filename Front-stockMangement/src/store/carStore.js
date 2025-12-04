@@ -21,8 +21,25 @@ export const useCarStore = create((set) => ({
 
     getCars: async () => {
         set({carLoading: true})
-        const response = await axios.get('http://localhost:8000/api/car/getCars')
-        set({cars: response.data, carLoading: false})
-        set((state) => ({carLoading: !state.carLoading}))
+        try {
+            const response = await axios.get('http://localhost:8000/api/car/getCars')
+            set({cars: response.data})
+        } catch (error) {
+            set((state) => ({message: error.response.data.message || error.response}))
+        } finally {
+            set((state) => ({carLoading: !state.carLoading}))
+        }
+    },
+
+    getACar: async (id) => {
+        set({carLoading: true})
+        try {
+            const response = await axios.get(`http://localhost:8000/api/car/getACar/${id}`)
+            set({cars: response.data})
+        } catch (error) {
+            set((state) => ({message: error.response.data.message || error.response}))
+        } finally {
+            set((state) => ({carLoading: !state.carLoading}))
+        }
     }
 }))
