@@ -23,7 +23,7 @@ const AddItem = () => {
         //Si on a un user
         if(car) {
             //Naviguer vers une autre page
-            navigate('/stockDetails')
+            navigate(`/stockDetails/${car._id}`)
         }
     }, [car, navigate])
 
@@ -39,6 +39,8 @@ const AddItem = () => {
         } catch (error) {
             console.log(error)
         }
+
+        // navigate(`/stockDetails/${car._id}`)}
     }
 
         const [open, setOpen] = React.useState(false);
@@ -294,7 +296,7 @@ const AddItem = () => {
                         </div>
                     </section>
                     <div className="p-4 flex justify-center w-full mt-8 gap-12">
-                        <Button color="green" onClick={handleSubmit}>Validate</Button>
+                        <Button color="green" onClick={handleSubmit} >Validate</Button>
                         <Button color="red" onClick={handleOpen}>Cancel</Button>
                     </div>
                 </section>

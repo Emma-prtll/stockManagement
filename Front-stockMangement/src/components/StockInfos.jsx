@@ -30,11 +30,11 @@ const StockInfos = ({car}) => {
                         {car?.type}
                     </Typography>
                 </section>
-                <section className="w-1/3">
-                    <Typography variant="h1" color="blue-gray" >
+                <section className="w-1/3 bg-gray-400 p-2 rounded-xl">
+                    <Typography variant="h2" color="blue-gray" className="text-center" >
                         {car?.currentStock}
                     </Typography>
-                    <Typography variant="h4" color="blue-gray" >
+                    <Typography variant="h5" color="blue-gray" className="text-center" >
                         Current stock
                     </Typography>
                 </section>
