@@ -8,16 +8,8 @@ const StockInfos = ({car}) => {
 
 
     return (
-        // <div className="stock-item">
-        //     <h3>{car.brand} {car.model}</h3>
-        //     <p>Type : {car.type}</p>
-        //     <p>Année : {car.year}</p>
-        //     <p>Stock actuel : {car.currentStock}</p>
-        //     <p>Stock désiré : {car.wishStock}</p>
-        //     <p>Stock danger : {car.dangerStock}</p>
-        // </div>
 
-        <Card className="my-6 w-86 bg-gray-600">
+        <Card className="w-86 bg-gray-600">
             <CardHeader color="blue-gray" className="relative h-56">
                 <img
                     src="https://media.audi.com/is/image/audi/country/ch/assets/models/r8/Audi-R8-5589-1920x1080-2.jpg"
@@ -38,11 +30,11 @@ const StockInfos = ({car}) => {
                         {car?.type}
                     </Typography>
                 </section>
-                <section className="w-1/3">
-                    <Typography variant="h1" color="blue-gray" >
+                <section className="w-1/3 bg-gray-400 p-2 rounded-xl">
+                    <Typography variant="h2" color="blue-gray" className="text-center" >
                         {car?.currentStock}
                     </Typography>
-                    <Typography variant="h4" color="blue-gray" >
+                    <Typography variant="h5" color="blue-gray" className="text-center" >
                         Current stock
                     </Typography>
                 </section>
@@ -50,7 +42,8 @@ const StockInfos = ({car}) => {
             <CardFooter className="pt-0">
                 <section className="flex items-center justify-center">
                     <Typography
-                       onClick={() => navigate(`/stockDetails/${car._id}`)}
+                        as="button"
+                        onClick={() => navigate(`/stockDetails/${car._id}`)}
                         color="black"
                         className="flex items-center bg-gray-300 gap-2 py-3 px-8 rounded-lg font-bold text-sm">
                         MORE INFOS

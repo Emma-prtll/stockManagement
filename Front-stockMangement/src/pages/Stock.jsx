@@ -1,19 +1,16 @@
 import StockInfos from "../components/StockInfos.jsx";
 import { useCarStore } from "../store/carStore"
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {Helmet} from "react-helmet";
-import {Spinner} from "@material-tailwind/react";
 
 const Stock = () => {
 
     const cars = useCarStore((state) => state.cars);
     const getCars = useCarStore((state) => state.getCars)
-    const loading = useCarStore((state) => state.carLoading);
 
     useEffect(() => {
         getCars()
     }, [])
-
 
 
     // const { getCars, cars, carLoading } = useCarStore()
@@ -30,16 +27,16 @@ const Stock = () => {
                     <title>Stock</title>
                 </Helmet>
 
-                <section className="h-screen p-2 rounded-xl overflow-auto bg-yellow-700 flex flex-row flex-wrap gap-4 pl-6 py-8">
-                    {loading && (
-                        <Spinner />
-                    )}
+                <section className="h-full rounded-xl bg-blue-500 overflow-auto flex justify-center ">
 
-                    {cars?.length && cars.map((car, i) => (
-                            <div  key={i} className="w-96">
-                                <StockInfos car={car} />
+                    {/*<section className="h-screen rounded-xl flex flex-row flex-wrap gap-4 w-5/6 pt-14 justify-center">*/}
+                    <section className="h-screen rounded-xl gap-4 pt-14 grid grid-cols-3">
+                        {cars?.map((car) => (
+                            <div className="w-96 pb-16">
+                                <StockInfos key={car._id} car={car} />
                             </div>
                         ))}
+                    </section>
                 </section>
             </section>
         </>
