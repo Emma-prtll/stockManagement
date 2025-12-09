@@ -23,7 +23,7 @@ const AddItem = () => {
         //Si on a un user
         if(car) {
             //Naviguer vers une autre page
-            navigate(`/stockDetails/${car._id}`)
+            navigate(`/stockDetails/${car.car._id}`)
         }
     }, [car, navigate])
 
