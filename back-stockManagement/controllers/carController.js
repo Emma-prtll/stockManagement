@@ -37,7 +37,7 @@ const addItem = handler (async (req, res) => {
 
     //Informer le user que c'est bon !
     if(car){
-        res.status(201).json({"Message" : `La voiture à été créer avec succès : ${car}`})
+        res.status(201).json({"Message" : `La voiture à été créer avec succès.`, car})
     } else {
         res.status(400)
         throw new Error("Une erreur est survenue !")

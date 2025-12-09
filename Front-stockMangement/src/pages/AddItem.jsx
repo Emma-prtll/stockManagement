@@ -23,9 +23,11 @@ const AddItem = () => {
         //Si on a un user
         if(car) {
             //Naviguer vers une autre page
-            navigate('/stockDetails')
+             navigate(`/stockDetails/${car.car._id}`)
         }
     }, [car, navigate])
+
+    console.log(car)
 
     const handleSubmit = async (e) => {
         e.preventDefault()

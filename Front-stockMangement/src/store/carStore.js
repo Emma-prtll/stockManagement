@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true
 
 export const useCarStore = create((set) => ({
     //Déclaration et initialisation des stats du store
-    cars: null, //Utilisé pour stocker les données utilisateur qui vienne du backend
+    cars: [], //Utilisé pour stocker les données utilisateur qui vienne du backend
     message: "", //Utilisé pour afficher les messages d'erreur ou de succès
     carLoading: false, //Utilisé pour activer ou désactiver un loader
 
@@ -27,7 +27,7 @@ export const useCarStore = create((set) => ({
         } catch (error) {
             set((state) => ({message: error.response.data.message || error.response}))
         } finally {
-            set((state) => ({carLoading: !state.carLoading}))
+            set((state) => ({carLoading: false}))
         }
     },
 
