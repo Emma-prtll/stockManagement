@@ -24,9 +24,24 @@ router.route('/logout').post(userController.logout)
 router.route('/profile:_id').get(userController.getProfile)
 
 // @route Route User (PUT) /api/user/profile
-// @desc Route pour modifier les informations d'un utilisateur (onglet profile sur le frontend)
+// @desc Route pour modifier les informations d'un utilisateur qui est connecté (onglet profile sur le frontend)
 // @access Private
 router.route('/profile').put(userController.updateProfile)
+
+// @route Route User (PUT) /api/user/userProfile
+// @desc Route pour modifier les informations d'un utilisateur (onglet admin sur le frontend)
+// @access Private
+router.route('/updateUser/:id').put(userController.updateUser)
+
+// @route Route User (GET)
+// @desc Route pour obtenir tous les produits de la BDD
+// @access Public
+router.route('/getUsers').get(userController.getUsers)
+
+// @route Route User (GET)
+// @desc Route pour obtenir un produit de la BDD via son ID
+// @access Public
+router.route('/getAUser/:id').get(userController.getAUser)
 
 
 //Export des routes

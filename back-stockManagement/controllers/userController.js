@@ -4,6 +4,7 @@ const User = require('../models/userModel')
 //Import du token
 const {generateToken} = require('../utils/generateToken')
 const bcrypt = require('bcrypt')
+const Car = require("../models/carModel");
 
 
 // @route Route User (POST) /api/user/register
@@ -150,15 +151,88 @@ const updateProfile = handler(async (req, res) => {
     }
 
     //Ici, on a toutes les données qui doivent être modifiées | on enregistre les modifications
-    const updatedUser = await user.save()
+    const updateProfile = await user.save()
 
     res.status(200).json({
-        _id: updatedUser._id,
-        email: updatedUser.email,
-        username: updatedUser.username,
-        lastName: updatedUser.lastName,
-        firstName: updatedUser.firstName,
+        _id: updateProfile._id,
+        email: updateProfile.email,
+        lastName: updateProfile.lastName,
+        firstName: updateProfile.firstName,
     })
+})
+
+const updateUser = handler(async (req, res) => {
+    //On vérifie si le profile existe
+    console.log("ID reçu:", req.params.id)
+    console.log("Données reçues:", req.body)
+
+    const user = await User.findById(req.params.id)
+
+    if(!user){
+        res.status(400)
+        throw new Error("L'utilisateur n'existe pas.")
+    }
+
+    //Ici, on a un utilisateur qui existe
+    //On peut le mettre à jours | (écriture en ternaire)
+    user.firstName = req.body.firstName ? req.body.firstName : user.firstName //Si un firstName est fournis dans le formulaire on prend celui la, sinon on garde ce qu'on a
+    user.lastName = req.body.lastName ? req.body.lastName : user.lastName
+    user.email = req.body.email ? req.body.email : user.email
+    user.role = req.body.role ? req.body.role : user.role
+    user.sector = req.body.sector ? req.body.sector : user.sector
+
+    // if(req.body.input.oldPassword) {
+    //     //Verifier si oldPassword (formulaire) === user.password (bdd)
+    //     let compare = await bcrypt.compare(req.body.input.oldPassword, user.password)
+    //     if(!compare) {
+    //         //si non, on renvoie une erreur
+    //         res.status(400)
+    //         throw new Error("Le mot de passe n'existe pas.")
+    //     } else {
+    //         //Si oui, on modifie le mot de passe de l'utilisateur avec req.body.input.newPassword
+    //         user.password = req.body.input.newPassword
+    //     }
+    // }
+
+    //Ici, on a toutes les données qui doivent être modifiées | on enregistre les modifications
+    const updateUser = await user.save()
+
+    res.status(200).json({
+        _id: updateUser._id,
+        email: updateUser.email,
+        lastName: updateUser.lastName,
+        firstName: updateUser.firstName,
+        role: updateUser.role,
+        sector: updateUser.sector,
+    })
+})
+
+const getUsers =  handler (async (req, res) => {
+    const users = await User.find()
+    res.status(200).json(users)
+})
+
+const getAUser = handler (async (req, res) => {
+    //On vérifie si l'item existe
+    const user = await User.findById(req.params.id)
+
+    if(user) {
+        //Ici, on a un item qui existe, on le retourne au frontend
+        res.status(200).json({
+            _id: user._id,
+            email: user.email,
+            lastName: user.lastName,
+            firstName: user.firstName,
+            role: user.role,
+            sector: user.sector
+        })
+    } else {
+        //Ici, l'item n'existe pas
+        res.status(400)
+        throw new Error("L'utilisateur n'existe pas.")
+    }
+
+    res.status(200).json({message: `Route pour récupérer UN utilisateur.trice : ${req.params._id}`})
 })
 
 module.exports = {
@@ -166,5 +240,8 @@ module.exports = {
     login,
     logout,
     getProfile,
-    updateProfile
+    updateProfile,
+    updateUser,
+    getUsers,
+    getAUser
 }

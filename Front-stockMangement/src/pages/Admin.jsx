@@ -2,12 +2,22 @@ import EmployeeInfos from "../components/EmployeeInfos.jsx";
 import StockInfos from "../components/StockInfos.jsx";
 import {Button, Card, CardBody, CardFooter, Typography} from "@material-tailwind/react";
 import {FaArrowRightLong} from "react-icons/fa6";
-import React from "react";
+import React, {useEffect} from "react";
 import {Helmet} from "react-helmet";
+import {useCarStore} from "../store/carStore.js";
+import {useUserStore} from "../store/userStore.js";
 
 
 
 const Admin = () => {
+
+    const users = useUserStore((state) => state.users);
+    const getUsers = useUserStore((state) => state.getUsers)
+
+    useEffect(() => {
+        getUsers()
+    }, [])
+
     return (
         <>
             <Helmet>
@@ -24,6 +34,15 @@ const Admin = () => {
 
                     <EmployeeInfos />
                 </section>
+
+                {/*<section className="h-screen p-6 rounded-xl bg-blue-gray-300 overflow-y-auto ">*/}
+                {/*    {users?.length && users.map((car, i) => (*/}
+                {/*        <div key={i} className="w-96 pb-16">*/}
+                {/*            <EmployeeInfos user={user}/>*/}
+
+                {/*        </div>*/}
+                {/*    ))}*/}
+                {/*</section>*/}
             </section>
         </>
     );

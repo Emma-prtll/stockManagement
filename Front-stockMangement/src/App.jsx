@@ -10,6 +10,7 @@ import Register from "./pages/Register.jsx";
 import StockDetails from "./pages/StockDetails.jsx";
 import EmployeeEdit from "./pages/EmployeeEdit.jsx";
 import {ToastContainer} from "react-toastify"
+import EmployeeInfos from "./components/EmployeeInfos.jsx";
 
 
 
@@ -25,7 +26,8 @@ function App() {
                 <Route path="/addItem" element={<AddItem />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/admin" element={<Admin />} />
-                <Route path="/employeeEdit" element={<EmployeeEdit/>} />
+                <Route path="/employeeInfos" element={<EmployeeInfos/>} />
+                <Route path="/employeeEdit/:id" element={<EmployeeEdit/>} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
             </Routes>

@@ -18,7 +18,7 @@ const StockDetails = () => {
         getACar(car_id)
     }, [])
 
-    console.log(car)
+    // console.log(car)
 
 
     return (

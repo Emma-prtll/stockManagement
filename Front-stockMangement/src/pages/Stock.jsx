@@ -31,9 +31,9 @@ const Stock = () => {
 
                     {/*<section className="h-screen rounded-xl flex flex-row flex-wrap gap-4 w-5/6 pt-14 justify-center">*/}
                     <section className="h-screen rounded-xl gap-4 pt-14 grid grid-cols-3">
-                        {cars?.map((car) => (
-                            <div className="w-96 pb-16">
-                                <StockInfos key={car._id} car={car} />
+                        {cars?.length && cars.map((car, i) => (
+                            <div key={i} className="w-96 pb-16">
+                                <StockInfos car={car} />
                             </div>
                         ))}
                     </section>

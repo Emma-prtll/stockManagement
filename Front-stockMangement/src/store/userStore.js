@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true
     //create() = methode de zustand
 export const useUserStore = create((set) => ({
     //Déclaration et initialisation des stats du store
-    user: null, //Utilisé pour stocker les données utilisateur qui vienne du backend
+    users: [], //Utilisé pour stocker les données utilisateur qui vienne du backend
     message: "", //Utilisé pour afficher les messages d'erreur ou de succès
     userLoading: false, //Utilisé pour activer ou désactiver un loader
 
@@ -44,11 +44,42 @@ export const useUserStore = create((set) => ({
         set((state) => ({userLoading: !state.userLoading})) //4. J'arrête mon loader | quand le front à reçu les infos du back -> ça repasse à false
     },
 
-    updateUser: async (data) => {
+    updateProfile: async (data) => {
         set((state) => ({userLoading: !state.userLoading}))
         const response = await axios.put('http://localhost:8000/api/user/profile', data)
         set(() => ({user: response.data}))
         set((state) => ({userLoading: !state.userLoading}))
+    },
+
+    updateUser: async (id, data) => {
+        set((state) => ({userLoading: !state.userLoading}))
+        const response = await axios.put(`http://localhost:8000/api/user/updateUser/${id}`, data)
+        set(() => ({user: response.data}))
+        set((state) => ({userLoading: !state.userLoading}))
+    },
+
+    getUsers: async () => {
+        set({userLoading: true})
+        try {
+            const response = await axios.get('http://localhost:8000/api/user/getUsers')
+            set({users: response.data})
+        } catch (error) {
+            set((state) => ({message: error.response.data.message || error.response}))
+        } finally {
+            set((state) => ({userLoading: false}))
+        }
+    },
+
+    getAUser: async (id) => {
+        set({userLoading: true})
+        try {
+            const response = await axios.get(`http://localhost:8000/api/user/getAUser/${id}`)
+            set({users: response.data})
+        } catch (error) {
+            set((state) => ({message: error.response.data.message || error.response}))
+        } finally {
+            set((state) => ({userLoading: !state.userLoading}))
+        }
     }
 
 
