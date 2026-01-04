@@ -4,6 +4,7 @@ import {useUserStore} from "../store/userStore.js";
 import navigation from "../components/Navigation.jsx";
 import {useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet";
+import {toast} from "react-toastify";
 
 
 const Register = () => {
@@ -27,15 +28,17 @@ const Register = () => {
     const user = useUserStore((state) => state.user)
     const navigate = useNavigate()
 
-    // useEffect(() => {
-    //     //Si on a un user
-    //     if(user) {
-    //         //Naviguer vers une autre page
-    //         navigate('/')
-    //     }
-    // }, [user, navigate])
 
-    //SEND BUTTON
+    useEffect(() => {
+        //Si on a un user
+        if(user) {
+            //Naviguer vers une autre page
+            navigate(`/admin`)
+
+        }
+    }, [user, navigate])
+
+    // SEND BUTTON
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -48,22 +51,56 @@ const Register = () => {
             sector
         };
 
+        // try {
+        //     await login( {email, password})
+        //     if(user) {
+        //         setCredentials({user})
+        //         navigate('/')
+        //     } else {
+        //         toast.dismiss() //Ferme-le toaste actif avant d'en activer un autre
+        //         toast.error(message.message)
+        //         setEmail("")
+        //         setPassword("")
+        //     }
+        // } catch (e) {
+        //     console.log(e)
+        // }
         //On appelle le store et la fonction
         //On capture l'erreur s'il y en a une
         try {
             await register(data) //On transmet les infos d'inscription au store
+            if(data){
+                navigate("/admin", {
+                    state: {
+                        toastType: "success",
+                        message: "Employee successfully created",
+                    },
+                })
+            } else {
+                setPassword("")
+                setFirstName("")
+                setLastName("")
+                setEmail("")
+                setRole("")
+                setSector("")
+            }
 
-            setPassword("")
-            setFirstName("")
-            setLastName("")
-            setEmail("")
-            setRole("")
-            setSector("")
 
-        } catch (error) {
-            console.log(error)
         }
+        catch (error) {
+            toast.dismiss() //Ferme-le toaste actif avant d'en activer un autre
+            toast.error(message.message)
+
+                // navigate("/admin", {
+                //     state: {
+                //         toastType: "error",
+                //         message: "Error while creating employee",
+                //     },
+                // });
+            }
     }
+
+
 
     return (
         <section className=" fixed end-0 w-5/6 p-4 h-screen bg-blue-100 ">

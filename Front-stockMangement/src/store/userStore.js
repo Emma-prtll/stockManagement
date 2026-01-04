@@ -37,11 +37,21 @@ export const useUserStore = create((set) => ({
     //Pour enregister un utilisateur en backend
     //data vient du formulaire
     register: async (data) => {
-        //On inverse
-        set((state) => ({userLoading: !state.userLoading})) //1. J'initialise mon loader | quand le user confirme sont register -> ça passe à true
-        const response = await axios.post('http://localhost:8000/api/user/register', data) //2. J'appelle mon serveur sur la bonne route en passant les données //axios.post car notre route et en post et on met notre route + ce que l'on veut envoyer -> data
-        set(() => ({user: response.data})) //3. Je stock les données de l'utilisateur qui viennent du backend dans mon state "user"
-        set((state) => ({userLoading: !state.userLoading})) //4. J'arrête mon loader | quand le front à reçu les infos du back -> ça repasse à false
+        // set((state) => ({userLoading: !state.userLoading})) //1. J'initialise mon loader | quand le user confirme sont register -> ça passe à true
+        // const response = await axios.post('http://localhost:8000/api/user/register', data) //2. J'appelle mon serveur sur la bonne route en passant les données //axios.post car notre route et en post et on met notre route + ce que l'on veut envoyer -> data
+        // set(() => ({user: response.data})) //3. Je stock les données de l'utilisateur qui viennent du backend dans mon state "user"
+        // set((state) => ({userLoading: !state.userLoading})) //4. J'arrête mon loader | quand le front à reçu les infos du back -> ça repasse à false
+
+        set((state) => ({userLoading: !state.userLoading}))
+
+        try {
+            const response = await axios.post('http://localhost:8000/api/user/register', data)
+            set(() => ({user: response.data}))
+        } catch (error) {
+            set(() => ({message: error.response.data}))
+        } finally {
+            set((state) => ({userLoading: !state.userLoading}))
+        }
     },
 
     updateProfile: async (data) => {

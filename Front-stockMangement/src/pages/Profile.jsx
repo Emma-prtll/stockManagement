@@ -52,6 +52,11 @@ const Profile = () => {
                 _id: userInfo.user._id,
                 input: data
             }
+            setFirstname("")
+            setLastname("")
+            setEmail("")
+            setOldPassword("")
+            setNewPassword("")
             await updateProfile(update)
         } catch (e) {
             console.log(e)

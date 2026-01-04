@@ -20,7 +20,7 @@ const AddItem = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        //Si on a un user
+        //Si on a une voiture
         if(car) {
             //Naviguer vers une autre page
             navigate(`/stockDetails/${car.car._id}`)

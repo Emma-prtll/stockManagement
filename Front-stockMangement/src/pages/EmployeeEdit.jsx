@@ -5,7 +5,7 @@ import {
     ButtonGroup,
     Card,
     CardBody,
-    Collapse,
+    Collapse, Dialog, DialogBody, DialogFooter, DialogHeader,
     IconButton,
     Input, Option,
     Select,
@@ -18,6 +18,7 @@ import {FaArrowLeftLong, FaArrowRightLong} from "react-icons/fa6";
 import {useState} from "react";
 import { RiEditLine } from "react-icons/ri";
 import {useAuthStore} from "../store/authStore.js";
+import {toast} from "react-toastify";
 
 
 const EmployeeEdit = () => {
@@ -66,6 +67,10 @@ const EmployeeEdit = () => {
         try {
             await updateUser(user_id, data)
             await getAUser(user_id)
+
+            setRole("")
+            setSector("")
+
         } catch (err) {
             console.log(err);
         }
@@ -83,19 +88,46 @@ const EmployeeEdit = () => {
     //         console.log(e)
     //     }
     // }
-
+    const [open, setOpen] = React.useState(true);
+    const handleOpen = () => setOpen(!open);
 
     return (
         <>
             <Helmet>
                 <title>Admin - Employee infos</title>
             </Helmet>
+
+            {/*DIALOG*/}
+            <Dialog open={open} handler={handleOpen}>
+                <DialogHeader>Edit mode</DialogHeader>
+                <DialogBody className="flex flex-col">
+                    You are currently editing this employee’s information.
+                    Any change you make will be saved directly to the database.
+
+                    <span className="font-bold">
+                    Please make sure all information is correct before making changes.
+                    </span>
+                    This action affects the employee’s account and responsibilities.
+
+                </DialogBody>
+                <DialogFooter className="flex justify-center gap-8">
+                    <Button
+                        variant="gradient"
+                        color="red"
+                        onClick={handleOpen}
+                        className="mr-1"
+                    >
+                        <span>Agree</span>
+                    </Button>
+                </DialogFooter>
+            </Dialog>
+
             <section className="fixed end-0 w-5/6 p-4 h-screen bg-blue-100">
                 <section className="h-full p-2 rounded-xl bg-blue-500">
                     <section className="pt-6 pl-6">
                         <Typography
                             as="a"
-                            href="/stock"
+                            href="/admin"
                             color="black"
                             className="flex items-center bg-gray-300 gap-2 py-3 px-8 rounded-lg font-bold text-sm w-36"
                         >
@@ -139,7 +171,7 @@ const EmployeeEdit = () => {
                                 </section>
                             </section>
                             {/*PROFESSIONAL INFOS*/}
-                            <section className="w-1/2 p-6 bg-amber-400 flex gap-10">
+                            <section className="w-1/2 p-6 bg-amber-400 flex gap-10 flex-col">
                                 <Typography color="white" className="font-bold text-xl">Role : {user?.role}</Typography>
                                 <Select
                                     variant="static"

@@ -52,7 +52,8 @@ const register = handler(async (req, res) => {
         })
     } else {
         res.status(400)
-        throw new Error("Une erreur est survenue !")
+        res.status(400).json({message: "Une erreur est survenue !"})
+
     }
 })
 

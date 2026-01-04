@@ -7,9 +7,23 @@ import {Helmet} from "react-helmet";
 import {useCarStore} from "../store/carStore.js";
 import {useUserStore} from "../store/userStore.js";
 
+import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+
 
 
 const Admin = () => {
+
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.state?.toastType && location.state?.message) {
+            toast[location.state.toastType](location.state.message);
+
+            // Nettoie le state pour éviter un toast au refresh
+            window.history.replaceState({}, document.title);
+        }
+    }, [location.state]);
 
     const users = useUserStore((state) => state.users);
     const getUsers = useUserStore((state) => state.getUsers)
@@ -17,6 +31,7 @@ const Admin = () => {
     useEffect(() => {
         getUsers()
     }, [])
+
 
     return (
         <>

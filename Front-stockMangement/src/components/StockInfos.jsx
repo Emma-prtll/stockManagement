@@ -6,6 +6,17 @@ const StockInfos = ({car}) => {
 
     const navigate = useNavigate();
 
+    //CODE COULEURS
+    const getStockColor = () => {
+        if (car.currentStock >= car.wishStock) {
+            return "bg-green-500";
+        }
+        else if (car.currentStock < car.wishStock && car.currentStock >= car.dangerStock) {
+            return "bg-orange-500";
+        } else {
+            return "bg-red-500";
+        }
+    }
 
     return (
 
@@ -30,7 +41,8 @@ const StockInfos = ({car}) => {
                         {car?.type}
                     </Typography>
                 </section>
-                <section className="w-1/3 bg-gray-400 p-2 rounded-xl">
+                {/*<section className="w-1/3 bg-gray-400 p-2 rounded-xl">*/}
+                <section className={`w-1/3 p-2 rounded-xl ${getStockColor()}`}>
                     <Typography variant="h2" color="blue-gray" className="text-center" >
                         {car?.currentStock}
                     </Typography>
