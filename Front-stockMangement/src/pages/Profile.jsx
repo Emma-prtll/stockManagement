@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {useAuthStore} from "../store/authStore.js";
 import {useUserStore} from "../store/userStore.js";
 import {Helmet} from "react-helmet";
+import {toast} from "react-toastify";
 
 
 const Profile = () => {
@@ -34,6 +35,9 @@ const Profile = () => {
     const updateProfile = useUserStore((state) => state.updateProfile)
     const user = useUserStore((state) => state.user)
 
+    //Import des UserInfo depuis "userStore"
+    const message = useUserStore((state) => state.message)
+
     //Méthode pour modifier notre localStorage après modification de l'utilisateur
     const setCredentials = useAuthStore((state) => state.setCredentials)
 
@@ -58,6 +62,8 @@ const Profile = () => {
             setOldPassword("")
             setNewPassword("")
             await updateProfile(update)
+            toast.error(message.message)
+
         } catch (e) {
             console.log(e)
         }

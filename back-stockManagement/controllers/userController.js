@@ -51,7 +51,7 @@ const register = handler(async (req, res) => {
             sector: user.sector ? user.sector : "",
         })
     } else {
-        res.status(400)
+        // res.status(400)
         res.status(400).json({message: "Une erreur est survenue !"})
 
     }
@@ -78,7 +78,7 @@ const login = handler(async (req, res) => {
             sector : user.sector
         })
     } else {
-        res.status(400)
+        // res.status(400)
         res.status(400).json({message: "Email ou mot de passe incorrect."})
     }
 })

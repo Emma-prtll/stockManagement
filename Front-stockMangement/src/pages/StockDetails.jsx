@@ -1,10 +1,19 @@
 import React, {useEffect} from 'react';
 import StockInfos from "../components/StockInfos.jsx";
-import {Button, ButtonGroup, Typography} from "@material-tailwind/react";
+import {
+    Button,
+    ButtonGroup,
+    Dialog,
+    DialogBody,
+    DialogFooter,
+    DialogHeader, Input, Option, Select,
+    Typography
+} from "@material-tailwind/react";
 import {Helmet} from "react-helmet";
 import {useCarStore} from "../store/carStore.js";
 import {useNavigate, useParams} from "react-router-dom";
 import {FaArrowLeftLong, FaArrowRightLong} from "react-icons/fa6";
+import {useAuthStore} from "../store/authStore.js";
 
 const StockDetails = () => {
 
@@ -20,6 +29,18 @@ const StockDetails = () => {
 
     // console.log(car)
 
+    //GESTION DES ROLES
+    const userInfo = useAuthStore((state) => state.userInfo);
+    const role = userInfo?.user.role;
+    const isManager = role === "Manager";
+    const isAdmin = role === "Admin";
+
+    //Dialogue
+    const [openCar, setOpenCar] = React.useState(false);
+    const handleOpenCar = () => setOpenCar(!openCar);
+
+    const [openData, setOpenData] = React.useState(false);
+    const handleOpenData = () => setOpenData(!openData);
 
     return (
         <>
@@ -56,13 +77,81 @@ const StockDetails = () => {
                                         {car?.type}
                                     </Typography>
                                 </section>
-                                {/*BUTTONS*/}
-                                <section className=" w-1/2 flex justify-center items-center">
-                                            <ButtonGroup size="lg">
-                                                <Button className="bg-green-500">More</Button>
-                                                <Button className="bg-red-500">Less</Button>
-                                            </ButtonGroup>
-                                </section>
+                                {/*BUTTONS | accès unique au MANAGER + ADMIN*/}
+                                {(isManager || isAdmin) && (
+
+                                    <section className=" w-1/2 flex justify-center items-center">
+                                            {/*<ButtonGroup size="lg">*/}
+                                            {/*    <Button className="bg-green-500">More</Button>*/}
+                                            {/*    <Button className="bg-red-500">Less</Button>*/}
+                                            {/*</ButtonGroup>*/}
+                                        <Button>
+                                                <Typography variant="h4" color="white" className="text-center" onClick={handleOpenCar}  >
+                                                    Edit car
+                                                </Typography>
+                                        </Button>
+                                    </section>
+                                )}
+
+                                {/*DIALOG CAR*/}
+                                <Dialog open={openCar} handler={handleOpenCar}>
+                                <DialogHeader>Modification</DialogHeader>
+                                <DialogBody className="flex flex-col gap-6">
+                                    <Input
+                                        type="text"
+                                        variant="outlined"
+                                        label="Brand"
+                                        name="brand"
+                                        value={car?.brand}
+                                        // onChange={(e) => setBrand(e.target.value)}
+                                    />
+                                    <Input
+                                        type="text"
+                                        variant="outlined"
+                                        label="Model"
+                                        name="model"
+                                        value={car?.model}
+                                        // onChange={(e) => setBrand(e.target.value)}
+                                    />
+                                    <Input
+                                        type="text"
+                                        variant="outlined"
+                                        label="Year"
+                                        name="year"
+                                        value={car?.year}
+                                        // onChange={(e) => setBrand(e.target.value)}
+                                    />
+                                    <Select
+                                        variant="static"
+                                        label="Type"
+                                        size="lg"
+                                        name="type"
+                                        value={car?.type}
+                                        // onChange={(value) => setType(value)}
+                                    >
+                                        <Option value="Sport">Sport</Option>
+                                        <Option value="SUV">SUV</Option>
+                                        <Option value="Coupe">Coupe</Option>
+                                        <Option value="Roadster">Roadster</Option>
+                                        <Option value="Truck">Truck</Option>
+                                    </Select>
+                                </DialogBody>
+                                <DialogFooter className="flex justify-center gap-8">
+                                    <Button
+                                        variant="gradient"
+                                        color="red"
+                                        onClick={handleOpenCar}
+                                        className="mr-1"
+                                    >
+                                        <span>Cancel</span>
+                                    </Button>
+                                        <Button variant="text" color="green" onClick={handleOpenCar}>
+                                            <span>Confirm</span>
+                                        </Button>
+                                </DialogFooter>
+                            </Dialog>
+
+
                             </section>
                             <section className=" flex">
                                 {/*STOCK INFOS*/}
@@ -91,6 +180,52 @@ const StockDetails = () => {
                                             From danger
                                         </Typography>
                                     </section>
+                                    <Button variant="text" color="black" className="bg-red-300" onClick={handleOpenData}>
+                                        EDIT
+                                    </Button>
+                                    {/*DIALOG DATAS*/}
+                                    <Dialog open={openData} handler={handleOpenData}>
+                                        <DialogHeader>Modification</DialogHeader>
+                                        <DialogBody className="flex flex-col gap-6">
+                                            <Input
+                                                type="text"
+                                                variant="outlined"
+                                                label="Brand"
+                                                name="brand"
+                                                value={car?.currentStock}
+                                                // onChange={(e) => setBrand(e.target.value)}
+                                            />
+                                            <Input
+                                                type="text"
+                                                variant="outlined"
+                                                label="Brand"
+                                                name="brand"
+                                                value={car?.wishStock}
+                                                // onChange={(e) => setBrand(e.target.value)}
+                                            />
+                                            <Input
+                                                type="text"
+                                                variant="outlined"
+                                                label="Brand"
+                                                name="brand"
+                                                value={car?.dangerStock}
+                                                // onChange={(e) => setBrand(e.target.value)}
+                                            />
+                                        </DialogBody>
+                                        <DialogFooter className="flex justify-center gap-8">
+                                            <Button
+                                                variant="gradient"
+                                                color="red"
+                                                onClick={handleOpenData}
+                                                className="mr-1"
+                                            >
+                                                <span>Cancel</span>
+                                            </Button>
+                                            <Button variant="text" color="green" onClick={handleOpenData}>
+                                                <span>Confirm</span>
+                                            </Button>
+                                        </DialogFooter>
+                                    </Dialog>
                                 </section>
                             </section>
                         </section>

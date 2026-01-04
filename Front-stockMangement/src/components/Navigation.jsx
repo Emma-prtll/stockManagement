@@ -36,7 +36,7 @@ const Navigation = () => {
             <NavList />
 
             {userInfo ? (
-                <Button variant="text" className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer bg-amber-50 text-center font-black" onClick={handleLogout}>Logout</Button>
+                <Button variant="text" className="p-2 mt-6 rounded-lg hover:bg-amber-700 transition-all cursor-pointer bg-amber-50 text-center font-black" onClick={handleLogout}>Logout</Button>
             ) : (
                 <Button variant="text" className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer bg-amber-50 text-center font-black" onClick={handleLogout}>
                     <a href="/login">Login</a>

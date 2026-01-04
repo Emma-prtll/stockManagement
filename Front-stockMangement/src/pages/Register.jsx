@@ -9,6 +9,9 @@ import {toast} from "react-toastify";
 
 const Register = () => {
 
+    const message = useUserStore((state) => state.message)
+
+
     // STEPPER
     const [activeStep, setActiveStep] = React.useState(0);
     const [isLastStep, setIsLastStep] = React.useState(false);
@@ -50,56 +53,23 @@ const Register = () => {
             role,
             sector
         };
-
-        // try {
-        //     await login( {email, password})
-        //     if(user) {
-        //         setCredentials({user})
-        //         navigate('/')
-        //     } else {
-        //         toast.dismiss() //Ferme-le toaste actif avant d'en activer un autre
-        //         toast.error(message.message)
-        //         setEmail("")
-        //         setPassword("")
-        //     }
-        // } catch (e) {
-        //     console.log(e)
-        // }
         //On appelle le store et la fonction
         //On capture l'erreur s'il y en a une
         try {
             await register(data) //On transmet les infos d'inscription au store
-            if(data){
-                navigate("/admin", {
-                    state: {
-                        toastType: "success",
-                        message: "Employee successfully created",
-                    },
-                })
-            } else {
-                setPassword("")
-                setFirstName("")
-                setLastName("")
-                setEmail("")
-                setRole("")
-                setSector("")
-            }
 
-
-        }
-        catch (error) {
-            toast.dismiss() //Ferme-le toaste actif avant d'en activer un autre
+            // setPassword("")
+            // setFirstName("")
+            // setLastName("")
+            // setEmail("")
+            // setRole("")
+            // setSector("")
+        } catch (error) {
+            console.log(error)
             toast.error(message.message)
 
-                // navigate("/admin", {
-                //     state: {
-                //         toastType: "error",
-                //         message: "Error while creating employee",
-                //     },
-                // });
-            }
+        }
     }
-
 
 
     return (

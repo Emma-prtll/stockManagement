@@ -1,78 +1,96 @@
+import React from "react";
 import { Typography } from "@material-tailwind/react";
 import {useAuthStore} from "../store/authStore.js";
 
 const NavList = () => {
+    const userInfo = useAuthStore((state) => state.userInfo);
 
-    const userInfo = useAuthStore((state) => state.userInfo)
+    const isLogged = !!userInfo;
+    const role = userInfo?.user.role;
+
+     // let userRole = ""
+    // if(role === "Admin") {
+    //      userRole = "Admin"
+    // }else if (role === "Manager") {
+    //     userRole = "Manager"
+    // }else if (role === "Employee") {
+    //     userRole = "Employee"
+    // }
+
+    // const isEmployee = role === "Employee";
+    const isManager = role === "Manager";
+    const isAdmin = role === "Admin";
+
 
     return (
         <nav className="flex flex-col gap-2">
             <Typography
-                as="a"
-                href="/home"
-                color="white"
-                className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer"
+            className="font-extralight"
             >
-                Dashboard
+
+                {userInfo?.user.role}
             </Typography>
 
-            <Typography
-                as="a"
-                href="/stock"
-                color="white"
-                className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer"
-            >
-                Stock
-            </Typography>
 
-            <Typography
-                as="a"
-                href="/addItem"
-                color="white"
-                className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer"
-            >
-                Add new item
-            </Typography>
+            {/*USER CONNECTED*/}
+            {isLogged && (
+                <>
+                    {/* COMMUN À TOUS */}
+                    <Typography
+                        as="a"
+                        href="/home"
+                        color="white"
+                        className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer font-semibold"
+                    >
+                        Dashboard
+                    </Typography>
 
-            <hr className="my-3 border-amber-800" />
+                    <Typography
+                        as="a"
+                        href="/stock"
+                        color="white"
+                        className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer font-semibold"
+                    >
+                        Stock
+                    </Typography>
 
-            {userInfo && (
-            <Typography
-                as="a"
-                href="/profile"
-                color="white"
-                className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer"
-            >
-                Profile
-            </Typography>
+                    {/* MANAGER + ADMIN */}
+                    {(isManager || isAdmin) && (
+                        <Typography
+                            as="a"
+                            href="/addItem"
+                            color="white"
+                            className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer font-semibold"
+                        >
+                            Add new item
+                        </Typography>
+
+                    )}
+
+                    {/* ADMIN SEUL */}
+                    {(isAdmin) && (
+                        <Typography
+                            as="a"
+                            href="/admin"
+                            color="white"
+                            className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer font-semibold"
+                        >
+                            Administrator
+                        </Typography>
+                    )}
+
+                    {/* COMMUN */}
+                    <Typography
+                        as="a"
+                        href="/profile"
+                        color="white"
+                        className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer font-black"
+                    >
+                        Profile
+                    </Typography>
+
+                </>
             )}
-
-
-            <Typography
-                as="a"
-                href="/admin"
-                color="white"
-                className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer"
-            >
-                Administrator (admin only)
-            </Typography>
-
-            <Typography
-                as="a"
-                href="/register"
-                color="white"
-                className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer"
-            >
-                Register (admin only)
-            </Typography>
-
-            {userInfo && (
-                <Typography
-                    color="red"
-                    className="font-bold bg-gray-300 m-2 text-center rounded-lg"
-                >You are connected</Typography>
-            )}
-
         </nav>
     );
 };
