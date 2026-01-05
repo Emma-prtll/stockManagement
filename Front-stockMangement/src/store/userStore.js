@@ -55,21 +55,21 @@ export const useUserStore = create((set) => ({
     },
 
     updateProfile: async (data) => {
-        // set((state) => ({userLoading: !state.userLoading}))
-        // const response = await axios.put('http://localhost:8000/api/user/profile', data)
-        // set(() => ({user: response.data}))
-        // set((state) => ({userLoading: !state.userLoading}))
-
+        set((state) => ({userLoading: !state.userLoading}))
+        const response = await axios.put('http://localhost:8000/api/user/profile', data)
+        set(() => ({user: response.data}))
         set((state) => ({userLoading: !state.userLoading}))
 
-        try {
-            const response = await axios.post('http://localhost:8000/api/user/profile', data)
-            set(() => ({user: response.data}))
-        } catch (error) {
-            set(() => ({message: error.response.data}))
-        } finally {
-            set((state) => ({userLoading: !state.userLoading}))
-        }
+        // set((state) => ({userLoading: !state.userLoading}))
+        //
+        // try {
+        //     const response = await axios.post('http://localhost:8000/api/user/profile', data)
+        //     set(() => ({user: response.data}))
+        // } catch (error) {
+        //     set(() => ({message: error.response.data}))
+        // } finally {
+        //     set((state) => ({userLoading: !state.userLoading}))
+        // }
     },
 
     updateUser: async (id, data) => {

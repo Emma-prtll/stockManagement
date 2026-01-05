@@ -44,16 +44,15 @@ export const useCarStore = create((set) => ({
     },
 
     updateItem: async (id, data) => {
-        set({carLoading: true})
-        try {
-            const response = await axios.put(`http://localhost:8000/api/car/updateItem/${id}`)
-            set({cars: response.data})
-        } catch (error) {
-            set((state) => ({message: error.response.data.message || error.response}))
-        } finally {
-            set((state) => ({carLoading: !state.carLoading}))
-        }
+
+        set((state) => ({carLoading: !state.carLoading}))
+        const response = await axios.put(`http://localhost:8000/api/car/updateItem/${id}`, data)
+        set(() => ({car: response.data}))
+        set((state) => ({carLoading: !state.carLoading}))
+
     },
+
+
 
 
 }))

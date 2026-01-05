@@ -33,10 +33,6 @@ const UpdateStockInfos = () => {
     const [openCar, setOpenCar] = React.useState(false);
     const handleOpenCar = () => setOpenCar(!openCar);
 
-    useEffect(() => {
-        getACar(car_id)
-    }, [])
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = {
@@ -48,7 +44,7 @@ const UpdateStockInfos = () => {
         try {
             await updateCar(car_id, data)
             await getACar(car_id)
-
+            handleOpenCar()
             setBrand("")
             setModel("")
             setYear("")
@@ -119,7 +115,7 @@ const UpdateStockInfos = () => {
                         label="Model"
                         name="model"
                         value={model}
-                        onChange={(e) => setBrand(e.target.value)}
+                        onChange={(e) => setModel(e.target.value)}
                     />
                     </div>
 
@@ -133,7 +129,7 @@ const UpdateStockInfos = () => {
                         label="Year"
                         name="year"
                         value={year}
-                        onChange={(e) => setBrand(e.target.value)}
+                        onChange={(e) => setYear(e.target.value)}
                     />
                     </div>
 

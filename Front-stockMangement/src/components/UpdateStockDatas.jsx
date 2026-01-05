@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Button,
     Dialog,
@@ -17,6 +17,8 @@ const UpdateStockDatas = () => {
 
     const car = useCarStore((state) => state.cars)
     const getACar = useCarStore((state) => state.getACar)
+    // const updateProfile = useUserStore((state) => state.updateProfile)
+    const updateCar = useCarStore((state) => state.updateItem)
     const car_id = useParams().id
 
     //GESTION DES ROLES
@@ -25,8 +27,41 @@ const UpdateStockDatas = () => {
     const isManager = role === "Manager";
     const isAdmin = role === "Admin";
 
-    const [openData, setOpenData] = useState(false);
-    const handleOpenData = () => setOpenData(!openData);
+    //Dialogue
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(!open);
+
+    //MORE AND LESS BUTTONS
+    useEffect(() => {
+        if (car) {
+            setCurrentStock(car.currentStock || 0);
+            setWishStock(car.wishStock || 0);
+            setDangerStock(car.dangerStock || 0);
+        }
+    }, [car]);
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const data = {
+            currentStock,
+            wishStock,
+            dangerStock
+        }
+        try {
+            await updateCar(car_id, data)
+            await getACar(car_id)
+            handleOpen()
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    //State pour les inputs
+    const [currentStock, setCurrentStock] = useState("")
+    const [wishStock, setWishStock] = useState("")
+    const [dangerStock, setDangerStock] = useState("")
 
     return (
         <section className="w-full flex justify-evenly bg-gray-400 rounded-xl p-4">
@@ -54,11 +89,14 @@ const UpdateStockDatas = () => {
                     From danger
                 </Typography>
             </section>
-            <Button variant="text" color="black" className="bg-red-300" onClick={handleOpenData}>
+            {(isManager || isAdmin) && (
+            <Button variant="text" color="black" className="bg-red-300" onClick={handleOpen}>
                 EDIT
             </Button>
+            )}
+
             {/*DIALOG DATAS*/}
-            <Dialog open={openData} handler={handleOpenData}>
+            <Dialog open={open} handler={handleOpen}>
                 <DialogHeader>Modification</DialogHeader>
                 <DialogBody className="flex flex-col gap-6">
                     {/*MORE OR LESS STOCK UPDATE*/}
@@ -74,8 +112,8 @@ const UpdateStockDatas = () => {
                         <div className="relative w-full">
                             <Input
                                 type="number"
-                                value={car?.currentStock}
-                                // onChange={(e) => setCurrentStock(Number(e.target.value))}
+                                value={currentStock}
+                                onChange={(e) => setCurrentStock(Number(e.target.value))}
                                 className="!border-t-blue-gray-200 placeholder:text-blue-gray-300 placeholder:opacity-100  focus:!border-t-gray-900 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                 labelProps={{
                                     className: "before:content-none after:content-none",
@@ -88,7 +126,8 @@ const UpdateStockDatas = () => {
                                 <IconButton
                                     size="sm"
                                     className="rounded"
-                                    onClick={() => setValue((cur) => (cur === 0 ? 0 : cur - 1))}
+                                    onClick={() => setCurrentStock((prev) => Math.max(0, prev - 1))}
+
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +142,8 @@ const UpdateStockDatas = () => {
                                 <IconButton
                                     size="sm"
                                     className="rounded"
-                                    onClick={() => setValue((cur) => cur + 1)}
+                                    onClick={() => setCurrentStock((prev) => prev + 1)}
+
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -129,8 +169,8 @@ const UpdateStockDatas = () => {
                         <div className="relative w-full">
                             <Input
                                 type="number"
-                                value={car?.wishStock}
-                                // onChange={(e) => setCurrentStock(Number(e.target.value))}
+                                value={wishStock}
+                                onChange={(e) => setWishStock(Number(e.target.value))}
                                 className="!border-t-blue-gray-200 placeholder:text-blue-gray-300 placeholder:opacity-100  focus:!border-t-gray-900 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                 labelProps={{
                                     className: "before:content-none after:content-none",
@@ -143,7 +183,7 @@ const UpdateStockDatas = () => {
                                 <IconButton
                                     size="sm"
                                     className="rounded"
-                                    onClick={() => setValue((cur) => (cur === 0 ? 0 : cur - 1))}
+                                    onClick={() => setWishStock((prev) => Math.max(0, prev - 1))}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -158,7 +198,7 @@ const UpdateStockDatas = () => {
                                 <IconButton
                                     size="sm"
                                     className="rounded"
-                                    onClick={() => setValue((cur) => cur + 1)}
+                                    onClick={() => setWishStock((prev) => prev + 1)}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -185,8 +225,8 @@ const UpdateStockDatas = () => {
                         <div className="relative w-full">
                             <Input
                                 type="number"
-                                value={car?.dangerStock}
-                                // onChange={(e) => setCurrentStock(Number(e.target.value))}
+                                value={dangerStock}
+                                onChange={(e) => setDangerStock(Number(e.target.value))}
                                 className="!border-t-blue-gray-200 placeholder:text-blue-gray-300 placeholder:opacity-100  focus:!border-t-gray-900 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                 labelProps={{
                                     className: "before:content-none after:content-none",
@@ -199,7 +239,8 @@ const UpdateStockDatas = () => {
                                 <IconButton
                                     size="sm"
                                     className="rounded"
-                                    onClick={() => setValue((cur) => (cur === 0 ? 0 : cur - 1))}
+                                    onClick={() => setDangerStock((prev) => Math.max(0, prev - 1))}
+
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -214,7 +255,7 @@ const UpdateStockDatas = () => {
                                 <IconButton
                                     size="sm"
                                     className="rounded"
-                                    onClick={() => setValue((cur) => cur + 1)}
+                                    onClick={() => setDangerStock((prev) => prev + 1)}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -228,47 +269,22 @@ const UpdateStockDatas = () => {
                             </div>
                         </div>
                     </div>
-                    {/*MORE OR LESS STOCK UPDATE*/}
-
-                    {/*<Input*/}
-                    {/*    type="text"*/}
-                    {/*    variant="outlined"*/}
-                    {/*    label="Current stock"*/}
-                    {/*    name="current"*/}
-                    {/*    value={car?.currentStock}*/}
-                    {/*    // onChange={(e) => setBrand(e.target.value)}*/}
-                    {/*/>*/}
-                    {/*<Input*/}
-                    {/*    type="text"*/}
-                    {/*    variant="outlined"*/}
-                    {/*    label="Wish stock"*/}
-                    {/*    name="wish"*/}
-                    {/*    value={car?.wishStock}*/}
-                    {/*    // onChange={(e) => setBrand(e.target.value)}*/}
-                    {/*/>*/}
-                    {/*<Input*/}
-                    {/*    type="text"*/}
-                    {/*    variant="outlined"*/}
-                    {/*    label="Danger stock"*/}
-                    {/*    name="danger"*/}
-                    {/*    value={car?.dangerStock}*/}
-                    {/*    // onChange={(e) => setBrand(e.target.value)}*/}
-                    {/*/>*/}
                 </DialogBody>
                 <DialogFooter className="flex justify-center gap-8">
                     <Button
                         variant="gradient"
                         color="red"
-                        onClick={handleOpenData}
+                        onClick={handleOpen}
                         className="mr-1"
                     >
                         <span>Cancel</span>
                     </Button>
-                    <Button variant="text" color="green" onClick={handleOpenData}>
+                    <Button variant="text" color="green" onClick={handleSubmit}>
                         <span>Confirm</span>
                     </Button>
                 </DialogFooter>
             </Dialog>
+
         </section>
 
     );

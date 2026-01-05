@@ -46,11 +46,8 @@ const addItem = handler (async (req, res) => {
 
 const updateItem = handler (async (req, res) => {
     //On vérifie si l'item existe
-    // const car = await Car.findById(req.body._id)
-    console.log("PARAMS :", req.params)
-    console.log("BODY :", req.body)
     const car = await Car.findById(req.params.id)
-    console.log("CAR FOUND :", car)
+
     if(!car) {
         res.status(400)
         throw new Error("La voiture n'existe pas.")

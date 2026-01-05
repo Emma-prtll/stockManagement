@@ -12,7 +12,7 @@ router.route('/addItem').post(carController.addItem)
 // @desc Route pour modifier un produit dans la BDD depuis son ID
 // @access Private (admin)
 // router.route('/updateItem').put(carController.updateItem) ANCIEN
-router.route('/updateItem/:_id').put(carController.updateItem)
+router.route('/updateItem/:id').put(carController.updateItem)
 
 // @route Route Car (DELETE)
 // @desc Route pour supprimer un produit dans la BDD depuis son ID
