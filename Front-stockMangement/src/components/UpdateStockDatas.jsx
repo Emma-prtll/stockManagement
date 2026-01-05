@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     Button,
     Dialog,
@@ -25,7 +25,7 @@ const UpdateStockDatas = () => {
     const isManager = role === "Manager";
     const isAdmin = role === "Admin";
 
-    const [openData, setOpenData] = React.useState(false);
+    const [openData, setOpenData] = useState(false);
     const handleOpenData = () => setOpenData(!openData);
 
     return (

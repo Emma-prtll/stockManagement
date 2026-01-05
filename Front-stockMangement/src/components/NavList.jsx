@@ -27,7 +27,6 @@ const NavList = () => {
             <Typography
             className="font-extralight"
             >
-
                 {userInfo?.user.role}
             </Typography>
 
