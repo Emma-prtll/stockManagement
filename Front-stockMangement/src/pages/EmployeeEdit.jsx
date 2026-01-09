@@ -39,14 +39,26 @@ const EmployeeEdit = () => {
     const userInfo = useAuthStore((state) => state.userInfo)
     const getAUser = useUserStore((state) => state.getAUser)
     const updateUser = useUserStore((state) => state.updateUser)
+    const deleteUser = useUserStore((state) => state.deleteUser)
     const user_id = useParams().id
-
-
 
     useEffect(() => {
         getAUser(user_id)
     }, [])
 
+    //Suppression du user
+    const navigate = useNavigate();
+
+    const handleDelete = async () => {
+        if(user._id) {
+            await deleteUser(user._id)
+            navigate("/admin")
+            window.location.reload();
+        }
+    }
+
+    const [openDelete, setOpenDelete] = React.useState(false);
+    const handleOpenDelete = () => setOpenDelete(!openDelete);
 
 
     //Méthode pour gérer l'update des infos de l'utilisateur
@@ -121,6 +133,38 @@ const EmployeeEdit = () => {
                     </Button>
                 </DialogFooter>
             </Dialog>
+            {/* DIALOGUE DE CONFIRMATION DE SUPPRESSION */}
+            <Dialog open={openDelete} handler={handleOpenDelete}>
+                <DialogHeader>You are about to delete a car ! </DialogHeader>
+                <DialogBody className="flex flex-col">
+                    You are currently editing this employee’s information.
+                    Any change you make will be saved directly to the database.
+
+                    <span className="font-bold">
+                    Please make sure all information is correct before making changes.
+                    </span>
+                    This action affects the employee’s account and responsibilities.
+
+                </DialogBody>
+                <DialogFooter className="flex justify-center gap-8">
+                    <Button
+                        variant="gradient"
+                        color="red"
+                        onClick={handleOpenDelete}
+                        className="mr-1"
+                    >
+                        <span>Cancel</span>
+                    </Button>
+                    <Button
+                        variant="gradient"
+                        color="red"
+                        onClick={handleDelete}
+                        className="mr-1"
+                    >
+                        <span>Agree</span>
+                    </Button>
+                </DialogFooter>
+            </Dialog>
 
             <section className="fixed end-0 w-5/6 p-4 h-screen bg-blue-100">
                 <section className="h-full p-2 rounded-xl bg-blue-500">
@@ -168,6 +212,13 @@ const EmployeeEdit = () => {
                                             {user?.email}
                                         </Typography>
                                     </section>
+                                </section>
+                                <section>
+                                    <Button>
+                                        <Typography variant="h4" color="white" className="text-center" onClick={handleOpenDelete} >
+                                            Delete employee
+                                        </Typography>
+                                    </Button>
                                 </section>
                             </section>
                             {/*PROFESSIONAL INFOS*/}

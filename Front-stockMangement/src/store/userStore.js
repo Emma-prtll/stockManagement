@@ -101,7 +101,34 @@ export const useUserStore = create((set) => ({
         } finally {
             set((state) => ({userLoading: !state.userLoading}))
         }
-    }
+    },
+
+    // deleteUser: async (id) => {
+    //     //
+    //     // set((state) => ({userLoading: !state.userLoading}))
+    //     // const response = await axios.delete(`http://localhost:8000/api/user/deleteUser/${id}`)
+    //     // set(() => ({message: response.data}))
+    //
+    //     set({userLoading: true})
+    //     try {
+    //         const response = await axios.delete(`http://localhost:8000/api/user/deleteUser/${id}`)
+    //         set({users: response.data})
+    //     } catch (error) {
+    //         set((state) => ({message: error.response.data.message || error.response}))
+    //     } finally {
+    //         set((state) => ({userLoading: !state.userLoading}))
+    //     }
+    // },
+
+    deleteUser: async (id) => {
+
+        set((state) => ({userLoading: !state.userLoading}))
+        const response = await axios.delete(`http://localhost:8000/api/user/deleteUser/${id}`)
+        set(() => ({message: response.data}))
+
+    },
+
+
 
 
 }))

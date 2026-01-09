@@ -43,6 +43,11 @@ router.route('/getUsers').get(userController.getUsers)
 // @access Public
 router.route('/getAUser/:id').get(userController.getAUser)
 
+// @route Route User (GET)
+// @desc Route pour supprimer un produit de la BDD via son ID
+// @access Public
+router.route('/deleteUser/:id').delete(userController.deleteUser)
+
 
 //Export des routes
 module.exports = router

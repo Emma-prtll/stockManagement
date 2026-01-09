@@ -1,5 +1,6 @@
 //Import des librairies et fichiers
 const handler = require('express-async-handler')
+const carModel = require('../models/carModel')
 const Car = require('../models/carModel')
 
 // @route Route Car (POST)
@@ -79,9 +80,19 @@ const updateItem = handler (async (req, res) => {
     //res.status(200).json({"Message" : `La voiture ${updatedCar._id} | ${updatedCar.brand} à été modifiée avec succès !`})
 })
 
-const deleteItem = (req, res) => {
-    res.status(200).json({message: `Route pour supprimer une voiture : ${req.params._id}`})
-}
+const deleteItem = handler(async (req, res) => {
+    const car = await carModel.findById(req.params.id)
+
+    if(!car) {
+        res.status(400)
+        throw new Error("Aucune voiture trouvée.")
+    }
+
+    await car.deleteOne()
+    res.status(200).json({
+        message: `La voiture ${car.brand} a bien été supprimée.`,
+    })
+})
 
 const getCars =  handler (async (req, res) => {
     const cars = await Car.find()

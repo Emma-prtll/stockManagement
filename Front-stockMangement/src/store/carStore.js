@@ -8,6 +8,7 @@ axios.defaults.withCredentials = true
 export const useCarStore = create((set) => ({
     //Déclaration et initialisation des stats du store
     cars: [], //Utilisé pour stocker les données utilisateur qui vienne du backend
+    car: null,
     message: "", //Utilisé pour afficher les messages d'erreur ou de succès
     carLoading: false, //Utilisé pour activer ou désactiver un loader
 
@@ -52,7 +53,12 @@ export const useCarStore = create((set) => ({
 
     },
 
+    deleteItem: async (id) => {
 
+        set((state) => ({carLoading: !state.carLoading}))
+        const response = await axios.delete(`http://localhost:8000/api/car/deleteItem/${id}`)
+        set(() => ({message: response.data}))
 
+    },
 
 }))

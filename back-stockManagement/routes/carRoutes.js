@@ -17,8 +17,10 @@ router.route('/updateItem/:id').put(carController.updateItem)
 // @route Route Car (DELETE)
 // @desc Route pour supprimer un produit dans la BDD depuis son ID
 // @access Private (admin)
-router.put('/deleteItem:_id', (req, res) => {
-})
+// router.put('/deleteItem:_id', (req, res) => {
+// })
+router.route('/deleteItem/:id').delete(carController.deleteItem)
+
 
 // @route Route Car (GET)
 // @desc Route pour obtenir tous les produits de la BDD

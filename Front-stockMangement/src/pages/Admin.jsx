@@ -44,7 +44,15 @@ const Admin = () => {
 
                     <section className="flex justify-between px-8 mb-6 mt-4">
                         <Typography variant="h3" color="white" className="mb-2">Employee list</Typography>
-                        <Button className="bg-red-200 mb-8">Add Employee</Button>
+                        {/*<Button className="bg-red-200 mb-8">Add Employee</Button>*/}
+                        <Typography
+                            as="a"
+                            href="/register"
+                            color="white"
+                            className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer font-semibold"
+                        >
+                            Add Employee
+                        </Typography>
                     </section>
 
                     <EmployeeInfos />

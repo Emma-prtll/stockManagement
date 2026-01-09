@@ -12,16 +12,26 @@ import {
 } from "@material-tailwind/react";
 import {useAuthStore} from "../store/authStore.js";
 import {useCarStore} from "../store/carStore.js";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useUserStore} from "../store/userStore.js";
 
 const UpdateStockInfos = () => {
 
     const car = useCarStore((state) => state.cars)
     const getACar = useCarStore((state) => state.getACar)
-    // const updateProfile = useUserStore((state) => state.updateProfile)
     const updateCar = useCarStore((state) => state.updateItem)
+    const deleteCar = useCarStore((state) => state.deleteItem)
     const car_id = useParams().id
+
+    //Suppression de la voiture
+    const navigate = useNavigate();
+
+    const handleDelete = async () => {
+        if(car._id) {
+            await deleteCar(car._id)
+            navigate("/stock")
+        }
+    }
 
     //GESTION DES ROLES
     const userInfo = useAuthStore((state) => state.userInfo);
@@ -32,6 +42,8 @@ const UpdateStockInfos = () => {
     //Dialogue
     const [openCar, setOpenCar] = React.useState(false);
     const handleOpenCar = () => setOpenCar(!openCar);
+    const [openDelete, setOpenDelete] = React.useState(false);
+    const handleOpenDelete = () => setOpenDelete(!openDelete);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -86,6 +98,19 @@ const UpdateStockInfos = () => {
                     </Button>
                 </section>
             )}
+            {(isAdmin) && (
+            <section className=" w-1/2 flex justify-center items-center">
+                <Button>
+                    {/*<Typography variant="h4" color="white" className="text-center" onClick={() => handleDelete(car?._id)} >*/}
+                    <Typography variant="h4" color="white" className="text-center" onClick={handleOpenDelete} >
+                        Delete Car
+                    </Typography>
+                </Button>
+            </section>
+
+            )}
+
+
 
             {/*DIALOG CAR*/}
             <Dialog open={openCar} handler={handleOpenCar}>
@@ -166,6 +191,39 @@ const UpdateStockInfos = () => {
                     </Button>
                     <Button variant="text" color="green" onClick={handleSubmit}>
                         <span>Confirm</span>
+                    </Button>
+                </DialogFooter>
+            </Dialog>
+
+        {/* DIALOGUE DE CONFIRMATION DE SUPPRESSION */}
+            <Dialog open={openDelete} handler={handleOpenDelete}>
+                <DialogHeader>You are about to delete a car ! </DialogHeader>
+                <DialogBody className="flex flex-col">
+                    You are currently editing this employee’s information.
+                    Any change you make will be saved directly to the database.
+
+                    <span className="font-bold">
+                    Please make sure all information is correct before making changes.
+                    </span>
+                    This action affects the employee’s account and responsibilities.
+
+                </DialogBody>
+                <DialogFooter className="flex justify-center gap-8">
+                    <Button
+                        variant="gradient"
+                        color="red"
+                        onClick={handleOpenDelete}
+                        className="mr-1"
+                    >
+                        <span>Cancel</span>
+                    </Button>
+                    <Button
+                        variant="gradient"
+                        color="red"
+                        onClick={handleDelete}
+                        className="mr-1"
+                    >
+                        <span>Agree</span>
                     </Button>
                 </DialogFooter>
             </Dialog>

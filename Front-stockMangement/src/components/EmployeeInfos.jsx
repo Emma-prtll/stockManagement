@@ -9,7 +9,6 @@ const EmployeeInfos = () => {
     const getUsers = useUserStore((state) => state.getUsers);
     const users = useUserStore((state) => state.users);
 
-    // Charger les données au montage
     useEffect(() => {
         getUsers();
     }, []);

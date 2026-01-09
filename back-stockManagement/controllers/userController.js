@@ -4,7 +4,7 @@ const User = require('../models/userModel')
 //Import du token
 const {generateToken} = require('../utils/generateToken')
 const bcrypt = require('bcrypt')
-const Car = require("../models/carModel");
+const userModel = require("../models/userModel");
 
 
 // @route Route User (POST) /api/user/register
@@ -233,7 +233,21 @@ const getAUser = handler (async (req, res) => {
         throw new Error("L'utilisateur n'existe pas.")
     }
 
-    res.status(200).json({message: `Route pour récupérer UN utilisateur.trice : ${req.params._id}`})
+    // res.status(200).json({message: `Route pour récupérer UN utilisateur.trice : ${req.params._id}`})
+})
+
+const deleteUser = handler(async (req, res) => {
+    const user = await userModel.findById(req.params.id)
+
+    if(!user) {
+        res.status(400)
+        throw new Error("Aucun user trouvé.")
+    }
+
+    await user.deleteOne()
+    res.status(200).json({
+        message: `Le user ${user.lastName} a bien été supprimé.`,
+    })
 })
 
 module.exports = {
@@ -244,5 +258,6 @@ module.exports = {
     updateProfile,
     updateUser,
     getUsers,
-    getAUser
+    getAUser,
+    deleteUser
 }
