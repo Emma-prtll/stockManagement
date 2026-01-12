@@ -51,6 +51,7 @@ const EmployeeEdit = () => {
 
     const handleDelete = async () => {
         if(user._id) {
+            toast.success(response.message)
             await deleteUser(user._id)
             navigate("/admin")
             window.location.reload();
@@ -135,7 +136,7 @@ const EmployeeEdit = () => {
             </Dialog>
             {/* DIALOGUE DE CONFIRMATION DE SUPPRESSION */}
             <Dialog open={openDelete} handler={handleOpenDelete}>
-                <DialogHeader>You are about to delete a car ! </DialogHeader>
+                <DialogHeader>You are about to delete an employee ! </DialogHeader>
                 <DialogBody className="flex flex-col">
                     You are currently editing this employee’s information.
                     Any change you make will be saved directly to the database.
@@ -271,63 +272,3 @@ const EmployeeEdit = () => {
 
 export default EmployeeEdit;
 
-// {/*ROLE*/}
-// <section className="w-1/2 pt-3 bg-amber-400    ">
-//     <section className="flex items-center gap-6">
-//         <Typography variant="h3" color="blue-gray" className="">
-//             {user?.role}
-//         </Typography>
-//         <IconButton variant="text" color="blue-gray" onClick={toggleOpenRole}>
-//             <RiEditLine size={24}/>
-//         </IconButton>
-//     </section>
-//     <Collapse open={openRole}>
-//         <Card className="my-4 mx-auto bg-gray-300 shadow-none">
-//             <CardBody className=" flex gap-4">
-//                 <Select
-//                     variant="static"
-//                     label="Role"
-//                     size="lg"
-//                     name="roleSelect"
-//                     value={role}
-//                     onChange={(value) => setRole(value)}
-//                 >
-//                     <Option value="Admin">Admin</Option>
-//                     <Option value="Manager">Manager</Option>
-//                     <Option value="Employee">Employee</Option>
-//                 </Select>
-//                 {/*<Button color="orange" onClick={(e) => handleSubmit(e, {firstName})}>Save</Button>*/}
-//             </CardBody>
-//         </Card>
-//     </Collapse>
-// </section>
-// {/*SECTOR*/}
-// <section className="w-1/2 pt-3 bg-amber-400    ">
-//     <section className="flex items-center gap-6">
-//         <Typography variant="h3" color="blue-gray" className="">
-//             {user?.sector}
-//         </Typography>
-//         <IconButton variant="text" color="blue-gray" onClick={toggleOpenSector}>
-//             <RiEditLine size={24}/>
-//         </IconButton>
-//     </section>
-//     <Collapse open={openSector}>
-//         <Card className="my-4 mx-auto bg-gray-300 shadow-none">
-//             <CardBody className=" flex gap-4">
-//                 <Select
-//                     variant="static"
-//                     label="Sector"
-//                     size="lg"
-//                     name="sectorSelect"
-//                     value={sector}
-//                     onChange={(value) => setSector(value)}
-//                 >
-//                     <Option value="Stock">Stock</Option>
-//                     <Option value="Customer service">Customer service</Option>
-//                     <Option value="Supplier">Supplier</Option>
-//                 </Select>
-//                 {/*<Button color="orange" onClick={(e) => handleSubmit(e, {firstName})}>Save</Button>*/}
-//             </CardBody>
-//         </Card>
-//     </Collapse>
-// </section>

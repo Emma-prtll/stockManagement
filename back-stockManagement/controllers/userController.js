@@ -16,16 +16,15 @@ const register = handler(async (req, res) => {
 
     //On check si les infos "required" sont présents et pas vides
     if(!email || !password || !firstName || !lastName || !role || !sector || email === '' || password === '' || firstName === '' || lastName === '' || role === '' || sector === '') {
-        res.status(400)
-        throw new Error ("Merci de remplir tous les champs")
+        return res.status(400).json({message: "Merci de remplir tous les champs"})
+
     }
 
     //Ici, le formulaire est rempli correctement
     //On vérifie s'il existe déja
     const userExists = await User.findOne({email})
     if(userExists){
-        res.status(400)
-        throw new Error("L'utilisateur existe déjà.")
+        return res.status(400).json({message: "L'utilisateur existe déjà."})
     }
 
     //Ici, on a tout vérifié
@@ -49,10 +48,10 @@ const register = handler(async (req, res) => {
             firstName: user.firstName ? user.firstName : "",
             role: user.role ? user.role : "",
             sector: user.sector ? user.sector : "",
+            message: `${user.firstName} ${user.lastName} has been created successfully!`
         })
     } else {
-        // res.status(400)
-        res.status(400).json({message: "Une erreur est survenue !"})
+        return res.status(400).json({message: "Une erreur est survenue !"})
 
     }
 })
@@ -159,6 +158,7 @@ const updateProfile = handler(async (req, res) => {
         email: updateProfile.email,
         lastName: updateProfile.lastName,
         firstName: updateProfile.firstName,
+        role: updateProfile.role,
     })
 })
 
@@ -240,13 +240,12 @@ const deleteUser = handler(async (req, res) => {
     const user = await userModel.findById(req.params.id)
 
     if(!user) {
-        res.status(400)
-        throw new Error("Aucun user trouvé.")
+        return res.status(400).json({message: "No user found."})
     }
 
     await user.deleteOne()
     res.status(200).json({
-        message: `Le user ${user.lastName} a bien été supprimé.`,
+        message: `User ${user.firstName} ${user.lastName} deleted successfully`,
     })
 })
 

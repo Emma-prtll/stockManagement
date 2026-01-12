@@ -9,16 +9,15 @@ import {toast} from "react-toastify";
 
 const Register = () => {
 
-    const message = useUserStore((state) => state.message)
-
+    // const message = useUserStore((state) => state.message)
 
     // STEPPER
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [isLastStep, setIsLastStep] = React.useState(false);
-    const [isFirstStep, setIsFirstStep] = React.useState(false);
+    // const [activeStep, setActiveStep] = React.useState(0);
+    // const [isLastStep, setIsLastStep] = React.useState(false);
+    // const [isFirstStep, setIsFirstStep] = React.useState(false);
 
-    const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
-    const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
+    // const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
+    // const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
     // STATE INPUTS
     const [firstName, setFirstName] = useState("")
@@ -36,8 +35,8 @@ const Register = () => {
         //Si on a un user
         if(user) {
             //Naviguer vers une autre page
+            toast.success(user.message)
             navigate(`/admin`)
-
         }
     }, [user, navigate])
 
@@ -57,20 +56,11 @@ const Register = () => {
         //On capture l'erreur s'il y en a une
         try {
             await register(data) //On transmet les infos d'inscription au store
-
-            // setPassword("")
-            // setFirstName("")
-            // setLastName("")
-            // setEmail("")
-            // setRole("")
-            // setSector("")
         } catch (error) {
             console.log(error)
-            toast.error(message.message)
-
+            toast.error(error.message)
         }
     }
-
 
     return (
         <section className=" fixed end-0 w-5/6 p-4 h-screen bg-blue-100 ">
@@ -128,15 +118,9 @@ const Register = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-
-
                 </CardBody>
-                {/*<CardFooter className="pt-0">*/}
-                {/*    <Button variant="gradient" fullWidth color="gray" type={"submit"}>*/}
-                {/*        Validate*/}
-                {/*    </Button>*/}
-                {/*</CardFooter>*/}
             </Card>
+
     {/*PROFESSIONAL INFOS*/}
                 <Card className="w-3/6">
                     <CardBody className="flex flex-col gap-8">
@@ -176,27 +160,26 @@ const Register = () => {
                     </CardFooter>
                 </Card>
 
-
-    {/* STEPPER STATE*/}
-                <div className="w-4/6 pl-96 absolute bottom-10">
-                    <Stepper
-                        activeStep={activeStep}
-                        isLastStep={(value) => setIsLastStep(value)}
-                        isFirstStep={(value) => setIsFirstStep(value)}
-                    >
-                        <Step onClick={() => setActiveStep(0)}>1</Step>
-                        <Step onClick={() => setActiveStep(1)}>2</Step>
-                        <Step onClick={() => setActiveStep(2)}>3</Step>
-                    </Stepper>
-                    <div className="mt-16 flex justify-between">
-                        <Button onClick={handlePrev} disabled={isFirstStep}>
-                            Prev
-                        </Button>
-                        <Button onClick={handleNext} disabled={isLastStep}>
-                            Next
-                        </Button>
-                    </div>
-                </div>
+    {/*/!* STEPPER STATE*!/*/}
+    {/*            <div className="w-4/6 pl-96 absolute bottom-10">*/}
+    {/*                <Stepper*/}
+    {/*                    activeStep={activeStep}*/}
+    {/*                    isLastStep={(value) => setIsLastStep(value)}*/}
+    {/*                    isFirstStep={(value) => setIsFirstStep(value)}*/}
+    {/*                >*/}
+    {/*                    <Step onClick={() => setActiveStep(0)}>1</Step>*/}
+    {/*                    <Step onClick={() => setActiveStep(1)}>2</Step>*/}
+    {/*                    <Step onClick={() => setActiveStep(2)}>3</Step>*/}
+    {/*                </Stepper>*/}
+    {/*                <div className="mt-16 flex justify-between">*/}
+    {/*                    <Button onClick={handlePrev} disabled={isFirstStep}>*/}
+    {/*                        Prev*/}
+    {/*                    </Button>*/}
+    {/*                    <Button onClick={handleNext} disabled={isLastStep}>*/}
+    {/*                        Next*/}
+    {/*                    </Button>*/}
+    {/*                </div>*/}
+    {/*            </div>*/}
             </section>
         </section>
 
