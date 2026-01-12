@@ -6,12 +6,13 @@ import {
     DialogFooter,
     DialogHeader,
     IconButton,
-    Input,
+    Input, Tooltip,
     Typography
 } from "@material-tailwind/react";
 import {useAuthStore} from "../store/authStore.js";
 import {useCarStore} from "../store/carStore.js";
 import {useParams} from "react-router-dom";
+import {FaInfoCircle} from "react-icons/fa";
 
 const UpdateStockDatas = () => {
 
@@ -63,6 +64,11 @@ const UpdateStockDatas = () => {
     const [wishStock, setWishStock] = useState("")
     const [dangerStock, setDangerStock] = useState("")
 
+    //Math
+    //WishStock
+    const mathWish = car?.currentStock / car?.wishStock
+    const percentageWish = Math.floor(mathWish * 100)
+
     return (
         <section className="w-full flex justify-evenly bg-gray-400 rounded-xl p-4">
             <section className="w-64 flex justify-center items-center flex-col">
@@ -70,15 +76,18 @@ const UpdateStockDatas = () => {
                     {car?.currentStock}
                 </Typography>
                 <Typography variant="h4" color="blue-gray" >
-                    Current stock
+                    Available Units
                 </Typography>
             </section>
             <section className="w-64 flex justify-center items-center flex-col">
                 <Typography variant="h1" color="blue-gray" >
-                    {car?.wishStock}%
+                    {percentageWish}%
                 </Typography>
                 <Typography variant="h4" color="blue-gray" className="text-center">
-                    Percentage of the wish
+                    Stock Fulfillment
+                </Typography>
+                <Typography>
+                    ({car?.wishStock} is your wish)
                 </Typography>
             </section>
             <section className="w-64 flex justify-center items-center flex-col">
@@ -86,29 +95,34 @@ const UpdateStockDatas = () => {
                     {car?.dangerStock}
                 </Typography>
                 <Typography variant="h4" color="blue-gray" >
-                    From danger
+                    Minimum Safety Stock
                 </Typography>
             </section>
             {(isManager || isAdmin) && (
             <Button variant="text" color="black" className="bg-red-300" onClick={handleOpen}>
-                EDIT
+                Edit Stock Levels
             </Button>
             )}
 
             {/*DIALOG DATAS*/}
             <Dialog open={open} handler={handleOpen}>
-                <DialogHeader>Modification</DialogHeader>
+                <DialogHeader>Update Stock Information</DialogHeader>
                 <DialogBody className="flex flex-col gap-6">
                     {/*MORE OR LESS STOCK UPDATE*/}
                     {/*CURRENT STOCK UPDATE*/}
-                    <div className="w-80">
+                    <div className="w-80 flex flex-wrap">
                         <Typography
                             variant="small"
                             color="blue-gray"
                             className="mb-1 font-medium"
                         >
-                            Current stock
+                            Available Units
+
                         </Typography>
+                        <Tooltip content="Current number of units available in stock" placement="right" className="z-[9999]">
+                            <span className="pl-2" ><FaInfoCircle /></span >
+                        </Tooltip>
+
                         <div className="relative w-full">
                             <Input
                                 type="number"
@@ -158,14 +172,18 @@ const UpdateStockDatas = () => {
                         </div>
                     </div>
                     {/*WISH STOCK UPDATE*/}
-                    <div className="w-80">
+                    <div className="w-80 flex flex-wrap">
                         <Typography
                             variant="small"
                             color="blue-gray"
                             className="mb-1 font-medium"
                         >
-                            Wish stock
+                            Target Stock Level
                         </Typography>
+                        <Tooltip content="Desired stock level used as a reference" placement="right" className="z-[9999]">
+                            <span className="pl-2" ><FaInfoCircle /></span >
+                        </Tooltip>
+
                         <div className="relative w-full">
                             <Input
                                 type="number"
@@ -214,14 +232,18 @@ const UpdateStockDatas = () => {
                     </div>
 
                     {/*DANGER STOCK UPDATE*/}
-                    <div className="w-80">
+                    <div className="w-80 flex flex-wrap">
                         <Typography
                             variant="small"
                             color="blue-gray"
                             className="mb-1 font-medium"
                         >
-                            Danger stock
+                            Minimum Safety Stock
                         </Typography>
+                        <Tooltip content="Minimum quantity required to avoid stock shortages" placement="right" className="z-[9999]">
+                            <span className="pl-2" ><FaInfoCircle /></span >
+                        </Tooltip>
+
                         <div className="relative w-full">
                             <Input
                                 type="number"
@@ -280,7 +302,7 @@ const UpdateStockDatas = () => {
                         <span>Cancel</span>
                     </Button>
                     <Button variant="text" color="green" onClick={handleSubmit}>
-                        <span>Confirm</span>
+                        <span>Save Changes</span>
                     </Button>
                 </DialogFooter>
             </Dialog>

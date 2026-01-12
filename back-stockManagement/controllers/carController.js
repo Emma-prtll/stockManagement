@@ -2,12 +2,14 @@
 const handler = require('express-async-handler')
 const carModel = require('../models/carModel')
 const Car = require('../models/carModel')
+const carHistory = require("../models/carHistoryModel");
+
 
 // @route Route Car (POST)
 // @desc Route pour créer un produit (formulaire sur le frontend)
 // @access Private (admin)
 const addItem = handler (async (req, res) => {
-    //On récupère les infos du frontend | on déstructure afin de ne pas avoir à écrire undividuellement pour chaque champs du formuaire
+    //On récupère les infos du frontend | on déstructure afin de ne pas avoir à écrire individuellement pour chaque champ du formulaire.
     const {brand, model, type, year, currentStock, wishStock, dangerStock} = req.body
 
     //On check si les infos "required" sont présentes et pas vides
@@ -36,6 +38,11 @@ const addItem = handler (async (req, res) => {
         dangerStock
     })
 
+    await carHistory.create({
+        carId: car._id,
+        currentStock: car.currentStock,
+    });
+
     //Informer le user que c'est bon !
     if(car){
         res.status(201).json({"Message" : `La voiture à été créer avec succès.`, car})
@@ -53,6 +60,9 @@ const updateItem = handler (async (req, res) => {
         res.status(400)
         throw new Error("La voiture n'existe pas.")
     }
+
+    const oldStock = car.currentStock;
+
     //Ici, on a un item qui existe
     //On peut le mettre à jours
     car.brand = req.body.brand ? req.body.brand : car.brand
@@ -67,6 +77,17 @@ const updateItem = handler (async (req, res) => {
     //On enregistre les modifications
     const updatedCar = await car.save()
 
+    //MODIFICATION DE L'HISTORIQUE
+    if (
+        req.body.currentStock !== undefined &&
+        oldStock !== updatedCar.currentStock
+    ) {
+        await carHistory.create({
+            carId: updatedCar._id,
+            currentStock: updatedCar.currentStock,
+        });
+    }
+
     res.status(200).json({
         _id: updatedCar._id,
         brand: updatedCar.brand,
@@ -78,6 +99,9 @@ const updateItem = handler (async (req, res) => {
         dangerStock: updatedCar.dangerStock,
     })
     //res.status(200).json({"Message" : `La voiture ${updatedCar._id} | ${updatedCar.brand} à été modifiée avec succès !`})
+
+
+
 })
 
 const deleteItem = handler(async (req, res) => {
