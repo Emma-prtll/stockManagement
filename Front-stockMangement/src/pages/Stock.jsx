@@ -1,7 +1,8 @@
 import StockInfos from "../components/StockInfos.jsx";
 import { useCarStore } from "../store/carStore"
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {Helmet} from "react-helmet";
+import {Toaster} from "react-hot-toast";
 
 const Stock = () => {
 
@@ -26,7 +27,10 @@ const Stock = () => {
                 <Helmet>
                     <title>Stock</title>
                 </Helmet>
-
+                <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                />
                 <section className="h-full rounded-xl bg-blue-500 overflow-auto flex justify-center ">
 
                     {/*<section className="h-screen rounded-xl flex flex-row flex-wrap gap-4 w-5/6 pt-14 justify-center">*/}

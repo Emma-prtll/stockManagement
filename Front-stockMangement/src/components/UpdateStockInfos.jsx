@@ -14,6 +14,7 @@ import {useAuthStore} from "../store/authStore.js";
 import {useCarStore} from "../store/carStore.js";
 import {useNavigate, useParams} from "react-router-dom";
 import {useUserStore} from "../store/userStore.js";
+import toast from "react-hot-toast";
 
 const UpdateStockInfos = () => {
 
@@ -27,9 +28,15 @@ const UpdateStockInfos = () => {
     const navigate = useNavigate();
 
     const handleDelete = async () => {
+
         if(car._id) {
-            await deleteCar(car._id)
+            const result = await deleteCar(car._id)
+            toast.success(result.message)
             navigate("/stock")
+
+            await deleteCar(car._id)
+
+            // toast.success(car.message)
         }
     }
 
@@ -54,16 +61,22 @@ const UpdateStockInfos = () => {
             type
         }
         try {
+            const result = await updateCar(car_id, data)
+
             await updateCar(car_id, data)
             await getACar(car_id)
             handleOpenCar()
+            toast.success(result.message)
+
             setBrand("")
             setModel("")
             setYear("")
             setType("")
 
         } catch (err) {
-            console.log(err);
+            console.log(err)
+            handleOpenCar()
+            toast.error(err.message)
         }
     }
 

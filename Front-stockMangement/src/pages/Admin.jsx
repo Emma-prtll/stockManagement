@@ -8,22 +8,14 @@ import {useCarStore} from "../store/carStore.js";
 import {useUserStore} from "../store/userStore.js";
 
 import { useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
+import {Toaster} from "react-hot-toast";
 
 
 
 const Admin = () => {
 
     const location = useLocation();
-
-    useEffect(() => {
-        if (location.state?.toastType && location.state?.message) {
-            toast[location.state.toastType](location.state.message);
-
-            // Nettoie le state pour éviter un toast au refresh
-            window.history.replaceState({}, document.title);
-        }
-    }, [location.state]);
 
     const users = useUserStore((state) => state.users);
     const getUsers = useUserStore((state) => state.getUsers)
@@ -38,7 +30,10 @@ const Admin = () => {
             <Helmet>
                 <title>Admin</title>
             </Helmet>
-
+            <Toaster
+                position="top-right"
+                reverseOrder={false}
+            />
             <section className=" fixed end-0 w-5/6 p-4 min-h-screen bg-gray-100">
                 <section className="h-screen p-6 rounded-xl bg-blue-gray-300 overflow-y-auto ">
 

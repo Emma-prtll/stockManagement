@@ -18,7 +18,9 @@ import {FaArrowLeftLong, FaArrowRightLong} from "react-icons/fa6";
 import {useState} from "react";
 import { RiEditLine } from "react-icons/ri";
 import {useAuthStore} from "../store/authStore.js";
-import {toast} from "react-toastify";
+// import {toast} from "react-toastify";
+import toast, {Toaster} from "react-hot-toast";
+
 
 
 const EmployeeEdit = () => {
@@ -40,6 +42,7 @@ const EmployeeEdit = () => {
     const getAUser = useUserStore((state) => state.getAUser)
     const updateUser = useUserStore((state) => state.updateUser)
     const deleteUser = useUserStore((state) => state.deleteUser)
+    const message = useUserStore((state) => state.message)
     const user_id = useParams().id
 
     useEffect(() => {
@@ -50,57 +53,40 @@ const EmployeeEdit = () => {
     const navigate = useNavigate();
 
     const handleDelete = async () => {
-        if(user._id) {
-            toast.success(response.message)
+        // if(user._id) {
+        //     await deleteUser(user._id)
+        //     navigate("/admin")
+        //     toast.success(user.message)
+        // }
+
+        try {
             await deleteUser(user._id)
             navigate("/admin")
-            window.location.reload();
+            toast.success(user.message)
+        } catch (err) {
+            toast.error(err.message);
         }
     }
 
     const [openDelete, setOpenDelete] = React.useState(false);
     const handleOpenDelete = () => setOpenDelete(!openDelete);
 
-
-    //Méthode pour gérer l'update des infos de l'utilisateur
-    // const handleSubmit = async (e, data) => {
-    //     e.preventDefault()
-    //     try {
-    //         let update = {
-    //             _id: userInfo.user._id,
-    //             input: data
-    //         }
-    //         await updateUser(update)
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
+    //  changer de role et sector
     const handleSubmit = async (e, data) => {
         e.preventDefault();
         try {
-            await updateUser(user_id, data)
-            await getAUser(user_id)
+            const res = await updateUser(user_id, data);
+            toast.success(res.message);
+            await getAUser(user_id);
 
-            setRole("")
+            setRole("");
             setSector("")
 
         } catch (err) {
-            console.log(err);
+            toast.error(err.message)
         }
     }
 
-    // const handleSubmit = async (e, data) => {
-    //     e.preventDefault()
-    //     try {
-    //         let update = {
-    //             _id: userInfo.user._id,
-    //             input: data
-    //         }
-    //         await updateProfile(update)
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
     const [open, setOpen] = React.useState(true);
     const handleOpen = () => setOpen(!open);
 
@@ -109,6 +95,10 @@ const EmployeeEdit = () => {
             <Helmet>
                 <title>Admin - Employee infos</title>
             </Helmet>
+            <Toaster
+                position="top-right"
+                reverseOrder={false}
+            />
 
             {/*DIALOG*/}
             <Dialog open={open} handler={handleOpen}>

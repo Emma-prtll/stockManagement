@@ -31,7 +31,8 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
             </Routes>
-            <ToastContainer theme="dark"/>
+            {/*<ToastContainer theme="dark"/>*/}
+
         </BrowserRouter>
     )
 }

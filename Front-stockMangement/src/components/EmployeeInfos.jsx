@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Button, Card, Typography } from "@material-tailwind/react";
 import {useUserStore} from "../store/userStore.js";
+import StockInfos from "./StockInfos.jsx";
 
 const EmployeeInfos = () => {
 
@@ -12,6 +13,9 @@ const EmployeeInfos = () => {
     useEffect(() => {
         getUsers();
     }, []);
+
+    const safeUsers = Array.isArray(users) ? users : [];
+
 
     return (
         <Card className="h-full w-full overflow-scroll">
@@ -33,7 +37,8 @@ const EmployeeInfos = () => {
                 </thead>
 
                 <tbody>
-                {users.map((user, index) => (
+                {safeUsers.map((user, index) => (
+                // {users.map((user, index) => (
                     <tr key={index} className="even:bg-blue-gray-50/50">
                         <td className="p-4">
                             <Typography variant="small" color="blue-gray">{user.firstName}</Typography>

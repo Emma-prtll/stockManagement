@@ -17,7 +17,6 @@ const register = handler(async (req, res) => {
     //On check si les infos "required" sont présents et pas vides
     if(!email || !password || !firstName || !lastName || !role || !sector || email === '' || password === '' || firstName === '' || lastName === '' || role === '' || sector === '') {
         return res.status(400).json({message: "Merci de remplir tous les champs"})
-
     }
 
     //Ici, le formulaire est rempli correctement
@@ -52,7 +51,6 @@ const register = handler(async (req, res) => {
         })
     } else {
         return res.status(400).json({message: "Une erreur est survenue !"})
-
     }
 })
 
@@ -125,8 +123,7 @@ const updateProfile = handler(async (req, res) => {
     const user = await User.findById(req.body._id)
 
     if(!user){
-        res.status(400)
-        throw new Error("L'utilisateur n'existe pas.")
+        return res.status(400).json({message: "L'utilisateur n'existe pas !"})
     }
 
     //Ici, on a un utilisateur qui existe
@@ -142,8 +139,7 @@ const updateProfile = handler(async (req, res) => {
         let compare = await bcrypt.compare(req.body.input.oldPassword, user.password)
         if(!compare) {
             //si non, on renvoie une erreur
-            res.status(400)
-            throw new Error("Le mot de passe n'existe pas.")
+            return res.status(400).json({message: "Le mot de passe est incorrect."})
         } else {
             //Si oui, on modifie le mot de passe de l'utilisateur avec req.body.input.newPassword
             user.password = req.body.input.newPassword
@@ -159,19 +155,16 @@ const updateProfile = handler(async (req, res) => {
         lastName: updateProfile.lastName,
         firstName: updateProfile.firstName,
         role: updateProfile.role,
+        message: `Your profile has been update successfully!`
     })
 })
 
 const updateUser = handler(async (req, res) => {
     //On vérifie si le profile existe
-    console.log("ID reçu:", req.params.id)
-    console.log("Données reçues:", req.body)
-
     const user = await User.findById(req.params.id)
 
     if(!user){
-        res.status(400)
-        throw new Error("L'utilisateur n'existe pas.")
+        return res.status(400).json({message: "L'utilisateur n'existe pas !"})
     }
 
     //Ici, on a un utilisateur qui existe
@@ -182,21 +175,9 @@ const updateUser = handler(async (req, res) => {
     user.role = req.body.role ? req.body.role : user.role
     user.sector = req.body.sector ? req.body.sector : user.sector
 
-    // if(req.body.input.oldPassword) {
-    //     //Verifier si oldPassword (formulaire) === user.password (bdd)
-    //     let compare = await bcrypt.compare(req.body.input.oldPassword, user.password)
-    //     if(!compare) {
-    //         //si non, on renvoie une erreur
-    //         res.status(400)
-    //         throw new Error("Le mot de passe n'existe pas.")
-    //     } else {
-    //         //Si oui, on modifie le mot de passe de l'utilisateur avec req.body.input.newPassword
-    //         user.password = req.body.input.newPassword
-    //     }
-    // }
-
     //Ici, on a toutes les données qui doivent être modifiées | on enregistre les modifications
     const updateUser = await user.save()
+
 
     res.status(200).json({
         _id: updateUser._id,
@@ -205,7 +186,9 @@ const updateUser = handler(async (req, res) => {
         firstName: updateUser.firstName,
         role: updateUser.role,
         sector: updateUser.sector,
+        message: `${user.firstName} ${user.lastName} has been update successfully!`
     })
+
 })
 
 const getUsers =  handler (async (req, res) => {

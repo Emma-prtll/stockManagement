@@ -13,11 +13,18 @@ export const useCarStore = create((set) => ({
     carLoading: false, //Utilisé pour activer ou désactiver un loader
 
     addItem: async (data) => {
-        //On inverse
-        set((state) => ({carLoading: !state.carLoading})) //1. J'initialise mon loader |
-        const response = await axios.post('http://localhost:8000/api/car/addItem', data) //2. J'appelle mon serveur sur la bonne route en passant les données //axios.post car notre route et en post et on met notre route + ce que l'on veut envoyer -> data
-        set(() => ({car: response.data})) //3. Je stock les données de la voiture qui viennent du backend dans mon state "car"
-        set((state) => ({carLoading: !state.carLoading})) //4. J'arrête mon loader | quand le front à reçu les infos du back -> ça repasse à false
+        set((state) => ({carLoading: !state.carLoading}))
+        try {
+            const response =  await axios.post('http://localhost:8000/api/car/addItem', data)
+            set(() => ({car: response.data}))
+            return response.data
+        } catch (error) {
+            const message = error.response?.data?.message
+            set({ message })
+            throw new Error(message)
+        } finally {
+            set((state) => ({carLoading: !state.carLoading}))
+        }
     },
 
     getCars: async () => {
@@ -46,19 +53,47 @@ export const useCarStore = create((set) => ({
 
     updateItem: async (id, data) => {
 
+        // set((state) => ({carLoading: !state.carLoading}))
+        // const response = await axios.put(`http://localhost:8000/api/car/updateItem/${id}`, data)
+        // set(() => ({car: response.data}))
+        // set((state) => ({carLoading: !state.carLoading}))
+
         set((state) => ({carLoading: !state.carLoading}))
-        const response = await axios.put(`http://localhost:8000/api/car/updateItem/${id}`, data)
-        set(() => ({car: response.data}))
-        set((state) => ({carLoading: !state.carLoading}))
+        try {
+            const response = await axios.put(`http://localhost:8000/api/car/updateItem/${id}`, data)
+            set(() => ({car: response.data}))
+            return response.data
+        } catch (error) {
+            // set(() => ({message: error.response.data}))
+            const message = error.response?.data?.message
+            set({ message })
+            throw new Error(message)
+        } finally {
+            set((state) => ({carLoading: !state.carLoading}))
+        }
 
     },
 
     deleteItem: async (id) => {
 
-        set((state) => ({carLoading: !state.carLoading}))
-        const response = await axios.delete(`http://localhost:8000/api/car/deleteItem/${id}`)
-        set(() => ({message: response.data}))
+        // set((state) => ({carLoading: !state.carLoading}))
+        // const response = await axios.delete(`http://localhost:8000/api/car/deleteItem/${id}`)
+        // set(() => ({message: response.data}))
 
+
+        set((state) => ({carLoading: !state.carLoading}))
+        try {
+            const response = await axios.delete(`http://localhost:8000/api/car/deleteItem/${id}`)
+            set(() => ({car: response.data}))
+            return response.data
+        } catch (error) {
+            // set(() => ({message: error.response.data}))
+            const message = error.response?.data?.message
+            set({ message })
+            // throw new Error(message)
+        } finally {
+            set((state) => ({carLoading: !state.carLoading}))
+        }
     },
 
 }))

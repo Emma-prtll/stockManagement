@@ -14,16 +14,14 @@ const addItem = handler (async (req, res) => {
 
     //On check si les infos "required" sont présentes et pas vides
     if(!brand || !model || !type || !year || currentStock === undefined || wishStock === undefined || dangerStock === undefined) {
-        res.status(400)
-        throw new Error ("Merci de remplir tous les champs")
+        return res.status(400).json({message: "Merci de remplir tous les champs"})
     }
 
     //Ici, le formulaire est rempli correctement
     //On vérifie s'il existe déjà
-    const carExists = await Car.findOne({model})
+    const carExists = await Car.findOne({model, year})
     if(carExists){
-        res.status(400)
-        throw new Error("La voiture existe déjà dans les stocks")
+        return res.status(400).json({message: "La voiture existe déjà dans les stocks"})
     }
 
     //Ici, on a tout vérifié
@@ -45,10 +43,9 @@ const addItem = handler (async (req, res) => {
 
     //Informer le user que c'est bon !
     if(car){
-        res.status(201).json({"Message" : `La voiture à été créer avec succès.`, car})
+        return res.status(201).json({message: `La voiture à été créer avec succès.`, car})
     } else {
-        res.status(400)
-        throw new Error("Une erreur est survenue !")
+        return res.status(400).json({message: "Une erreur est survenue !"})
     }
 })
 
@@ -57,8 +54,7 @@ const updateItem = handler (async (req, res) => {
     const car = await Car.findById(req.params.id)
 
     if(!car) {
-        res.status(400)
-        throw new Error("La voiture n'existe pas.")
+        return res.status(400).json({message: "La voiture n'existe pas !"})
     }
 
     const oldStock = car.currentStock;
@@ -85,7 +81,7 @@ const updateItem = handler (async (req, res) => {
         await carHistory.create({
             carId: updatedCar._id,
             currentStock: updatedCar.currentStock,
-        });
+        })
     }
 
     res.status(200).json({
@@ -97,24 +93,22 @@ const updateItem = handler (async (req, res) => {
         currentStock: updatedCar.currentStock,
         wishStock: updatedCar.wishStock,
         dangerStock: updatedCar.dangerStock,
+        message: `${car.brand} ${car.model} has been update successfully!`
     })
     //res.status(200).json({"Message" : `La voiture ${updatedCar._id} | ${updatedCar.brand} à été modifiée avec succès !`})
-
-
-
 })
 
 const deleteItem = handler(async (req, res) => {
     const car = await carModel.findById(req.params.id)
 
     if(!car) {
-        res.status(400)
-        throw new Error("Aucune voiture trouvée.")
+        return res.status(400).json({message: "Aucune voiture trouvée."})
     }
 
     await car.deleteOne()
     res.status(200).json({
-        message: `La voiture ${car.brand} a bien été supprimée.`,
+        // message: `La voiture ${car.brand} a bien été supprimée.`,
+        message: `La voiture a bien été supprimée.`,
     })
 })
 

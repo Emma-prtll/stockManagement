@@ -1,10 +1,11 @@
 import {Button, Card, CardBody, Collapse, IconButton, Input, Typography} from "@material-tailwind/react";
 import {FaRegEdit} from "react-icons/fa";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useAuthStore} from "../store/authStore.js";
 import {useUserStore} from "../store/userStore.js";
 import {Helmet} from "react-helmet";
 import {toast} from "react-toastify";
+import {Toaster} from "react-hot-toast";
 
 
 const Profile = () => {
@@ -56,16 +57,18 @@ const Profile = () => {
                 _id: userInfo.user._id,
                 input: data
             }
+            toast.success("fe")
+            // toast.success(user.message)
+
             setFirstname("")
             setLastname("")
             setEmail("")
             setOldPassword("")
             setNewPassword("")
             await updateProfile(update)
-            toast.error(message.message)
-
         } catch (e) {
             console.log(e)
+            toast.error(e.message)
         }
     }
 
@@ -75,10 +78,13 @@ const Profile = () => {
             <Helmet>
                 <title>Profile</title>
             </Helmet>
+            <Toaster
+                position="top-right"
+                reverseOrder={false}
+            />
 
             {/*background*/}
             <div className="p-10 rounded-l-xl border  h-full rounded-xl bg-gray-300 ">
-
                 {/*Title*/}
                 <div className="flex justify-center items-center gap-6 ">
                     <Typography
@@ -91,7 +97,6 @@ const Profile = () => {
 
                 {/*from section*/}
                 <div className="my-10 flex flex-col items-center border-8 rounded-2xl bg-gray-500 ">
-
                     {/*firstname et lastname section*/}
                     <div className="flex items-center gap-6  p-2 ">
                         {/*firstname*/}

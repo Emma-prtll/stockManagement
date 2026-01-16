@@ -1,9 +1,10 @@
 import {Card, CardHeader, CardBody, CardFooter, Typography, Input, Checkbox, Button, Spinner} from "@material-tailwind/react";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useAuthStore} from "../store/authStore.js";
 import {useUserStore} from "../store/userStore.js";
-import {toast} from "react-toastify";
+// import {toast} from "react-toastify";
+import toast, { Toaster } from 'react-hot-toast';
 import {Helmet} from "react-helmet";
 
 
@@ -47,18 +48,20 @@ const Login = () => {
             }
         } catch (e) {
             console.log(e)
+            toast.error(e.message)
         }
     }
 
     return (
-
-
         <section className=" fixed end-0 w-5/6 p-4 h-screen bg-blue-100">
             <Helmet>
                 <title>Login</title>
             </Helmet>
+            <Toaster
+                position="top-right"
+                reverseOrder={false}
+            />
             <section className="h-full p-2 rounded-xl bg-blue-500 flex items-center justify-center">
-
 
             <Card className="w-96  ">
                 <CardHeader

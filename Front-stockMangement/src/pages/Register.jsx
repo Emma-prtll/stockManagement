@@ -4,7 +4,9 @@ import {useUserStore} from "../store/userStore.js";
 import navigation from "../components/Navigation.jsx";
 import {useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet";
-import {toast} from "react-toastify";
+// import {toast} from "react-toastify";
+import toast, { Toaster } from 'react-hot-toast';
+
 
 
 const Register = () => {
@@ -67,6 +69,11 @@ const Register = () => {
             <Helmet>
                 <title>Register</title>
             </Helmet>
+            <Toaster
+                position="top-right"
+                reverseOrder={false}
+            />
+
             <section className="h-full p-2 rounded-xl bg-blue-500 flex items-center gap-8">
     {/*TITLE*/}
                 <div className="w-5/6 pl-40 absolute top-20 ">

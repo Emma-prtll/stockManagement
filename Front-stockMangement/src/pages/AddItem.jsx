@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {useCarStore} from "../store/carStore.js";
 import {useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet";
+import toast, {Toaster} from "react-hot-toast";
 
 const AddItem = () => {
     const [currentStock, setCurrentStock] = useState(0)
@@ -38,6 +39,7 @@ const AddItem = () => {
             await addItem(data)
         } catch (error) {
             console.log(error)
+            toast.error(error.message)
         }
 
         // navigate(`/stockDetails/${car._id}`)}
@@ -53,7 +55,10 @@ const AddItem = () => {
             <Helmet>
                 <title>Add Item</title>
             </Helmet>
-
+            <Toaster
+                position="top-right"
+                reverseOrder={false}
+            />
             <section className=" fixed end-0 w-5/6 p-4 h-screen bg-blue-100">
                 <section className="h-full p-2 rounded-xl bg-blue-100">
                     {/*DIALOG*/}

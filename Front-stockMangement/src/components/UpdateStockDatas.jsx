@@ -13,6 +13,7 @@ import {useAuthStore} from "../store/authStore.js";
 import {useCarStore} from "../store/carStore.js";
 import {useParams} from "react-router-dom";
 import {FaInfoCircle} from "react-icons/fa";
+import toast, {Toaster} from "react-hot-toast";
 
 const UpdateStockDatas = () => {
 
@@ -21,6 +22,8 @@ const UpdateStockDatas = () => {
     // const updateProfile = useUserStore((state) => state.updateProfile)
     const updateCar = useCarStore((state) => state.updateItem)
     const car_id = useParams().id
+    const message = useCarStore((state) => state.message)
+
 
     //GESTION DES ROLES
     const userInfo = useAuthStore((state) => state.userInfo);
@@ -50,12 +53,17 @@ const UpdateStockDatas = () => {
             dangerStock
         }
         try {
+            const result = await updateCar(car_id, data)
+
             await updateCar(car_id, data)
             await getACar(car_id)
             handleOpen()
+            toast.success(result.message)
 
         } catch (err) {
-            console.log(err);
+            console.log(err)
+            handleOpen()
+            toast.error(err.message)
         }
     }
 
@@ -71,6 +79,10 @@ const UpdateStockDatas = () => {
 
     return (
         <section className="w-full flex justify-evenly bg-gray-400 rounded-xl p-4">
+            <Toaster
+                position="top-right"
+                reverseOrder={false}
+            />
             <section className="w-64 flex justify-center items-center flex-col">
                 <Typography variant="h1" color="blue-gray" >
                     {car?.currentStock}
