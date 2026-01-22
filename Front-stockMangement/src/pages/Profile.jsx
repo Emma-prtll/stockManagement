@@ -1,4 +1,14 @@
-import {Button, Card, CardBody, Collapse, IconButton, Input, Typography} from "@material-tailwind/react";
+import {
+    Button,
+    Card,
+    CardBody,
+    Collapse,
+    IconButton,
+    Input,
+    Option,
+    Select,
+    Typography
+} from "@material-tailwind/react";
 import {FaRegEdit} from "react-icons/fa";
 import React, {useEffect, useState} from "react";
 import {useAuthStore} from "../store/authStore.js";
@@ -6,6 +16,9 @@ import {useUserStore} from "../store/userStore.js";
 import {Helmet} from "react-helmet";
 import {toast} from "react-toastify";
 import {Toaster} from "react-hot-toast";
+import isEmail from "validator/lib/isEmail.js";
+import isEmpty from "validator/es/lib/isEmpty.js";
+import {MdEdit} from "react-icons/md";
 
 
 const Profile = () => {
@@ -52,28 +65,37 @@ const Profile = () => {
     //Méthode pour gérer l'update des infos de l'utilisateur
     const handleSubmit = async (e, data) => {
         e.preventDefault()
-        try {
-            let update = {
-                _id: userInfo.user._id,
-                input: data
-            }
-            toast.success("fe")
-            // toast.success(user.message)
+        if(!isEmpty(email) && !isEmail(email)) {
+            toast.error("Email invalide")
+            console.log("Email invalide")
+        } else {
+            try {
+                let update = {
+                    _id: userInfo.user._id,
+                    input: data
+                }
+                toast.success("fe")
+                // toast.success(user.message)
 
-            setFirstname("")
-            setLastname("")
-            setEmail("")
-            setOldPassword("")
-            setNewPassword("")
-            await updateProfile(update)
-        } catch (e) {
-            console.log(e)
-            toast.error(e.message)
+                setFirstname("")
+                setLastname("")
+                setEmail("")
+                setOldPassword("")
+                setNewPassword("")
+                await updateProfile(update)
+            } catch (e) {
+                console.log(e)
+                toast.error(e.message)
+            }
         }
     }
 
-    return (
+    const [openFirstname, setOpenFirstname] = useState(false)
+    const [openLastname, setOpenLastname] = useState(false)
+    const [openEmail, setOpenEmail] = useState(false)
+    const [openPassword, setOpenPassword] = useState(false)
 
+    return (
         <section className="fixed end-0 w-5/6 p-4 h-screen  overflow-y-auto">
             <Helmet>
                 <title>Profile</title>
@@ -84,18 +106,167 @@ const Profile = () => {
             />
 
             {/*background*/}
-            <div className="p-10 rounded-l-xl border  h-full rounded-xl bg-gray-300 ">
+            <div className="p-10 rounded-l-xl border  h-full rounded-xl bg-blue-gray-600 ">
                 {/*Title*/}
-                <div className="flex justify-center items-center gap-6 ">
-                    <Typography
-                        variant="h1"
-                        color="black"
-                    >
-                        Mon profil
-                    </Typography>
-                </div>
+                <Typography className="font-h1 w-full text-center text-3xl pb-12" color="white">My profile</Typography>
 
-                {/*from section*/}
+                <section className="flex flex-col items-center h-2/3">
+
+                    {/*PERSONAL INFOS*/}
+                    <section className="w-3/5 bg-blue-gray-800 rounded-2xl border-2 p-8 shadow-xl mb-4">
+                        <Typography className="text-2xl font-bold text-gray-100 mb-6 ">
+                            Personal informations
+                        </Typography>
+                        <section className="flex">
+                            <section className="w-1/2 flex flex-col gap-6">
+                                {/*FIRSTNAME*/}
+                                <section>
+                                    <div className="flex items-center gap-4 ">
+                                    <Typography className="font-bold text-2xl text-gray-100">Firstname : </Typography>
+                                    <Typography className="text-2xl  text-gray-100">{userInfo.user.firstName}</Typography>
+                                    <IconButton
+                                        onClick={() => setOpenFirstname(!openFirstname)}
+                                        className="rounded-3xl bg-amber-900"
+                                        size="sm"
+                                    >
+                                        <MdEdit size={18}  />
+                                    </IconButton>
+                                    </div>
+                                    <Collapse open={openFirstname} className="w-96 pt-3">
+                                        <Input
+                                            type="text"
+                                            variant="outlined"
+                                            label="Firstname"
+                                            name="firstName"
+                                            value={firstName}
+                                            onChange={(e) => setFirstname(e.target.value)}
+                                            color="white"
+                                        />
+                                            <Button className="bg-amber-900 mt-3" onClick={(e) => handleSubmit(e, {firstName})}>Save</Button>
+                                        </Collapse>
+                                </section>
+
+                                {/*LASTNAME*/}
+                                <section>
+                                    <div className="flex items-center gap-4 ">
+                                        <Typography className="font-bold text-2xl text-gray-100">Lastname : </Typography>
+                                        <Typography className="text-2xl  text-gray-100">{userInfo.user.lastName}</Typography>
+                                        <IconButton
+                                            onClick={() => setOpenLastname(!openLastname)}
+                                            className="rounded-3xl bg-amber-900"
+                                            size="sm"
+                                        >
+                                            <MdEdit size={18}  />
+                                        </IconButton>
+                                    </div>
+                                    <Collapse open={openLastname} className="w-96 pt-3">
+                                        <Input
+                                            type="text"
+                                            variant="outlined"
+                                            label="Lastname"
+                                            name="lastName"
+                                            value={lastName}
+                                            onChange={(e) => setLastname(e.target.value)}
+                                            className="text-gray-100"
+                                            color="white"
+                                        />
+                                        <Button className="bg-amber-900 mt-3" onClick={(e) => handleSubmit(e, {lastName})}>Save</Button>
+                                    </Collapse>
+                                </section>
+                            </section>
+
+                            <section className="w-1/2 flex flex-col gap-6">
+                                {/*EMAIL*/}
+                                <section>
+                                    <div className="flex items-center gap-4">
+                                        <Typography className="font-bold text-2xl text-gray-100">Email : </Typography>
+                                        <Typography className="text-2xl  text-gray-100">{userInfo.user.email}</Typography>
+                                        <IconButton
+                                            onClick={() => setOpenEmail(!openEmail)}
+                                            className="rounded-3xl bg-amber-900"
+                                            size="sm"
+                                        >
+                                            <MdEdit size={18}  />
+                                        </IconButton>
+                                    </div>
+                                    <Collapse open={openEmail} className="w-96 pt-3">
+                                        <Input
+                                            type="text"
+                                            variant="outlined"
+                                            label="Email"
+                                            name="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            className="text-gray-100"
+                                            color="white"
+                                        />
+                                        <Button className="bg-amber-900 mt-3" onClick={(e) => handleSubmit(e, {email})}>Save</Button>
+                                    </Collapse>
+                                </section>
+
+                                {/*PASSWORD*/}
+                                <section>
+                                    <div className="flex items-center gap-4 ">
+                                        <Typography className="font-bold text-2xl text-gray-100">Password : </Typography>
+                                        <Typography className="text-2xl  text-gray-100">{userInfo.user.password}</Typography>
+                                        <IconButton
+                                            onClick={() => setOpenPassword(!openPassword)}
+                                            className="rounded-3xl bg-amber-900"
+                                            size="sm"
+                                        >
+                                            <MdEdit size={18}  />
+                                        </IconButton>
+                                    </div>
+                                    <Collapse open={openPassword} className="w-96 pt-3">
+                                        <div className="flex flex-col gap-3">
+                                        <Input
+                                            type="password"
+                                            variant="outlined"
+                                            label="Old password"
+                                            name="old_password"
+                                            value={oldPassword}
+                                            onChange={(e) => setOldPassword(e.target.value)}
+                                            className="text-gray-100"
+                                            color="white"
+                                        />
+                                        <Input
+                                            type="password"
+                                            variant="outlined"
+                                            label="New password"
+                                            name="new_password"
+                                            value={newPassword}
+                                            onChange={(e) => setNewPassword(e.target.value)}
+                                            className="text-gray-100"
+                                            color="white"
+                                        />
+                                        </div>
+                                        <Button className="bg-amber-900 mt-3" onClick={(e) => handleSubmit(e, {oldPassword, newPassword})}>Save</Button>
+                                    </Collapse>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+
+                    {/*PROFESSIONAL INFOS*/}
+                    <section className="w-3/5 bg-blue-gray-800 rounded-2xl border-2 p-8 shadow-xl mb-4">
+                        <Typography className="text-2xl font-bold text-gray-100 mb-6">
+                            Professional informations
+                        </Typography>
+                        {/*ROLE*/}
+                        <section className="flex items-center pb-4">
+                            <Typography className="text-xl font-bold text-gray-100">Role : </Typography>
+                            <Typography className="text-xl pl-2 text-gray-100">{userInfo.user.role}</Typography>
+                        </section>
+                        {/*SECTOR*/}
+                        <section className="flex items-center pb-4">
+                            <Typography className="text-xl font-bold text-gray-100">Sector : </Typography>
+                            <Typography className="text-xl pl-2 text-gray-100">{userInfo.user.sector}</Typography>
+                        </section>
+                    </section>
+
+                </section>
+
+                    {/*from section*/}
                 <div className="my-10 flex flex-col items-center border-8 rounded-2xl bg-gray-500 ">
                     {/*firstname et lastname section*/}
                     <div className="flex items-center gap-6  p-2 ">

@@ -113,7 +113,7 @@ const deleteItem = handler(async (req, res) => {
 })
 
 const getCars =  handler (async (req, res) => {
-    const cars = await Car.find()
+    const cars = await Car.find().sort({createdAt: -1})
     res.status(200).json(cars)
 })
 

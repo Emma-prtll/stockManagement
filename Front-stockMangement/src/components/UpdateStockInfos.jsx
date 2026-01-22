@@ -15,6 +15,9 @@ import {useCarStore} from "../store/carStore.js";
 import {useNavigate, useParams} from "react-router-dom";
 import {useUserStore} from "../store/userStore.js";
 import toast from "react-hot-toast";
+import isInt from "validator/es/lib/isInt.js";
+import isEmpty from "validator/es/lib/isEmpty.js";
+import {MdDelete, MdDeleteOutline, MdEdit, MdOutlineEdit} from "react-icons/md";
 
 const UpdateStockInfos = () => {
 
@@ -28,15 +31,14 @@ const UpdateStockInfos = () => {
     const navigate = useNavigate();
 
     const handleDelete = async () => {
-
         if(car._id) {
             const result = await deleteCar(car._id)
             toast.success(result.message)
             navigate("/stock")
 
             await deleteCar(car._id)
-
-            // toast.success(car.message)
+        } else {
+            toast.error("There is a problem.... Please try again later.")
         }
     }
 
@@ -60,24 +62,30 @@ const UpdateStockInfos = () => {
             year,
             type
         }
-        try {
-            const result = await updateCar(car_id, data)
-
-            await updateCar(car_id, data)
-            await getACar(car_id)
+        if(!isEmpty(year) && !isInt(year)) {
+            toast.error("Year must be a number")
             handleOpenCar()
-            toast.success(result.message)
-
-            setBrand("")
-            setModel("")
             setYear("")
-            setType("")
+
+        } else {
+            try {
+                const result = await updateCar(car_id, data)
+
+                await updateCar(car_id, data)
+                await getACar(car_id)
+                handleOpenCar()
+                toast.success(result.message)
+
+                setBrand("")
+                setModel("")
+                setYear("")
+                setType("")
 
         } catch (err) {
             console.log(err)
             handleOpenCar()
             toast.error(err.message)
-        }
+        } }
     }
 
     //State pour les inputs
@@ -87,43 +95,30 @@ const UpdateStockInfos = () => {
     const [year, setYear] = useState("")
 
     return (
-        <div className="flex justify-between items-center w-full">
+        <div className="flex justify-between items-center w-1/3 pl-8">
             {/*BASIC INFOS*/}
-            <section className="w-1/2 pt-3">
-                <Typography variant="h3" color="blue-gray" className="mb-5">
-                    {car?.brand}
+            <section className="w-full pt-3">
+                <Typography variant="h3" color="white" className="mb-5">
+                    {car?.brand} - {car?.model}
                 </Typography>
-                <Typography variant="h5" color="blue-gray" className="mb-2">
-                    {car?.model} - {car?.year}
+                <Typography variant="h5" color="white" className="mb-2">
+                    {car?.year}
                 </Typography>
-                <Typography variant="h5" color="blue-gray" className="mb-2">
+                <Typography variant="h5" color="white" className="mb-2">
                     {car?.type}
                 </Typography>
-            </section>
-            {/*BUTTONS | accès unique au MANAGER + ADMIN*/}
-            {(isManager || isAdmin) && (
-
-                <section className=" w-1/2 flex justify-center items-center">
-                    <Button>
-                        <Typography variant="h4" color="white" className="text-center" onClick={handleOpenCar}  >
-                            Edit car
-                        </Typography>
-                    </Button>
-                </section>
-            )}
-            {(isAdmin) && (
-            <section className=" w-1/2 flex justify-center items-center">
-                <Button>
-                    {/*<Typography variant="h4" color="white" className="text-center" onClick={() => handleDelete(car?._id)} >*/}
-                    <Typography variant="h4" color="white" className="text-center" onClick={handleOpenDelete} >
-                        Delete Car
+                {(isManager || isAdmin) && (
+                <Typography color="white" className="pt-6 font-semibold underline underline-offset-4 cursor-pointer flex items-center gap-2" onClick={handleOpenCar}>
+                    Edit <MdOutlineEdit />
+                </Typography>
+                )}
+                {(isAdmin) && (
+                    <Typography color="red" className="pt-3 font-semibold underline underline-offset-4 cursor-pointer flex items-center gap-2" onClick={handleOpenDelete}>
+                        Delete <MdDeleteOutline />
                     </Typography>
-                </Button>
+                )}
+
             </section>
-
-            )}
-
-
 
             {/*DIALOG CAR*/}
             <Dialog open={openCar} handler={handleOpenCar}>
@@ -162,8 +157,10 @@ const UpdateStockInfos = () => {
                             {car?.year}
                         </Typography>
                     <Input
-                        type="text"
+                        type="integer"
                         variant="outlined"
+                        maxLength={4}
+                        pattern="\d{4}"
                         label="Year"
                         name="year"
                         value={year}

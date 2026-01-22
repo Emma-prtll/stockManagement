@@ -79,8 +79,6 @@ export const useCarStore = create((set) => ({
         // set((state) => ({carLoading: !state.carLoading}))
         // const response = await axios.delete(`http://localhost:8000/api/car/deleteItem/${id}`)
         // set(() => ({message: response.data}))
-
-
         set((state) => ({carLoading: !state.carLoading}))
         try {
             const response = await axios.delete(`http://localhost:8000/api/car/deleteItem/${id}`)

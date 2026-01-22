@@ -20,6 +20,7 @@ import { RiEditLine } from "react-icons/ri";
 import {useAuthStore} from "../store/authStore.js";
 // import {toast} from "react-toastify";
 import toast, {Toaster} from "react-hot-toast";
+import {MdDeleteOutline, MdEdit} from "react-icons/md";
 
 
 
@@ -53,12 +54,6 @@ const EmployeeEdit = () => {
     const navigate = useNavigate();
 
     const handleDelete = async () => {
-        // if(user._id) {
-        //     await deleteUser(user._id)
-        //     navigate("/admin")
-        //     toast.success(user.message)
-        // }
-
         try {
             await deleteUser(user._id)
             navigate("/admin")
@@ -87,8 +82,11 @@ const EmployeeEdit = () => {
         }
     }
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(!open);
+
+    const [openUpdateRole, setOpenUpdateRole] = useState(false)
+    const [openUpdateSector, setOpenUpdateSector] = useState(false)
 
     return (
         <>
@@ -157,8 +155,9 @@ const EmployeeEdit = () => {
                 </DialogFooter>
             </Dialog>
 
-            <section className="fixed end-0 w-5/6 p-4 h-screen bg-blue-100">
-                <section className="h-full p-2 rounded-xl bg-blue-500">
+            <section className="fixed end-0 w-5/6 p-4 h-screen">
+                <section className="h-full p-2 rounded-xl bg-blue-gray-600">
+                    {/*BACK BUTTON*/}
                     <section className="pt-6 pl-6">
                         <Typography
                             as="a"
@@ -170,90 +169,125 @@ const EmployeeEdit = () => {
                             BACK
                         </Typography>
                     </section>
+                    {/*TITLE*/}
+                    <Typography className="font-h1 w-full text-center text-3xl pb-12" color="white">Employee infos</Typography>
 
-                    <section className="w-full h-5/6 p-4 flex flex-col  mt-8 justify-evenly bg-red-200 ">
-                        <section className="text-center">
-                            <Typography variant="h1" color="blue-gray" className="mb-5">
-                                Employee infos
+                    <section className="flex flex-col items-center h-2/3">
+                        {/*PERSONAL INFOS*/}
+                        <section className="w-3/5 bg-blue-gray-800 rounded-2xl border-2 p-8 shadow-xl mb-4">
+                            <Typography className="text-2xl font-bold text-gray-100 mb-6">
+                                Personal information
                             </Typography>
+                            {/*FIRSTNAME*/}
+                            <section className="flex items-center pb-4">
+                                <Typography className="text-xl font-bold text-gray-100">Firstname : </Typography>
+                                <Typography className="text-xl pl-2 text-gray-100">{user?.firstName}</Typography>
+                            </section>
+                            {/*LASTNAME*/}
+                            <section className="flex items-center pb-4">
+                                <Typography className="text-xl font-bold text-gray-100">Lastname : </Typography>
+                                <Typography className="text-xl pl-2 text-gray-100">{user?.lastName}</Typography>
+                            </section>
+                            {/*EMAIL*/}
+                            <section className="flex items-center pb-4">
+                                <Typography className="text-xl font-bold text-gray-100">Email : </Typography>
+                                <Typography className="text-xl pl-2 text-gray-100">{user?.email}</Typography>
+                            </section>
                         </section>
-                        <section className="flex h-5/6">
-                            {/*PERSONAL INFOS*/}
-                            <section className="w-1/2 p-6 bg-green-500 ">
-                                {/*FIRSTNAME*/}
-                                <section className="w-1/2 pt-3">
-                                    <section className="flex items-center gap-6">
-                                        <Typography variant="h3" color="blue-gray" className="">
-                                            {user?.firstName}
-                                        </Typography>
-                                    </section>
-                                </section>
-                                {/*LASTNAME*/}
-                                <section className="w-1/2 pt-3">
-                                    <section className="flex items-center gap-6">
-                                        <Typography variant="h3" color="blue-gray" className="">
-                                            {user?.lastName}
-                                        </Typography>
-                                    </section>
-                                </section>
-                                {/*EMAIL*/}
-                                <section className="w-1/2 pt-3">
-                                    <section className="flex items-center gap-6">
-                                        <Typography variant="h3" color="blue-gray" className="">
-                                            {user?.email}
-                                        </Typography>
-                                    </section>
-                                </section>
-                                <section>
-                                    <Button>
-                                        <Typography variant="h4" color="white" className="text-center" onClick={handleOpenDelete} >
-                                            Delete employee
-                                        </Typography>
+
+                        {/*PROFESSIONAL INFOS*/}
+                        <section className="w-3/5 bg-blue-gray-800 rounded-2xl border-2 p-8 shadow-xl ">
+                            <Typography className="text-2xl font-bold text-gray-100 mb-6">
+                                Professional information
+                            </Typography>
+                            <section className="flex">
+
+                            {/*ROLE*/}
+                            <section className="w-1/2" >
+                                <div className="flex items-center gap-4">
+                                    <Typography className="font-bold text-2xl text-gray-100">Role : </Typography>
+                                    <Typography className="text-2xl text-gray-100">{user?.role}</Typography>
+                                    <IconButton
+                                        onClick={() => setOpenUpdateRole(!openUpdateRole)}
+                                        className="rounded-3xl bg-amber-900"
+                                        size="sm"
+                                    >
+                                        <MdEdit size={18}  />
+                                    </IconButton>
+                                </div>
+                                <Collapse open={openUpdateRole} className="w-96">
+                                    <Select
+                                        variant="static"
+                                        size="lg"
+                                        name="role"
+                                        value={role}
+                                        onChange={(value) => setRole(value)}
+                                        className="text-gray-100"
+                                    >
+                                        <Option value="Admin">Admin</Option>
+                                        <Option value="Manager">Manager</Option>
+                                        <Option value="Employee">Employee</Option>
+                                    </Select>
+                                    <Button
+                                        className="mt-8 mb-16 bg-amber-900"
+                                        onClick={(e) => handleSubmit(e, { role })}
+                                    >
+                                        Save role
                                     </Button>
-                                </section>
+                                </Collapse>
                             </section>
-                            {/*PROFESSIONAL INFOS*/}
-                            <section className="w-1/2 p-6 bg-amber-400 flex gap-10 flex-col">
-                                <Typography color="white" className="font-bold text-xl">Role : {user?.role}</Typography>
-                                <Select
-                                    variant="static"
-                                    label="Role"
-                                    size="lg"
-                                    name="role"
-                                    value={role}
-                                    onChange={(value) => setRole(value)}
-                                >
-                                    <Option value="Admin">Admin</Option>
-                                    <Option value="Manager">Manager</Option>
-                                    <Option value="Employee">Employee</Option>
-                                </Select>
-                                {/*<Button color="orange" onClick={(e) => handleSubmit(e, {role})}>Save</Button>*/}
-                                <Button color="orange" onClick={(e) => handleSubmit(e, { role })}>
-                                    Save role
-                                </Button>
 
+                            {/*SECTOR*/}
+                            <section className="w-1/2">
+                                <div className="flex items-center gap-4">
+                                    <Typography className="font-bold text-2xl text-gray-100">Sector : </Typography>
+                                    <Typography className="text-2xl text-gray-100">{user?.sector}</Typography>
+                                    <IconButton
+                                        onClick={() => setOpenUpdateSector(!openUpdateSector)}
+                                        className="rounded-3xl bg-amber-900"
+                                        size="sm"
+                                    >
+                                        <MdEdit size={18}  />
+                                    </IconButton>
+                                </div>
+                                <Collapse open={openUpdateSector} className="w-96">
+                                    <Select
+                                        variant="static"
+                                        size="lg"
+                                        name="sector"
+                                        value={sector}
+                                        onChange={(value) => setSector(value)}
+                                        className="text-gray-100"
+                                    >
+                                        <Option value="Stock">Stock</Option>
+                                        <Option value="Customer service">Customer service</Option>
+                                        <Option value="Supplier">Supplier</Option>
+                                    </Select>
+                                    <Button
+                                        className="mt-8 mb-16 bg-amber-900"
+                                        onClick={(e) => handleSubmit(e, { sector })}
+                                    >
+                                        Save sector
+                                    </Button>
+                                </Collapse>
 
-                                <Typography color="white" className="font-bold text-xl">Sector : {user?.sector}</Typography>
-                                <Select
-                                    variant="static"
-                                    label="Sector"
-                                    size="lg"
-                                    name="sector"
-                                    value={sector}
-                                    onChange={(value) => setSector(value)}
-                                >
-                                    <Option value="Stock">Stock</Option>
-                                    <Option value="Customer service">Customer service</Option>
-                                    <Option value="Supplier">Supplier</Option>
-                                </Select>
-                                <Button color="orange" onClick={(e) => handleSubmit(e, { sector })}>
-                                    Save sector
-                                </Button>
+                        </section>
                             </section>
+
                         </section>
 
+                        {/*DELETE EMPLOYEE*/}
+                        <section className="fixed bottom-16 ">
+                            <Button
+                                variant="gradient"
+                                color="red"
+                                onClick={handleOpenDelete}
+                                className="mr-1 flex items-center gap-2"
+                            >
+                                Delete employee
+                            </Button>
+                        </section>
                     </section>
-
                 </section>
             </section>
         </>

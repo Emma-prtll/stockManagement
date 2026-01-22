@@ -22,6 +22,8 @@ app.use(express.urlencoded({extended: false })) //On explique qu'il va recevoir 
 app.use('/api/user', require('./routes/userRoutes'))
 //Route utilisée pour les voitures
 app.use('/api/car', require('./routes/carRoutes'))
+//Route utilisée pour les historiques de voitures
+app.use('/api/carHistory', require('./routes/carHistoryRoutes'))
 
 //On essaye de se connecter à la BDD de Mongo
 //Si la base de donnée n'est pas atteignable, on ne lance pas le serveur

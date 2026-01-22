@@ -6,8 +6,11 @@ module.exports = withMT({
         "./src/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
+
         fontFamily: {
-            sans: ["Robot", "sans-serif"],
+            // sans: ['Raleway', 'sans-serif'],
+            sans: ['Montserrat', 'sans-serif'],
+            h1: ['"Special Gothic Expanded One"', 'sans-serif'],
         },
         extend: {},
     },

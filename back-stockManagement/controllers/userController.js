@@ -155,6 +155,7 @@ const updateProfile = handler(async (req, res) => {
         lastName: updateProfile.lastName,
         firstName: updateProfile.firstName,
         role: updateProfile.role,
+        sector: updateProfile.sector,
         message: `Your profile has been update successfully!`
     })
 })

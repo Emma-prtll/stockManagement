@@ -1,9 +1,28 @@
-import {Button, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton, Input, Option, Select, Typography} from "@material-tailwind/react"
+import {
+    Button,
+    Dialog,
+    DialogBody,
+    DialogFooter,
+    DialogHeader,
+    IconButton,
+    Input,
+    Option,
+    Select, Step,
+    Stepper,
+    Typography
+} from "@material-tailwind/react"
 import React, {useEffect, useState} from "react";
 import {useCarStore} from "../store/carStore.js";
 import {useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet";
 import toast, {Toaster} from "react-hot-toast";
+import isInt from "validator/es/lib/isInt.js";
+import isEmail from "validator/lib/isEmail.js";
+import {CogIcon, HomeIcon, UserIcon} from "@heroicons/react/16/solid/index.js";
+import {FaCar, FaCheck} from "react-icons/fa";
+import {FiPackage} from "react-icons/fi";
+import isEmpty from "validator/es/lib/isEmpty.js";
+
 
 const AddItem = () => {
     const [currentStock, setCurrentStock] = useState(0)
@@ -33,22 +52,35 @@ const AddItem = () => {
 
         const data = {
             brand, model, type, year, currentStock, wishStock, dangerStock
-        };
-
-        try{
-            await addItem(data)
-        } catch (error) {
-            console.log(error)
-            toast.error(error.message)
+        }
+            try{
+                await addItem(data)
+            } catch (error) {
+                console.log(error)
+                toast.error(error.message)
+            }
         }
 
-        // navigate(`/stockDetails/${car._id}`)}
-    }
-
         const [open, setOpen] = React.useState(false);
-
         const handleOpen = () => setOpen(!open);
 
+    //STEPPER
+    const [activeStep, setActiveStep] = React.useState(0);
+    const [isLastStep, setIsLastStep] = React.useState(false);
+    const [isFirstStep, setIsFirstStep] = React.useState(false);
+
+    const handleNext = () => {
+        if(activeStep === 0) {
+            if(!isEmpty(year) && !isInt(year)) {
+                toast.error("There is an error ! Year must be a number")
+            } else {
+                !isLastStep && setActiveStep((cur) => cur + 1)
+            }
+        } else {
+            !isLastStep && setActiveStep((cur) => cur + 1)
+        }}
+
+    const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
     return (
         <>
@@ -59,10 +91,10 @@ const AddItem = () => {
                 position="top-right"
                 reverseOrder={false}
             />
-            <section className=" fixed end-0 w-5/6 p-4 h-screen bg-blue-100">
-                <section className="h-full p-2 rounded-xl bg-blue-100">
+            <section className=" fixed end-0 w-5/6 p-4 h-screen">
+                <section className="h-full p-2 rounded-xl bg-blue-gray-700">
                     {/*DIALOG*/}
-                    <Dialog open={open} handler={handleOpen}>
+                    <Dialog open={open} handler={handleOpen} className="p-4">
                         <DialogHeader>Are you sure ?</DialogHeader>
                         <DialogBody>
                             If you confirm you will lose all the informations you have entered.
@@ -70,7 +102,7 @@ const AddItem = () => {
                         </DialogBody>
                         <DialogFooter className="flex justify-center gap-8">
                             <Button
-                                variant="gradient"
+                                variant="outlined"
                                 color="red"
                                 onClick={handleOpen}
                                 className="mr-1"
@@ -78,7 +110,10 @@ const AddItem = () => {
                                 <span>Cancel</span>
                             </Button>
                             <a href="/home">
-                                <Button variant="text" color="green" onClick={handleOpen}>
+                                <Button
+                                    variant="outlined"
+                                    color="green"
+                                    onClick={handleOpen}>
                                     <span>Confirm</span>
                                 </Button>
                             </a>
@@ -86,13 +121,14 @@ const AddItem = () => {
                     </Dialog>
 
                     {/*TITLE*/}
-                    <Typography color="black" className="p-10 w-full mb-4 font-bold text-center text-3xl">Add a new car</Typography>
+                    <Typography className="font-h1 p-10 w-full mb-4 text-center text-3xl" color="white">Add a new car</Typography>
 
-                    <section className="flex h-2/3 justify-between">
-                        {/*PART 1*/}
-                        <div className="p-10  h-full w-1/2">
-                            <Typography color="black" className="text-2xl font-black pb-6">Car infos</Typography>
-                            <div className="flex flex-col gap-6">
+                    <section className="flex justify-center ">
+                        {/*PART 1 - CAR INFOS*/}
+                        {activeStep === 0 && (
+                        <div className="h-full w-1/2 border-4 rounded-xl shadow-xl">
+                            <Typography className="font-h1 text-2xl border-6 p-6 rounded-xl" color="white">Car infos</Typography>
+                            <div className="flex flex-col gap-6 p-14 bg-gray-200">
                                 <Input
                                     variant="static"
                                     label="Brand"
@@ -143,13 +179,14 @@ const AddItem = () => {
                                     // onChange={(e) => setImage(e.target.value)}
                                 />
                             </div>
-
                         </div>
+                        )}
 
-                        {/*PART 2*/}
-                        <div className="p-10 h-full w-1/2">
-                            <Typography color="black" className="text-2xl font-black pb-6">Stock infos</Typography>
-                            <div className="flex flex-col">
+                        {/*PART 2 - STOCK INFOS*/}
+                        {activeStep === 1 && (
+                            <div className="h-full w-1/2 border-4 rounded-xl shadow-xl">
+                                <Typography className="font-h1 text-2xl border-6 p-6 bg-blue-gray-700 rounded-xl" color="white">Stock infos</Typography>
+                                <div className="flex flex-col p-14 bg-gray-200">
                                 {/*CURRENT STOCK*/}
                                 <Typography color="black" className="pb-2">Current stock</Typography>
                                 <div className="relative w-full pb-8">
@@ -299,11 +336,74 @@ const AddItem = () => {
                                 {/*----------------------*/}
                             </div>
                         </div>
+                        )}
+
+                        {/*PART 3 - VALIDATION*/}
+                        {activeStep === 2 && (
+                            <div className="h-full w-1/2 border-4 rounded-xl shadow-xl bg-gray-200">
+                                <div className="bg-blue-gray-700 rounded-t-xl">
+                                    <Typography className="font-h1 text-2xl border-6 p-6  rounded-xl" color="white">Summery and validation</Typography>
+                                    <Typography className="w-4/5 border-6 pl-6 pb-6   rounded-xl" color="white">
+                                        Please carefully review the information below before submitting.
+                                        Ensure all required fields are completed accurately.
+                                        You can navigate back to previous steps to make any necessary corrections.
+                                    </Typography>
+                                </div>
+
+                                <section className="font-h1 text-2xl border-6 p-6  flex justify-evenly " color="white">
+                                    <div className="flex flex-col gap-2 ">
+                                        <Typography className="font-h1 pb-2">Car infos</Typography>
+                                        <Typography>Brand : {brand}</Typography>
+                                        <Typography>Model : {model}</Typography>
+                                        <Typography>Type : {type}</Typography>
+                                        <Typography>Year : {year}</Typography>
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                    <Typography className="font-h1 pb-2">Stock infos</Typography>
+                                        <Typography>Current stock : {currentStock}</Typography>
+                                        <Typography>Wish stock : {wishStock}</Typography>
+                                        <Typography>Danger stock : {dangerStock}</Typography>
+                                    </div>
+
+                                </section>
+                                <div className="p-4 flex justify-center w-full my-4 gap-12 ">
+                                    <Button color="red" variant="outlined" onClick={handleOpen}>Cancel</Button>
+                                    <Button color="green" onClick={handleSubmit} >Validate</Button>
+                                </div>
+                            </div>
+                        )}
                     </section>
-                    <div className="p-4 flex justify-center w-full mt-8 gap-12">
-                        <Button color="green" onClick={handleSubmit} >Validate</Button>
-                        <Button color="red" onClick={handleOpen}>Cancel</Button>
-                    </div>
+
+                    {/*STEPPER*/}
+                    <section className="flex justify-center w-5/6 pt-20 fixed bottom-12 right-0">
+                        <div className="w-3/5 py-4 px-8">
+                            <Stepper
+                                activeStep={activeStep}
+                                isLastStep={(value) => setIsLastStep(value)}
+                                isFirstStep={(value) => setIsFirstStep(value)}
+                                lineClassName="bg-white/50"
+                                activeLineClassName="bg-amber-900"
+                            >
+                                <Step completedClassName="!bg-amber-900" activeClassName="!bg-amber-900" onClick={() => setActiveStep(0)}>
+                                    <FaCar className="h-5 w-5" />
+                                </Step>
+                                <Step completedClassName="!bg-amber-900" activeClassName="!bg-amber-900" onClick={() => setActiveStep(1)}>
+                                    <FiPackage className="h-5 w-5"/>
+                                </Step>
+                                <Step  completedClassName="!bg-amber-900" activeClassName="!bg-amber-900" onClick={() => setActiveStep(2)}>
+                                    <FaCheck className="h-4 w-4"  />
+                                </Step>
+                            </Stepper>
+                            <div className="mt-16 flex justify-between">
+                                <Button onClick={handlePrev} disabled={isFirstStep}>
+                                    Prev
+                                </Button>
+                                <Button onClick={handleNext} disabled={isLastStep}>
+                                    Next
+                                </Button>
+                            </div>
+                        </div>
+                    </section>
                 </section>
             </section>
         </>

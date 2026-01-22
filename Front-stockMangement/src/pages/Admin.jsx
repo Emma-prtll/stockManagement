@@ -35,32 +35,24 @@ const Admin = () => {
                 reverseOrder={false}
             />
             <section className=" fixed end-0 w-5/6 p-4 min-h-screen bg-gray-100">
-                <section className="h-screen p-6 rounded-xl bg-blue-gray-300 overflow-y-auto ">
+                <section className="h-screen p-6 rounded-xl bg-blue-gray-500 overflow-y-auto ">
 
                     <section className="flex justify-between px-8 mb-6 mt-4">
-                        <Typography variant="h3" color="white" className="mb-2">Employee list</Typography>
+                        <Typography color="white" className="font-h1 text-3xl mb-2">Employee list</Typography>
                         {/*<Button className="bg-red-200 mb-8">Add Employee</Button>*/}
                         <Typography
                             as="a"
                             href="/register"
-                            color="white"
-                            className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer font-semibold"
+                            color="black"
+                            className="p-3 rounded-lg bg-gray-400 hover:bg-amber-900 transition-all cursor-pointer font-semibold shadow-2xl"
                         >
                             Add Employee
                         </Typography>
                     </section>
 
                     <EmployeeInfos />
+
                 </section>
-
-                {/*<section className="h-screen p-6 rounded-xl bg-blue-gray-300 overflow-y-auto ">*/}
-                {/*    {users?.length && users.map((car, i) => (*/}
-                {/*        <div key={i} className="w-96 pb-16">*/}
-                {/*            <EmployeeInfos user={user}/>*/}
-
-                {/*        </div>*/}
-                {/*    ))}*/}
-                {/*</section>*/}
             </section>
         </>
     );

@@ -16,6 +16,7 @@ import {FaArrowLeftLong, FaArrowRightLong} from "react-icons/fa6";
 import {useAuthStore} from "../store/authStore.js";
 import UpdateStockInfos from "../components/UpdateStockInfos.jsx";
 import UpdateStockDatas from "../components/UpdateStockDatas.jsx";
+import LinearChart from "../components/LinearChart.jsx";
 
 const StockDetails = () => {
 
@@ -36,24 +37,25 @@ const StockDetails = () => {
             <Helmet>
                 <title>Stock Details</title>
             </Helmet>
-            <section className="fixed end-0 w-5/6 p-4 h-screen bg-blue-100">
-                <section className="h-full p-2 rounded-xl bg-blue-500">
+            <section className="fixed end-0 w-5/6 p-4 h-screen">
+                <section className="h-full p-2 rounded-xl bg-blue-gray-700">
+                    {/*BACK*/}
                     <section>
                         <Typography
                             as="a"
                             href="/stock"
                             color="black"
-                            className="flex items-center bg-gray-300 gap-2 py-3 px-8 rounded-lg font-bold text-sm w-36"
+                            className="flex items-center bg-gray-300 gap-2 py-3 px-8 m-4 rounded-lg font-bold text-sm w-36"
                         >
-                            <FaArrowLeftLong />
-                            BACK
+                            <FaArrowLeftLong /> BACK
                         </Typography>
                     </section>
-                    <section className=" w-full  p-4 flex  flex-row">
 
-
-                        <section className=" w-8/12 h-96 p-6  ">
-                            <section className="flex flex-col p-4">
+                    {/*MAIN*/}
+                    <section className=" w-full  flex flex-row">
+                        {/*CAR INFOS*/}
+                        <section className=" w-8/12 h-96 px-6  ">
+                            <section className="flex flex-row p-4 gap-4 pt-9">
                                 <UpdateStockInfos />
                                 <UpdateStockDatas />
                             </section>
@@ -71,8 +73,9 @@ const StockDetails = () => {
                         </section>
                     </section>
 
-                    <section className=" w-full h-1/2 p-6 flex">
-                        <section className="bg-yellow-200 w-full rounded-xl ">STOCK MOVEMENT</section>
+                    {/*GRAPH STOCK MOVEMENT*/}
+                    <section className=" w-full h-1/2 p-8 flex">
+                        <section className="bg-blue-gray-300 w-full rounded-xl p-12 ">STOCK MOVEMENT</section>
                     </section>
                 </section>
             </section>

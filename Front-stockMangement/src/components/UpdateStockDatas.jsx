@@ -78,43 +78,52 @@ const UpdateStockDatas = () => {
     const percentageWish = Math.floor(mathWish * 100)
 
     return (
-        <section className="w-full flex justify-evenly bg-gray-400 rounded-xl p-4">
+        <section className="w-2/3 flex flex-col">
+
+        <section className="flex flex-wrap p-2 px-4 gap-6  bg-gradient-to-br from-gray-400 to-blue-gray-300 border-4 rounded-xl">
             <Toaster
                 position="top-right"
                 reverseOrder={false}
             />
-            <section className="w-64 flex justify-center items-center flex-col">
-                <Typography variant="h1" color="blue-gray" >
+            <section className="w-40 h-40 flex justify-center items-center text-center flex-col ">
+                <Typography variant="h2" className="" color="blue-gray" >
                     {car?.currentStock}
                 </Typography>
-                <Typography variant="h4" color="blue-gray" >
+                <Typography variant="h5" color="blue-gray" >
                     Available Units
                 </Typography>
             </section>
-            <section className="w-64 flex justify-center items-center flex-col">
-                <Typography variant="h1" color="blue-gray" >
+            <section className="w-52 h-40 flex justify-center items-center flex-col">
+                <Typography variant="h2" color="blue-gray" >
                     {percentageWish}%
                 </Typography>
-                <Typography variant="h4" color="blue-gray" className="text-center">
+                <Typography variant="h5" color="blue-gray" className="text-center">
                     Stock Fulfillment
                 </Typography>
                 <Typography>
                     ({car?.wishStock} is your wish)
                 </Typography>
             </section>
-            <section className="w-64 flex justify-center items-center flex-col">
-                <Typography variant="h1" color="blue-gray" >
+            <section className="w-40 h-40 flex justify-center items-center text-center flex-col">
+                <Typography variant="h2" color="blue-gray" >
                     {car?.dangerStock}
                 </Typography>
-                <Typography variant="h4" color="blue-gray" >
+                <Typography variant="h5" color="blue-gray" >
                     Minimum Safety Stock
                 </Typography>
             </section>
+        </section>
+
+        <section className="flex justify-center items-center gap-4 mt-4">
             {(isManager || isAdmin) && (
-            <Button variant="text" color="black" className="bg-red-300" onClick={handleOpen}>
-                Edit Stock Levels
-            </Button>
+                <Button variant="text" color="black" className="bg-gray-300 hover:bg-red-300" onClick={handleOpen}>
+                    Edit Stock Levels
+                </Button>
+                // <Typography color="white" className="pt-6 font-semibold cursor-pointer" onClick={handleOpen}>
+                //     Edit Stock Levels
+                // </Typography>
             )}
+        </section>
 
             {/*DIALOG DATAS*/}
             <Dialog open={open} handler={handleOpen}>
@@ -318,9 +327,7 @@ const UpdateStockDatas = () => {
                     </Button>
                 </DialogFooter>
             </Dialog>
-
         </section>
-
     );
 };
 
