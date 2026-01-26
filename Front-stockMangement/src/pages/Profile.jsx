@@ -95,6 +95,9 @@ const Profile = () => {
     const [openEmail, setOpenEmail] = useState(false)
     const [openPassword, setOpenPassword] = useState(false)
 
+    console.log(userInfo.user)
+    console.log(userInfo.user.sector)
+
     return (
         <section className="fixed end-0 w-5/6 p-4 h-screen  overflow-y-auto">
             <Helmet>
@@ -110,8 +113,7 @@ const Profile = () => {
                 {/*Title*/}
                 <Typography className="font-h1 w-full text-center text-3xl pb-12" color="white">My profile</Typography>
 
-                <section className="flex flex-col items-center h-2/3">
-
+                <section className="flex flex-col  items-center h-2/3">
                     {/*PERSONAL INFOS*/}
                     <section className="w-3/5 bg-blue-gray-800 rounded-2xl border-2 p-8 shadow-xl mb-4">
                         <Typography className="text-2xl font-bold text-gray-100 mb-6 ">
@@ -208,7 +210,7 @@ const Profile = () => {
                                 <section>
                                     <div className="flex items-center gap-4 ">
                                         <Typography className="font-bold text-2xl text-gray-100">Password : </Typography>
-                                        <Typography className="text-2xl  text-gray-100">{userInfo.user.password}</Typography>
+                                        <Typography className="text-2xl  text-gray-100">*******</Typography>
                                         <IconButton
                                             onClick={() => setOpenPassword(!openPassword)}
                                             className="rounded-3xl bg-amber-900"
@@ -229,6 +231,7 @@ const Profile = () => {
                                             className="text-gray-100"
                                             color="white"
                                         />
+
                                         <Input
                                             type="password"
                                             variant="outlined"
@@ -263,133 +266,7 @@ const Profile = () => {
                             <Typography className="text-xl pl-2 text-gray-100">{userInfo.user.sector}</Typography>
                         </section>
                     </section>
-
                 </section>
-
-                    {/*from section*/}
-                <div className="my-10 flex flex-col items-center border-8 rounded-2xl bg-gray-500 ">
-                    {/*firstname et lastname section*/}
-                    <div className="flex items-center gap-6  p-2 ">
-                        {/*firstname*/}
-                        <div className="w-96 ">
-
-                            <div className=" w-full h-12 flex items-center justify-center">
-                                <Typography color="white" className="font-bold text-xl">Firstname :</Typography>
-                                <Typography color="white" className="text-xl pl-4">{userInfo.user.firstName}</Typography>
-                            </div>
-
-                            <Collapse open={openCollaps}>
-
-                            {/*<div className=" w-full ">*/}
-                                <Card className="my-4 mx-auto bg-gray-300 shadow-none">
-                                    <CardBody className=" flex gap-4">
-                                        <Input
-                                            type="text"
-                                            variant="outlined"
-                                            label="Firstname"
-                                            name="firstName"
-                                            value={firstName}
-                                            onChange={(e) => setFirstname(e.target.value)}
-                                        />
-                                        <Button color="orange" onClick={(e) => handleSubmit(e, {firstName})}>Save</Button>
-                                    </CardBody>
-                                </Card>
-                            {/*</div>*/}
-                                </Collapse>
-                        </div>
-
-                        {/*lastname*/}
-                        <div className="w-96 ">
-
-                            <div className=" w-full h-12 flex items-center justify-center">
-                                <Typography color="white" className="font-bold text-xl">Lastname :</Typography>
-                                <Typography color="white" className="text-xl pl-4">{userInfo.user.lastName}</Typography>
-                            </div>
-
-                            <Collapse open={openCollaps}>
-                                <Card className="my-4 mx-auto bg-gray-300 shadow-none">
-                                    <CardBody className=" flex gap-4">
-                                        <Input
-                                            type="text"
-                                            variant="outlined"
-                                            label="Lastname"
-                                            name="lastName"
-                                            value={lastName}
-                                            onChange={(e) => setLastname(e.target.value)}
-                                        />
-                                        <Button color="orange" onClick={(e) => handleSubmit(e, {lastName})}>Save</Button>
-                                    </CardBody>
-                                </Card>
-                            </Collapse>
-
-                        </div>
-                    </div>
-
-                    {/*email et password section*/}
-                    <div className="flex  gap-6  p-2 ">
-                        {/*email*/}
-                        <div className="w-96 ">
-
-                            <div className=" w-full h-12 flex items-center justify-center">
-                                <Typography color="white" className="font-bold text-xl">Email :</Typography>
-                                <Typography color="white" className="text-xl pl-4">{userInfo.user.email}</Typography>
-                            </div>
-
-                            <Collapse open={openCollaps}>
-                                <Card className="my-4 mx-auto bg-gray-300 shadow-none">
-                                    <CardBody className=" flex gap-4">
-                                        <Input
-                                            type="text"
-                                            variant="outlined"
-                                            label="Email"
-                                            name="email"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                        />
-                                        <Button color="orange" onClick={(e) => handleSubmit(e, {email})}>Save</Button>
-                                    </CardBody>
-                                </Card>
-                            </Collapse>
-                        </div>
-
-                        {/*password*/}
-                        <div className="w-96 ">
-
-                            <div className=" w-full h-12 flex items-center justify-center">
-                                <Typography color="white" className="font-bold text-xl">Password :</Typography>
-                                <Typography color="white" className="text-xl pl-4">****</Typography>
-                            </div>
-
-                            <Collapse open={openCollaps}>
-                                <Card className="my-4 mx-auto bg-gray-300 shadow-none">
-                                    <CardBody className=" flex flex-col gap-4">
-                                        <Input
-                                            type="password"
-                                            variant="outlined"
-                                            label="Old password"
-                                            name="old_password"
-                                            value={oldPassword}
-                                            onChange={(e) => setOldPassword(e.target.value)}
-                                        />
-                                        <Input
-                                            type="password"
-                                            variant="outlined"
-                                            label="New password"
-                                            name="new_password"
-                                            value={newPassword}
-                                            onChange={(e) => setNewPassword(e.target.value)}
-                                        />
-                                        <Button color="orange" onClick={(e) => handleSubmit(e, {oldPassword, newPassword})}>Save</Button>
-                                    </CardBody>
-                                </Card>
-                            </Collapse>
-                        </div>
-
-                    </div>
-                </div>
-                <div className="flex justify-center items-center gap-6 ">
-                    <Button onClick={toggleOpenCollaps} className="bg-red-500">Edit</Button>
-                </div>
             </div>
         </section>
 

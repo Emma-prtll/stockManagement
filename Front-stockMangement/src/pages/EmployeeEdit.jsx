@@ -82,7 +82,7 @@ const EmployeeEdit = () => {
         }
     }
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
     const handleOpen = () => setOpen(!open);
 
     const [openUpdateRole, setOpenUpdateRole] = useState(false)
@@ -114,7 +114,7 @@ const EmployeeEdit = () => {
                 <DialogFooter className="flex justify-center gap-8">
                     <Button
                         variant="gradient"
-                        color="red"
+                        color="deep-orange"
                         onClick={handleOpen}
                         className="mr-1"
                     >
@@ -145,8 +145,8 @@ const EmployeeEdit = () => {
                         <span>Cancel</span>
                     </Button>
                     <Button
-                        variant="gradient"
-                        color="red"
+                        variant="outlined"
+                        color="green"
                         onClick={handleDelete}
                         className="mr-1"
                     >

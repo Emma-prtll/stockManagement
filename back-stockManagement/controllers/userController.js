@@ -41,7 +41,6 @@ const register = handler(async (req, res) => {
     // Si vous ne voulez pas un login auto après inscription
         res.status(201).json({
             _id: user._id,
-            username: user.username,
             email: user.email,
             lastName: user.lastName ? user.lastName : "",
             firstName: user.firstName ? user.firstName : "",
