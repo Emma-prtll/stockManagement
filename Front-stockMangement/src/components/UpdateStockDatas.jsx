@@ -80,24 +80,24 @@ const UpdateStockDatas = () => {
     return (
         <section className="w-2/3 flex flex-col">
 
-        <section className="flex flex-wrap p-2 px-4 gap-6  bg-gradient-to-br from-gray-400 to-blue-gray-300 border-4 rounded-xl">
+        <section className="flex p-2 px-4 bg-gradient-to-br from-gray-400 to-blue-gray-300 border-4  rounded-xl">
             <Toaster
                 position="top-right"
                 reverseOrder={false}
             />
-            <section className="w-40 h-40 flex justify-center items-center text-center flex-col ">
-                <Typography variant="h2" className="" color="blue-gray" >
+            <section className="w-40 h-40 flex justify-center items-center text-center flex-col">
+                <Typography variant="h3" className="" color="blue-gray" >
                     {car?.currentStock}
                 </Typography>
-                <Typography variant="h5" color="blue-gray" >
+                <Typography variant="h6" color="blue-gray" >
                     Available Units
                 </Typography>
             </section>
             <section className="w-52 h-40 flex justify-center items-center flex-col">
-                <Typography variant="h2" color="blue-gray" >
+                <Typography variant="h3" color="blue-gray" >
                     {percentageWish}%
                 </Typography>
-                <Typography variant="h5" color="blue-gray" className="text-center">
+                <Typography variant="h6" color="blue-gray" className="text-center">
                     Stock Fulfillment
                 </Typography>
                 <Typography>
@@ -105,10 +105,10 @@ const UpdateStockDatas = () => {
                 </Typography>
             </section>
             <section className="w-40 h-40 flex justify-center items-center text-center flex-col">
-                <Typography variant="h2" color="blue-gray" >
+                <Typography variant="h3" color="blue-gray" >
                     {car?.dangerStock}
                 </Typography>
-                <Typography variant="h5" color="blue-gray" >
+                <Typography variant="h6" color="blue-gray" >
                     Minimum Safety Stock
                 </Typography>
             </section>

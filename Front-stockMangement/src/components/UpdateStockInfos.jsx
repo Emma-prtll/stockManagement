@@ -95,9 +95,9 @@ const UpdateStockInfos = () => {
     const [year, setYear] = useState("")
 
     return (
-        <div className="flex justify-between items-center w-1/3 pl-8">
+        <div className="flex justify-between w-1/3 pl-8 mr-6">
             {/*BASIC INFOS*/}
-            <section className="w-full pt-3">
+            <section className="w-full">
                 <Typography variant="h3" color="white" className="mb-5">
                     {car?.brand} - {car?.model}
                 </Typography>

@@ -126,7 +126,7 @@ const Register = () => {
                 <Typography className="font-h1 p-10 w-full mb-4 text-center text-3xl" color="white">Add a new employee</Typography>
 
                 {/*FORM*/}
-                <section className="gap-2 w-full px-16 pt-16 rounded-xl ">
+                <section className="gap-2 w-full px-16 rounded-xl ">
                     <section className="gap-3 w-full flex rounded-xl ">
                     {/*PERSONAL INFOS*/}
                     <div className="bg-gray-200 rounded-tl-xl w-1/2 py-10 px-14 flex flex-col gap-4">

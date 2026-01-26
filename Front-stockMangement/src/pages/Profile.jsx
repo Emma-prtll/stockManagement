@@ -65,7 +65,7 @@ const Profile = () => {
     //Méthode pour gérer l'update des infos de l'utilisateur
     const handleSubmit = async (e, data) => {
         e.preventDefault()
-        if(!isEmpty(email) && !isEmail(email)) {
+        if(mail===true && !isEmpty(email) && !isEmail(email)) {
             toast.error("Email invalide")
             console.log("Email invalide")
         } else {
@@ -77,12 +77,33 @@ const Profile = () => {
                 toast.success("fe")
                 // toast.success(user.message)
 
-                setFirstname("")
-                setLastname("")
-                setEmail("")
-                setOldPassword("")
-                setNewPassword("")
+                // setFirstname("")
+                // setLastname("")
+                // setEmail("")
+                // setOldPassword("")
+                // setNewPassword("")
+                if (data.firstName !== undefined){
+                    setFirstname("")
+                    setOpenFirstname(!openFirstname)
+                }
+                if (data.lastName !== undefined) {
+                    setLastname("")
+                    setOpenLastname(!openLastname)
+
+                }
+                if (data.email !== undefined) {
+                    setEmail("")
+                    setOpenEmail(!openEmail)
+
+                }
+                if (data.oldPassword !== undefined) {
+                    setOldPassword("")
+                    setNewPassword("")
+                    setOpenPassword(!openPassword)
+                }
+
                 await updateProfile(update)
+                mail=false
             } catch (e) {
                 console.log(e)
                 toast.error(e.message)
@@ -95,11 +116,10 @@ const Profile = () => {
     const [openEmail, setOpenEmail] = useState(false)
     const [openPassword, setOpenPassword] = useState(false)
 
-    console.log(userInfo.user)
-    console.log(userInfo.user.sector)
+    let mail = false;
 
     return (
-        <section className="fixed end-0 w-5/6 p-4 h-screen  overflow-y-auto">
+        <section className="fixed end-0 w-5/6 p-4 h-screen overflow-y-auto">
             <Helmet>
                 <title>Profile</title>
             </Helmet>
@@ -109,13 +129,13 @@ const Profile = () => {
             />
 
             {/*background*/}
-            <div className="p-10 rounded-l-xl border  h-full rounded-xl bg-blue-gray-600 ">
+            <div className="p-10 rounded-l-xl border h-full rounded-xl bg-blue-gray-600 ">
                 {/*Title*/}
                 <Typography className="font-h1 w-full text-center text-3xl pb-12" color="white">My profile</Typography>
 
                 <section className="flex flex-col  items-center h-2/3">
                     {/*PERSONAL INFOS*/}
-                    <section className="w-3/5 bg-blue-gray-800 rounded-2xl border-2 p-8 shadow-xl mb-4">
+                    <section className="w-4/5 bg-blue-gray-800 rounded-2xl border-2 p-8 shadow-xl mb-4">
                         <Typography className="text-2xl font-bold text-gray-100 mb-6 ">
                             Personal informations
                         </Typography>
@@ -202,7 +222,7 @@ const Profile = () => {
                                             className="text-gray-100"
                                             color="white"
                                         />
-                                        <Button className="bg-amber-900 mt-3" onClick={(e) => handleSubmit(e, {email})}>Save</Button>
+                                        <Button className="bg-amber-900 mt-3" onClick={(e) => handleSubmit(e, {email}, mail=true)}>Save</Button>
                                     </Collapse>
                                 </section>
 
@@ -251,7 +271,7 @@ const Profile = () => {
                     </section>
 
                     {/*PROFESSIONAL INFOS*/}
-                    <section className="w-3/5 bg-blue-gray-800 rounded-2xl border-2 p-8 shadow-xl mb-4">
+                    <section className="w-4/5 bg-blue-gray-800 rounded-2xl border-2 p-8 shadow-xl mb-4">
                         <Typography className="text-2xl font-bold text-gray-100 mb-6">
                             Professional informations
                         </Typography>

@@ -121,7 +121,7 @@ const AddItem = () => {
                     </Dialog>
 
                     {/*TITLE*/}
-                    <Typography className="font-h1 p-10 w-full mb-4 text-center text-3xl" color="white">Add a new car</Typography>
+                    <Typography className="font-h1 p-10 w-full text-center text-3xl" color="white">Add a new car</Typography>
 
                     <section className="flex justify-center ">
                         {/*PART 1 - CAR INFOS*/}
@@ -170,14 +170,14 @@ const AddItem = () => {
                                     value={year}
                                     onChange={(e) => setYear(e.target.value)}
                                 />
-                                <Input
-                                    label="Image (disable)"
-                                    size="lg"
-                                    name="image"
-                                    disabled
-                                    // value={image}
-                                    // onChange={(e) => setImage(e.target.value)}
-                                />
+                                {/*<Input*/}
+                                {/*    label="Image (disable)"*/}
+                                {/*    size="lg"*/}
+                                {/*    name="image"*/}
+                                {/*    disabled*/}
+                                {/*    // value={image}*/}
+                                {/*    // onChange={(e) => setImage(e.target.value)}*/}
+                                {/*/>*/}
                             </div>
                         </div>
                         )}
@@ -342,15 +342,15 @@ const AddItem = () => {
                         {activeStep === 2 && (
                             <div className="h-full w-1/2 border-4 rounded-xl shadow-xl bg-gray-200">
                                 <div className="bg-blue-gray-700 rounded-t-xl">
-                                    <Typography className="font-h1 text-2xl border-6 p-6  rounded-xl" color="white">Summery and validation</Typography>
-                                    <Typography className="w-4/5 border-6 pl-6 pb-6   rounded-xl" color="white">
+                                    <Typography className="font-h1 text-2xl border-6 p-6 pb-2 rounded-xl" color="white">Summery and validation</Typography>
+                                    <Typography className="w-4/5 border-6 pl-6 pb-6 rounded-xl" color="white">
                                         Please carefully review the information below before submitting.
                                         Ensure all required fields are completed accurately.
                                         You can navigate back to previous steps to make any necessary corrections.
                                     </Typography>
                                 </div>
 
-                                <section className="font-h1 text-2xl border-6 p-6  flex justify-evenly " color="white">
+                                <section className="font-h1 text-2xl border-6 p-6 flex justify-evenly " color="white">
                                     <div className="flex flex-col gap-2 ">
                                         <Typography className="font-h1 pb-2">Car infos</Typography>
                                         <Typography>Brand : {brand}</Typography>
@@ -366,7 +366,7 @@ const AddItem = () => {
                                     </div>
 
                                 </section>
-                                <div className="p-4 flex justify-center w-full my-4 gap-12 ">
+                                <div className="flex justify-center w-full my-4 gap-12 ">
                                     <Button color="red" variant="outlined" onClick={handleOpen}>Cancel</Button>
                                     <Button color="green" onClick={handleSubmit} >Validate</Button>
                                 </div>
@@ -375,7 +375,7 @@ const AddItem = () => {
                     </section>
 
                     {/*STEPPER*/}
-                    <section className="flex justify-center w-5/6 pt-20 fixed bottom-12 right-0">
+                    <section className="flex justify-center w-5/6  fixed bottom-12 right-0 ">
                         <div className="w-3/5 py-4 px-8">
                             <Stepper
                                 activeStep={activeStep}
@@ -394,7 +394,7 @@ const AddItem = () => {
                                     <FaCheck className="h-4 w-4"  />
                                 </Step>
                             </Stepper>
-                            <div className="mt-16 flex justify-between">
+                            <div className="mt-8 flex justify-between">
                                 <Button onClick={handlePrev} disabled={isFirstStep}>
                                     Prev
                                 </Button>

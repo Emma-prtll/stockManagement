@@ -174,7 +174,7 @@ const EmployeeEdit = () => {
 
                     <section className="flex flex-col items-center h-2/3">
                         {/*PERSONAL INFOS*/}
-                        <section className="w-3/5 bg-blue-gray-800 rounded-2xl border-2 p-8 shadow-xl mb-4">
+                        <section className="w-4/5 bg-blue-gray-800 rounded-2xl border-2 p-8 shadow-xl mb-4">
                             <Typography className="text-2xl font-bold text-gray-100 mb-6">
                                 Personal information
                             </Typography>
@@ -196,7 +196,7 @@ const EmployeeEdit = () => {
                         </section>
 
                         {/*PROFESSIONAL INFOS*/}
-                        <section className="w-3/5 bg-blue-gray-800 rounded-2xl border-2 p-8 shadow-xl ">
+                        <section className="w-4/5 bg-blue-gray-800 rounded-2xl border-2 p-8 shadow-xl ">
                             <Typography className="text-2xl font-bold text-gray-100 mb-6">
                                 Professional information
                             </Typography>

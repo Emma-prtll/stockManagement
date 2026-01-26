@@ -52,17 +52,17 @@ const StockDetails = () => {
                     </section>
 
                     {/*MAIN*/}
-                    <section className=" w-full  flex flex-row">
+                    <section className="w-full flex flex-row h-1/3 mb-12">
                         {/*CAR INFOS*/}
                         <section className=" w-8/12 h-96 px-6  ">
-                            <section className="flex flex-row p-4 gap-4 pt-9">
+                            <section className="flex flex-row p-4  ">
                                 <UpdateStockInfos />
                                 <UpdateStockDatas />
                             </section>
                         </section>
 
                         {/*IMAGE*/}
-                        <section className=" w-4/12 h-96 p-6  ">
+                        <section className=" w-3/12 h-64 p-6    ">
                             <section className=" w-full h-full ">
                                 <img
                                     src="https://media.audi.com/is/image/audi/country/ch/assets/models/r8/Audi-R8-5589-1920x1080-2.jpg"

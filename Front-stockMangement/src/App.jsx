@@ -11,6 +11,7 @@ import StockDetails from "./pages/StockDetails.jsx";
 import EmployeeEdit from "./pages/EmployeeEdit.jsx";
 import {ToastContainer} from "react-toastify"
 import EmployeeInfos from "./components/EmployeeInfos.jsx";
+import {useAuthStore} from "./store/authStore.js";
 
 
 

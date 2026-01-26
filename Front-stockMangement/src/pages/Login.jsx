@@ -53,7 +53,7 @@ const Login = () => {
     }
 
     return (
-        <section className=" fixed end-0 w-5/6 p-4 h-screen bg-blue-100">
+        <section className=" fixed end-0 w-5/6 p-4 h-screen">
             <Helmet>
                 <title>Login</title>
             </Helmet>
@@ -61,7 +61,7 @@ const Login = () => {
                 position="top-right"
                 reverseOrder={false}
             />
-            <section className="h-full p-2 rounded-xl bg-blue-500 flex items-center justify-center">
+            <section className="h-full p-2 rounded-xl bg-blue-gray-600 flex items-center justify-center">
 
             <Card className="w-96  ">
                 <CardHeader
@@ -96,7 +96,7 @@ const Login = () => {
                             <Spinner className="h-8 w-8"/>
                         </>
                     ) : (
-                        <Button variant="gradient" className="focus:outline-none" fullWidth onClick={handleSubmit}>
+                        <Button variant="gradient" color="gray" className="focus:outline-none" fullWidth onClick={handleSubmit}>
                             Sign In
                         </Button>
                     )}
