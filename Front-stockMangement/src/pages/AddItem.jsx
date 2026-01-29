@@ -13,7 +13,7 @@ import {
 } from "@material-tailwind/react"
 import React, {useEffect, useState} from "react";
 import {useCarStore} from "../store/carStore.js";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet";
 import toast, {Toaster} from "react-hot-toast";
 import isInt from "validator/es/lib/isInt.js";
@@ -109,14 +109,14 @@ const AddItem = () => {
                             >
                                 <span>Cancel</span>
                             </Button>
-                            <a href="/home">
+                            <Link to="/home">
                                 <Button
                                     variant="outlined"
                                     color="green"
                                     onClick={handleOpen}>
                                     <span>Confirm</span>
                                 </Button>
-                            </a>
+                            </Link>
                         </DialogFooter>
                     </Dialog>
 
@@ -170,14 +170,6 @@ const AddItem = () => {
                                     value={year}
                                     onChange={(e) => setYear(e.target.value)}
                                 />
-                                {/*<Input*/}
-                                {/*    label="Image (disable)"*/}
-                                {/*    size="lg"*/}
-                                {/*    name="image"*/}
-                                {/*    disabled*/}
-                                {/*    // value={image}*/}
-                                {/*    // onChange={(e) => setImage(e.target.value)}*/}
-                                {/*/>*/}
                             </div>
                         </div>
                         )}
@@ -235,7 +227,6 @@ const AddItem = () => {
                                         </IconButton>
                                     </div>
                                 </div>
-                                {/*----------------------*/}
                                 {/*WISH LIMIT*/}
                                 <Typography color="black" className="pb-2">Wish stock</Typography>
                                 <div className="relative w-full pb-8">
@@ -284,7 +275,6 @@ const AddItem = () => {
                                         </IconButton>
                                     </div>
                                 </div>
-                                {/*----------------------*/}
                                 {/*DANGER LIMIT*/}
                                 <Typography color="black" className="pb-2">Danger stock</Typography>
                                 <div className="relative w-full">
@@ -333,7 +323,6 @@ const AddItem = () => {
                                         </IconButton>
                                     </div>
                                 </div>
-                                {/*----------------------*/}
                             </div>
                         </div>
                         )}

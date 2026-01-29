@@ -87,7 +87,7 @@ const logout = handler( async (req, res) => {
         httpOnly: true,
         expires: new Date(0)
     })
-    res.status(200).json({message : "Utilisateur.trice déconnecté avec succès"})
+    res.status(200).json({message : "Logged out successfully."})
 })
 
 // @route Route User (GET) /api/user/profile:_id
@@ -108,8 +108,7 @@ const getProfile = handler (async (req, res) => {
         })
     } else {
         //Ici, l'utilisateur n'existe pas
-        res.status(400)
-        throw new Error("L'utilisateur n'existe pas.")
+        return res.status(400).json({message: "User not found."})
     }
 })
 
@@ -122,7 +121,7 @@ const updateProfile = handler(async (req, res) => {
     const user = await User.findById(req.body._id)
 
     if(!user){
-        return res.status(400).json({message: "L'utilisateur n'existe pas !"})
+        return res.status(400).json({message: "User not found."})
     }
 
     //Ici, on a un utilisateur qui existe
@@ -164,7 +163,7 @@ const updateUser = handler(async (req, res) => {
     const user = await User.findById(req.params.id)
 
     if(!user){
-        return res.status(400).json({message: "L'utilisateur n'existe pas !"})
+        return res.status(400).json({message: "User not found."})
     }
 
     //Ici, on a un utilisateur qui existe
@@ -178,7 +177,6 @@ const updateUser = handler(async (req, res) => {
     //Ici, on a toutes les données qui doivent être modifiées | on enregistre les modifications
     const updateUser = await user.save()
 
-
     res.status(200).json({
         _id: updateUser._id,
         email: updateUser.email,
@@ -188,7 +186,6 @@ const updateUser = handler(async (req, res) => {
         sector: updateUser.sector,
         message: `${user.firstName} ${user.lastName} has been update successfully!`
     })
-
 })
 
 const getUsers =  handler (async (req, res) => {
@@ -213,7 +210,7 @@ const getAUser = handler (async (req, res) => {
     } else {
         //Ici, l'item n'existe pas
         res.status(400)
-        throw new Error("L'utilisateur n'existe pas.")
+        throw new Error("User not found.")
     }
 
     // res.status(200).json({message: `Route pour récupérer UN utilisateur.trice : ${req.params._id}`})
@@ -223,7 +220,7 @@ const deleteUser = handler(async (req, res) => {
     const user = await userModel.findById(req.params.id)
 
     if(!user) {
-        return res.status(400).json({message: "No user found."})
+        return res.status(400).json({message: "User not found."})
     }
 
     await user.deleteOne()

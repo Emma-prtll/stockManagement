@@ -34,7 +34,7 @@ const Stock = () => {
                     reverseOrder={false}
                 />
 
-                <section className="h-dvh rounded-xl bg-green-500 overflow-auto flex flex-col justify-center ">
+                <section className="h-dvh rounded-xl overflow-auto flex flex-col justify-center ">
 
                     <section className="w-full h-20 bg-blue-gray-900 flex justify-center items-center gap-4 shadow-xl shadow-blue-gray-900/40 z-20">
                         <Typography color="white">

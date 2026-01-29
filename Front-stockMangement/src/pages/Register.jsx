@@ -15,7 +15,7 @@ import {
 import React, {useEffect, useState} from "react";
 import {useUserStore} from "../store/userStore.js";
 import navigation from "../components/Navigation.jsx";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet";
 // import {toast} from "react-toastify";
 import toast, { Toaster } from 'react-hot-toast';
@@ -110,14 +110,14 @@ const Register = () => {
                     >
                         <span>Cancel</span>
                     </Button>
-                    <a href="/admin">
+                    <Link to="/admin">
                         <Button
                             variant="outlined"
                             color="green"
                             onClick={handleOpen}>
                             <span>Confirm</span>
                         </Button>
-                    </a>
+                    </Link>
                 </DialogFooter>
             </Dialog>
 

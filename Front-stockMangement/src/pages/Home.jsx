@@ -1,5 +1,8 @@
 import {Helmet} from "react-helmet";
 import LinearChart from "../components/LinearChart.jsx";
+import {Typography} from "@material-tailwind/react";
+import React from "react";
+import {useCarStore} from "../store/carStore.js";
 
 
 const Home = () => {
@@ -11,18 +14,18 @@ const Home = () => {
                 <title>Dashboard</title>
             </Helmet>
 
-            <section className="fixed end-0 w-5/6 p-4 h-screen bg-blue-100">
-                <section className="h-full p-2 rounded-xl bg-blue-500">
-                    <section className="font-h1 p-10 bg-amber-200 rounded-xl">HOME</section>
-                    <section className="flex h-full">
-                        <div className="bg-red-200 w-1/3 mb-24"></div>
+            <section className="fixed end-0 w-5/6 p-4 h-screen bg-gray-100">
+                <section className="h-full p-2 rounded-xl bg-blue-gray-900">
+                    {/*TITLE*/}
+                    <Typography className="font-h1 p-10 w-full text-center text-3xl" color="white">Dashboard</Typography>
+                    <section className="py-14 rounded-xl bg-blue-gray-300 flex">
+                        <div className="flex flex-col justify-center items-center gap-6 w-1/3 pl-12">
+                            <div className="w-full h-1/2 border-4 rounded-xl"></div>
+                            <div className="w-full h-1/2 border-4 rounded-xl"></div>
+                        </div>
 
-                        <div className="bg-green-200 w-2/3 mb-24">
-                            <div className="bg-amber-400 w-full h-1/2 flex ">
-                                <div className="bg-amber-800 w-1/2">fe</div>
-                                <div className="bg-red-500 w-1/2">ht</div>
-                            </div>
-                            <div className="bg-gray-300 w-full h-1/2 flex justify-center items-center"><LinearChart/></div>
+                        <div className="flex justify-center items-center w-2/3">
+                                <LinearChart/>
                         </div>
                     </section>
 

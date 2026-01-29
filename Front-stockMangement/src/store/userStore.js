@@ -130,6 +130,7 @@ export const useUserStore = create((set) => ({
             try {
                 const response = await axios.delete(`http://localhost:8000/api/user/deleteUser/${id}`)
                 set({users: response.data})
+                return response.data
             } catch (error) {
                 // set((state) => ({message: error.response.data.message || error.response}))
                 const message = error.response?.data?.message
@@ -138,7 +139,6 @@ export const useUserStore = create((set) => ({
             } finally {
                 set((state) => ({userLoading: !state.userLoading}))
             }
-
     },
 
 

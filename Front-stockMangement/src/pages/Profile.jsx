@@ -1,24 +1,13 @@
-import {
-    Button,
-    Card,
-    CardBody,
-    Collapse,
-    IconButton,
-    Input,
-    Option,
-    Select,
-    Typography
-} from "@material-tailwind/react";
+import {Button, Card, CardBody, Collapse, IconButton, Input, Option, Select, Typography} from "@material-tailwind/react";
 import {FaRegEdit} from "react-icons/fa";
 import React, {useEffect, useState} from "react";
 import {useAuthStore} from "../store/authStore.js";
 import {useUserStore} from "../store/userStore.js";
 import {Helmet} from "react-helmet";
-import {toast} from "react-toastify";
-import {Toaster} from "react-hot-toast";
 import isEmail from "validator/lib/isEmail.js";
 import isEmpty from "validator/es/lib/isEmpty.js";
 import {MdEdit} from "react-icons/md";
+import toast, {Toaster} from "react-hot-toast";
 
 
 const Profile = () => {
@@ -74,14 +63,7 @@ const Profile = () => {
                     _id: userInfo.user._id,
                     input: data
                 }
-                toast.success("fe")
-                // toast.success(user.message)
 
-                // setFirstname("")
-                // setLastname("")
-                // setEmail("")
-                // setOldPassword("")
-                // setNewPassword("")
                 if (data.firstName !== undefined){
                     setFirstname("")
                     setOpenFirstname(!openFirstname)
@@ -102,7 +84,8 @@ const Profile = () => {
                     setOpenPassword(!openPassword)
                 }
 
-                await updateProfile(update)
+                const mess = await updateProfile(update)
+                toast.success(mess.message)
                 mail=false
             } catch (e) {
                 console.log(e)
@@ -148,10 +131,10 @@ const Profile = () => {
                                     <Typography className="text-2xl  text-gray-100">{userInfo.user.firstName}</Typography>
                                     <IconButton
                                         onClick={() => setOpenFirstname(!openFirstname)}
-                                        className="rounded-3xl bg-amber-900"
+                                        className="rounded-3xl bg-blue-gray-800 shadow-none"
                                         size="sm"
                                     >
-                                        <MdEdit size={18}  />
+                                        <MdEdit size={18}/>
                                     </IconButton>
                                     </div>
                                     <Collapse open={openFirstname} className="w-96 pt-3">
@@ -175,7 +158,7 @@ const Profile = () => {
                                         <Typography className="text-2xl  text-gray-100">{userInfo.user.lastName}</Typography>
                                         <IconButton
                                             onClick={() => setOpenLastname(!openLastname)}
-                                            className="rounded-3xl bg-amber-900"
+                                            className="rounded-3xl bg-blue-gray-800 shadow-none"
                                             size="sm"
                                         >
                                             <MdEdit size={18}  />
@@ -205,7 +188,7 @@ const Profile = () => {
                                         <Typography className="text-2xl  text-gray-100">{userInfo.user.email}</Typography>
                                         <IconButton
                                             onClick={() => setOpenEmail(!openEmail)}
-                                            className="rounded-3xl bg-amber-900"
+                                            className="rounded-3xl bg-blue-gray-800 shadow-none"
                                             size="sm"
                                         >
                                             <MdEdit size={18}  />
@@ -233,7 +216,7 @@ const Profile = () => {
                                         <Typography className="text-2xl  text-gray-100">*******</Typography>
                                         <IconButton
                                             onClick={() => setOpenPassword(!openPassword)}
-                                            className="rounded-3xl bg-amber-900"
+                                            className="rounded-3xl bg-blue-gray-800 shadow-none"
                                             size="sm"
                                         >
                                             <MdEdit size={18}  />

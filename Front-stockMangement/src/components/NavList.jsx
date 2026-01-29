@@ -5,8 +5,8 @@ import {useAuthStore} from "../store/authStore.js";
 const NavList = () => {
     const userInfo = useAuthStore((state) => state.userInfo);
 
-    const isLogged = !!userInfo;
-    const role = userInfo?.user.role;
+    const isLogged = !!userInfo
+    const role = userInfo?.user.role
 
      // let userRole = ""
     // if(role === "Admin") {
@@ -21,15 +21,11 @@ const NavList = () => {
     const isManager = role === "Manager";
     const isAdmin = role === "Admin";
 
-
     return (
         <nav className="flex flex-col gap-2">
-            <Typography
-            className="font-extralight"
-            >
-                {userInfo?.user.role}
+            <Typography className="font-extrabold text-2xl pb-8 text-center" color="white" >
+                Hey, {userInfo?.user.firstName} !
             </Typography>
-
 
             {/*USER CONNECTED*/}
             {isLogged && (

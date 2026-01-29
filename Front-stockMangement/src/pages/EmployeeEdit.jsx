@@ -1,16 +1,6 @@
 import React, {useEffect} from 'react';
 import StockInfos from "../components/StockInfos.jsx";
-import {
-    Button,
-    ButtonGroup,
-    Card,
-    CardBody,
-    Collapse, Dialog, DialogBody, DialogFooter, DialogHeader,
-    IconButton,
-    Input, Option,
-    Select,
-    Typography
-} from "@material-tailwind/react";
+import {Button, ButtonGroup, Card, CardBody, Collapse, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton, Input, Option, Select, Typography} from "@material-tailwind/react";
 import {Helmet} from "react-helmet";
 import {useUserStore} from "../store/userStore.js";
 import {useNavigate, useParams} from "react-router-dom";
@@ -55,9 +45,9 @@ const EmployeeEdit = () => {
 
     const handleDelete = async () => {
         try {
-            await deleteUser(user._id)
+            const mess = await deleteUser(user._id)
             navigate("/admin")
-            toast.success(user.message)
+            toast.success(mess.message)
         } catch (err) {
             toast.error(err.message);
         }
@@ -150,7 +140,7 @@ const EmployeeEdit = () => {
                         onClick={handleDelete}
                         className="mr-1"
                     >
-                        <span>Agree</span>
+                        <span>Yes, delete</span>
                     </Button>
                 </DialogFooter>
             </Dialog>

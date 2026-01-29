@@ -41,14 +41,11 @@ const Login = () => {
                 setCredentials({user})
                 navigate('/')
             } else {
-                toast.dismiss() //Ferme-le toaste actif avant d'en activer un autre
-                toast.error(message.message)
                 setEmail("")
                 setPassword("")
             }
         } catch (e) {
             console.log(e)
-            toast.error(e.message)
         }
     }
 
@@ -57,10 +54,7 @@ const Login = () => {
             <Helmet>
                 <title>Login</title>
             </Helmet>
-            <Toaster
-                position="top-right"
-                reverseOrder={false}
-            />
+
             <section className="h-full p-2 rounded-xl bg-blue-gray-600 flex items-center justify-center">
 
             <Card className="w-96  ">

@@ -9,33 +9,40 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import StockDetails from "./pages/StockDetails.jsx";
 import EmployeeEdit from "./pages/EmployeeEdit.jsx";
-import {ToastContainer} from "react-toastify"
 import EmployeeInfos from "./components/EmployeeInfos.jsx";
-import {useAuthStore} from "./store/authStore.js";
-
-
+import { useAuthStore } from "./store/authStore.js";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import NotLogged from "./pages/notLogged.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
 
 function App() {
-
     return (
-        <BrowserRouter >
+        <BrowserRouter>
             <Navigation />
             <Routes>
-                <Route path="/home" element={<Home />} />
-                <Route path="/stockDetails/:id" element={<StockDetails />} />
-                <Route path="/stock" element={<Stock />} />
-                <Route path="/addItem" element={<AddItem />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/employeeInfos" element={<EmployeeInfos/>} />
-                <Route path="/employeeEdit/:id" element={<EmployeeEdit/>} />
+                {/*EVERYBODY*/}
                 <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-            </Routes>
-            {/*<ToastContainer theme="dark"/>*/}
+                <Route path="/notLogged" element={<NotLogged />} />
+                <Route path="/*" element={<ErrorPage />} />
 
+                {/*IS LOGGED*/}
+                <Route path="/home" element={ <ProtectedRoute> <Home />  </ProtectedRoute>} />
+                <Route path="/stock" element={ <ProtectedRoute> <Stock />  </ProtectedRoute>} />
+                <Route path="/profile" element={ <ProtectedRoute> <Profile />  </ProtectedRoute>} />
+                <Route path="/stockDetails/:id" element={ <ProtectedRoute> <StockDetails />  </ProtectedRoute>} />
+
+                {/*IS MANAGER OR ADMIN*/}
+                <Route path="/addItem" element={  <ProtectedRoute allowedRoles={["Admin", "Manager"]}> <AddItem /> </ProtectedRoute>} />
+
+                {/*IS JUST ADMIN*/}
+                <Route path="/admin" element={ <ProtectedRoute allowedRoles={["Admin"]}> <Admin /></ProtectedRoute> }/>
+                <Route path="/addItem" element={ <ProtectedRoute allowedRoles={["Admin"]}> <AddItem /></ProtectedRoute> }/>
+                <Route path="/register" element={ <ProtectedRoute allowedRoles={["Admin"]}> <Register /></ProtectedRoute> }/>
+                <Route path="/employeeInfos" element={ <ProtectedRoute allowedRoles={["Admin"]}> <EmployeeInfos/> </ProtectedRoute> }/>
+                <Route path="/employeeEdit/:id" element={ <ProtectedRoute allowedRoles={["Admin"]}> <EmployeeEdit/> </ProtectedRoute> }/>
+            </Routes>
         </BrowserRouter>
-    )
+    );
 }
 
-export default App
+export default App;
