@@ -23,13 +23,17 @@ const NavList = () => {
 
     return (
         <nav className="flex flex-col gap-2">
-            <Typography className="font-extrabold text-2xl pb-8 text-center" color="white" >
-                Hey, {userInfo?.user.firstName} !
-            </Typography>
+            {/*<Typography className="font-extrabold text-2xl pb-8 text-center" color="white" >*/}
+            {/*    Hey, {userInfo?.user.firstName} !*/}
+            {/*</Typography>*/}
 
             {/*USER CONNECTED*/}
             {isLogged && (
+
                 <>
+                    <Typography className="font-extrabold text-2xl pb-8 text-center" color="white" >
+                        Hey, {userInfo?.user.firstName} !
+                    </Typography>
                     {/* COMMUN À TOUS */}
                     <Typography
                         as="a"
