@@ -28,6 +28,6 @@ export const useCarHistoryStore = create((set) => ({
                 historyLoading: false,
             })
 
-    }}
+        }}
 
 }))

@@ -61,7 +61,6 @@ const UpdateStockDatas = () => {
             toast.success(result.message)
 
         } catch (err) {
-            console.log(err)
             handleOpen()
             toast.error(err.message)
         }
@@ -80,50 +79,50 @@ const UpdateStockDatas = () => {
     return (
         <section className="w-2/3 flex flex-col">
 
-        <section className="flex p-2 px-4 bg-gradient-to-br from-gray-400 to-blue-gray-300 border-4  rounded-xl">
-            <Toaster
-                position="top-right"
-                reverseOrder={false}
-            />
-            <section className="w-40 h-40 flex justify-center items-center text-center flex-col">
-                <Typography variant="h3" className="" color="blue-gray" >
-                    {car?.currentStock}
-                </Typography>
-                <Typography variant="h6" color="blue-gray" >
-                    Available Units
-                </Typography>
+            <section className="flex p-2 px-4 bg-gradient-to-br from-gray-400 to-blue-gray-300 border-4  rounded-xl">
+                <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                />
+                <section className="w-40 h-40 flex justify-center items-center text-center flex-col">
+                    <Typography variant="h3" className="" color="blue-gray" >
+                        {car?.currentStock}
+                    </Typography>
+                    <Typography variant="h6" color="blue-gray" >
+                        Available Units
+                    </Typography>
+                </section>
+                <section className="w-52 h-40 flex justify-center items-center flex-col">
+                    <Typography variant="h3" color="blue-gray" >
+                        {percentageWish}%
+                    </Typography>
+                    <Typography variant="h6" color="blue-gray" className="text-center">
+                        Stock Fulfillment
+                    </Typography>
+                    <Typography>
+                        ({car?.wishStock} is your wish)
+                    </Typography>
+                </section>
+                <section className="w-40 h-40 flex justify-center items-center text-center flex-col">
+                    <Typography variant="h3" color="blue-gray" >
+                        {car?.dangerStock}
+                    </Typography>
+                    <Typography variant="h6" color="blue-gray" >
+                        Minimum Safety Stock
+                    </Typography>
+                </section>
             </section>
-            <section className="w-52 h-40 flex justify-center items-center flex-col">
-                <Typography variant="h3" color="blue-gray" >
-                    {percentageWish}%
-                </Typography>
-                <Typography variant="h6" color="blue-gray" className="text-center">
-                    Stock Fulfillment
-                </Typography>
-                <Typography>
-                    ({car?.wishStock} is your wish)
-                </Typography>
-            </section>
-            <section className="w-40 h-40 flex justify-center items-center text-center flex-col">
-                <Typography variant="h3" color="blue-gray" >
-                    {car?.dangerStock}
-                </Typography>
-                <Typography variant="h6" color="blue-gray" >
-                    Minimum Safety Stock
-                </Typography>
-            </section>
-        </section>
 
-        <section className="flex justify-center items-center gap-4 mt-4">
-            {(isManager || isAdmin) && (
-                <Button variant="text" color="black" className="bg-gray-300 hover:bg-red-300" onClick={handleOpen}>
-                    Edit Stock Levels
-                </Button>
-                // <Typography color="white" className="pt-6 font-semibold cursor-pointer" onClick={handleOpen}>
-                //     Edit Stock Levels
-                // </Typography>
-            )}
-        </section>
+            <section className="flex justify-center items-center gap-4 mt-4">
+                {(isManager || isAdmin) && (
+                    <Button variant="text" color="black" className="bg-gray-300 hover:bg-red-300" onClick={handleOpen}>
+                        Edit Stock Levels
+                    </Button>
+                    // <Typography color="white" className="pt-6 font-semibold cursor-pointer" onClick={handleOpen}>
+                    //     Edit Stock Levels
+                    // </Typography>
+                )}
+            </section>
 
             {/*DIALOG DATAS*/}
             <Dialog open={open} handler={handleOpen}>

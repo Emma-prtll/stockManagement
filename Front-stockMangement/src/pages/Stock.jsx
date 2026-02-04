@@ -8,8 +8,9 @@ import {Typography} from "@material-tailwind/react";
 
 const Stock = () => {
 
-    const cars = useCarStore((state) => state.cars);
+    const cars = useCarStore((state) => state.cars)
     const getCars = useCarStore((state) => state.getCars)
+
 
     useEffect(() => {
         getCars()
@@ -20,8 +21,9 @@ const Stock = () => {
     const toTop = () => {
         topRef.current?.scrollIntoView({
             behavior: "smooth",
-        });
-    };
+        })
+    }
+
 
     return (
         <>
@@ -67,6 +69,8 @@ const Stock = () => {
                                 <StockInfos car={car} />
                             </div>
                         ))}
+
+
                     </section>
                     <button className="h-10 w-10 bg-amber-900 rounded-3xl absolute right-24 bottom-20 border-4 animate-bounce flex justify-center items-center" onClick={toTop}>
                         <FaArrowUp className="h-6 w-6" color="white"/>

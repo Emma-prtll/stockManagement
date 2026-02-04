@@ -56,7 +56,6 @@ const AddItem = () => {
             try{
                 await addItem(data)
             } catch (error) {
-                console.log(error)
                 toast.error(error.message)
             }
         }
