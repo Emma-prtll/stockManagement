@@ -54,7 +54,7 @@ const updateItem = handler (async (req, res) => {
     const car = await Car.findById(req.params.id)
 
     if(!car) {
-        return res.status(400).json({message: "La voiture n'existe pas !"})
+        return res.status(400).json({message: "There is no car with this ID !"})
     }
 
     const oldStock = car.currentStock;
@@ -95,7 +95,6 @@ const updateItem = handler (async (req, res) => {
         dangerStock: updatedCar.dangerStock,
         message: `${car.brand} ${car.model} has been update successfully!`
     })
-    //res.status(200).json({"Message" : `La voiture ${updatedCar._id} | ${updatedCar.brand} à été modifiée avec succès !`})
 })
 
 const deleteItem = handler(async (req, res) => {

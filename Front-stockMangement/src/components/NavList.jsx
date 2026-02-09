@@ -8,28 +8,14 @@ const NavList = () => {
     const isLogged = !!userInfo
     const role = userInfo?.user.role
 
-     // let userRole = ""
-    // if(role === "Admin") {
-    //      userRole = "Admin"
-    // }else if (role === "Manager") {
-    //     userRole = "Manager"
-    // }else if (role === "Employee") {
-    //     userRole = "Employee"
-    // }
-
-    // const isEmployee = role === "Employee";
     const isManager = role === "Manager";
     const isAdmin = role === "Admin";
 
     return (
         <nav className="flex flex-col gap-2">
-            {/*<Typography className="font-extrabold text-2xl pb-8 text-center" color="white" >*/}
-            {/*    Hey, {userInfo?.user.firstName} !*/}
-            {/*</Typography>*/}
 
             {/*USER CONNECTED*/}
             {isLogged && (
-
                 <>
                     <Typography className="font-extrabold text-2xl pb-8 text-center" color="white" >
                         Hey, {userInfo?.user.firstName} !

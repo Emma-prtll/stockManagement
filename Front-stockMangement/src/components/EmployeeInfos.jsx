@@ -38,7 +38,6 @@ const EmployeeInfos = () => {
 
                 <tbody>
                 {safeUsers.map((user, index) => (
-                // {users.map((user, index) => (
                     <tr key={index} className="even:bg-blue-gray-50/50">
                         <td className="p-4">
                             <Typography variant="small" color="blue-gray">{user.firstName}</Typography>
