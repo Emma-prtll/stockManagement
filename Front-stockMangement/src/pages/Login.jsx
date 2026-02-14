@@ -1,35 +1,29 @@
 import {Card, CardHeader, CardBody, CardFooter, Typography, Input, Checkbox, Button, Spinner} from "@material-tailwind/react";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useAuthStore} from "../store/authStore.js";
 import {useUserStore} from "../store/userStore.js";
-// import {toast} from "react-toastify";
-import toast, { Toaster } from 'react-hot-toast';
 import {Helmet} from "react-helmet";
 
 
 const Login = () => {
 
-    //Création des states pour les input du formulaire
+    //States for the inputs
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    //Import des states et méthode du authSotre
     const userInfo = useAuthStore((state) => state.userInfo)
     const setCredentials = useAuthStore((state) => state.setCredentials)
 
-    //Import des states et méthode du userStore
     const user = useUserStore((state) => state.user)
-    const message = useUserStore((state) => state.message)
     const loading = useUserStore((state) => state.userLoading)
     const login = useUserStore((state) => state.login)
 
-    //Import de méthode de navigation de react
     const navigate = useNavigate()
 
     useEffect(() => {
         if(userInfo) {
-            navigate('/home')
+            navigate('/')
         }
     }, [navigate, userInfo])
 

@@ -1,6 +1,4 @@
 import {Typography} from "@material-tailwind/react";
-import {FaArrowLeftLong} from "react-icons/fa6";
-import React from "react";
 
 const ErrorPage = () => {
     return (
@@ -9,7 +7,7 @@ const ErrorPage = () => {
                     <img src="/img/icons/Error404.png" alt="Logo" className="w-3/5"/>
                 <Typography
                     as="a"
-                    href="/home"
+                    href="/"
                     color="white"
                     className="flex items-center bg-amber-900 gap-2 py-3 px-8 m-4 rounded-lg font-bold text-sm "
                 >

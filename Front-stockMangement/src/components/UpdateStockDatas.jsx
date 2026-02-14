@@ -1,41 +1,32 @@
-import React, {useEffect, useState} from 'react';
-import {
-    Button,
-    Dialog,
-    DialogBody,
-    DialogFooter,
-    DialogHeader,
-    IconButton,
-    Input, Tooltip,
-    Typography
-} from "@material-tailwind/react";
+import {useEffect, useState} from 'react';
+import {Button, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton, Input, Tooltip, Typography} from "@material-tailwind/react";
 import {useAuthStore} from "../store/authStore.js";
 import {useCarStore} from "../store/carStore.js";
 import {useParams} from "react-router-dom";
 import {FaInfoCircle} from "react-icons/fa";
 import toast, {Toaster} from "react-hot-toast";
+import {useCarHistoryStore} from "../store/carHistoryStore.js";
 
 const UpdateStockDatas = () => {
 
     const car = useCarStore((state) => state.cars)
     const getACar = useCarStore((state) => state.getACar)
-    // const updateProfile = useUserStore((state) => state.updateProfile)
     const updateCar = useCarStore((state) => state.updateItem)
     const car_id = useParams().id
-    const message = useCarStore((state) => state.message)
+    const getOneCarHistory = useCarHistoryStore((state) => state.getOneCarHistory);
 
 
-    //GESTION DES ROLES
+    //Roles gestion
     const userInfo = useAuthStore((state) => state.userInfo);
     const role = userInfo?.user.role;
     const isManager = role === "Manager";
     const isAdmin = role === "Admin";
 
     //Dialogue
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(!open);
 
-    //MORE AND LESS BUTTONS
+    //More and less stock update (buttons)
     useEffect(() => {
         if (car) {
             setCurrentStock(car.currentStock || 0);
@@ -57,6 +48,8 @@ const UpdateStockDatas = () => {
 
             await updateCar(car_id, data)
             await getACar(car_id)
+            await getOneCarHistory(car_id)
+
             handleOpen()
             toast.success(result.message)
 
@@ -66,13 +59,12 @@ const UpdateStockDatas = () => {
         }
     }
 
-    //State pour les inputs
+    //State for the inputs
     const [currentStock, setCurrentStock] = useState("")
     const [wishStock, setWishStock] = useState("")
     const [dangerStock, setDangerStock] = useState("")
 
-    //Math
-    //WishStock
+    //Math to calculate the percentage of stock fulfillment
     const mathWish = car?.currentStock / car?.wishStock
     const percentageWish = Math.floor(mathWish * 100)
 

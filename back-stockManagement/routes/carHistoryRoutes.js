@@ -1,13 +1,15 @@
-//Import des librairies et fichiers
 const express = require('express')
 const router = express.Router()
 const carHistoryController = require('../controllers/carHistoryController')
-const carController = require("../controllers/carController");
 
 // @route Route Car (GET)
-// @desc Route pour obtenir tous les produits de la BDD
-// @access Public
+// @desc Route to get ALL cars historic
+// @access Private
 router.route('/getCarsHistorical').get(carHistoryController.getCarsHistorical)
 
-//Export de le route
+// @route Route Car (GET)
+// @desc Route to get ONE car historic
+// @access Private
+router.route('/getOneCarHistory/:carId').get(carHistoryController.getOneCarHistory)
+
 module.exports = router

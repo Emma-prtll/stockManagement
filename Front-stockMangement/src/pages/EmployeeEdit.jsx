@@ -1,48 +1,32 @@
-import React, {useEffect} from 'react';
-import StockInfos from "../components/StockInfos.jsx";
-import {Button, ButtonGroup, Card, CardBody, Collapse, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton, Input, Option, Select, Typography} from "@material-tailwind/react";
+import {useEffect} from 'react';
+import {Button, Collapse, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton, Input, Option, Select, Typography} from "@material-tailwind/react";
 import {Helmet} from "react-helmet";
 import {useUserStore} from "../store/userStore.js";
 import {useNavigate, useParams} from "react-router-dom";
-import {FaArrowLeftLong, FaArrowRightLong} from "react-icons/fa6";
+import {FaArrowLeftLong} from "react-icons/fa6";
 import {useState} from "react";
-import { RiEditLine } from "react-icons/ri";
-import {useAuthStore} from "../store/authStore.js";
-// import {toast} from "react-toastify";
 import toast, {Toaster} from "react-hot-toast";
-import {MdDeleteOutline, MdEdit} from "react-icons/md";
-
-
+import {MdEdit} from "react-icons/md";
 
 const EmployeeEdit = () => {
 
-    // //State pour les collapse
-    // const navigate = useNavigate();
-    // const [openRole, setOpenRole] = useState(false)
-    // const toggleOpenRole= () => setOpenRole((openRole) => !openRole)
-    // const [openSector, setOpenSector] = useState(false)
-    // const toggleOpenSector= () => setOpenSector((openSector) => !openSector)
-
-    //State pour les inputs
+    //State for the inputs
     const [role, setRole] = useState("")
     const [sector, setSector] = useState("")
 
-
     const user = useUserStore((state) => state.users);
-    const userInfo = useAuthStore((state) => state.userInfo)
     const getAUser = useUserStore((state) => state.getAUser)
     const updateUser = useUserStore((state) => state.updateUser)
     const deleteUser = useUserStore((state) => state.deleteUser)
-    const message = useUserStore((state) => state.message)
     const user_id = useParams().id
 
     useEffect(() => {
         getAUser(user_id)
     }, [])
 
-    //Suppression du user
     const navigate = useNavigate();
 
+    // Delete the user | if it's a success, redirect to the admin page
     const handleDelete = async () => {
         try {
             const mess = await deleteUser(user._id)
@@ -53,10 +37,10 @@ const EmployeeEdit = () => {
         }
     }
 
-    const [openDelete, setOpenDelete] = React.useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
     const handleOpenDelete = () => setOpenDelete(!openDelete);
 
-    //  changer de role et sector
+    // Update the user | if it's a success, put the input empty back'
     const handleSubmit = async (e, data) => {
         e.preventDefault();
         try {

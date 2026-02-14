@@ -1,27 +1,27 @@
-import React, { useEffect } from 'react';
-import { Button, Card, Typography } from "@material-tailwind/react";
+import { useEffect } from 'react';
+import { Card, Typography } from "@material-tailwind/react";
 import {useUserStore} from "../store/userStore.js";
-import StockInfos from "./StockInfos.jsx";
 
 const EmployeeInfos = () => {
 
-    const TABLE_HEAD = ["Firstname", "Lastname", "Role", "Sector", "Email", "" ];
-
-    const getUsers = useUserStore((state) => state.getUsers);
-    const users = useUserStore((state) => state.users);
+    const getUsers = useUserStore((state) => state.getUsers)
+    const users = useUserStore((state) => state.users)
 
     useEffect(() => {
         getUsers();
-    }, []);
+    }, [])
 
-    const safeUsers = Array.isArray(users) ? users : [];
+    // Construction of the table head
+    const TABLE_HEAD = ["Firstname", "Lastname", "Role", "Sector", "Email", "" ]
 
+    const safeUsers = Array.isArray(users) ? users : []
 
     return (
         <Card className="h-full w-full overflow-scroll">
             <table className="w-full min-w-max table-auto text-left">
                 <thead>
                 <tr>
+                    {/*Loop through the table head and create a table header for each column*/}
                     {TABLE_HEAD.map((head) => (
                         <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                             <Typography
@@ -37,6 +37,7 @@ const EmployeeInfos = () => {
                 </thead>
 
                 <tbody>
+                {/*Loop through the users array and create a table row for each object*/}
                 {safeUsers.map((user, index) => (
                     <tr key={index} className="even:bg-blue-gray-50/50">
                         <td className="p-4">

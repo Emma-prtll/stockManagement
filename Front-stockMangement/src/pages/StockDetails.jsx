@@ -1,26 +1,14 @@
-import React, {useEffect} from 'react';
-import StockInfos from "../components/StockInfos.jsx";
-import {
-    Button,
-    ButtonGroup,
-    Dialog,
-    DialogBody,
-    DialogFooter,
-    DialogHeader, IconButton, Input, Option, Select,
-    Typography
-} from "@material-tailwind/react";
+import {useEffect} from 'react';
+import { Typography } from "@material-tailwind/react";
 import {Helmet} from "react-helmet";
 import {useCarStore} from "../store/carStore.js";
 import {useNavigate, useParams} from "react-router-dom";
-import {FaArrowLeftLong, FaArrowRightLong} from "react-icons/fa6";
-import {useAuthStore} from "../store/authStore.js";
+import {FaArrowLeftLong} from "react-icons/fa6";
 import UpdateStockInfos from "../components/UpdateStockInfos.jsx";
 import UpdateStockDatas from "../components/UpdateStockDatas.jsx";
-import LinearChart from "../components/LinearChart.jsx";
+import StockChart from "../components/StockChart.jsx";
 
 const StockDetails = () => {
-
-    const navigate = useNavigate();
 
     const car = useCarStore((state) => state.cars);
     const getACar = useCarStore((state) => state.getACar)
@@ -29,8 +17,6 @@ const StockDetails = () => {
     useEffect(() => {
         getACar(car_id)
     }, [])
-
-    // console.log(car)
 
     return (
         <>
@@ -75,7 +61,9 @@ const StockDetails = () => {
 
                     {/*GRAPH STOCK MOVEMENT*/}
                     <section className=" w-full h-1/2 p-8 flex">
-                        <section className="bg-blue-gray-300 w-full rounded-xl p-12 ">STOCK MOVEMENT</section>
+                        <div className="bg-blue-gray-900 w-full h-full border-2 rounded-xl shadow-xl shadow-blue-gray-900/50 p-8">
+                            <StockChart carId={car_id} dangerStock={car.dangerStock} wishStock={car.wishStock}  />
+                        </div>
                     </section>
                 </section>
             </section>

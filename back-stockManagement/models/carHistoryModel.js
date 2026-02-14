@@ -1,10 +1,9 @@
-//Import des librairies et fichier
 const mongoose = require('mongoose')
 
-//On définit le schema de données que l'on souhaite pour nos users
+// Set the schema for the cars historic
 const carHistorySchema = mongoose.Schema({
     carId: {
-        //Lien avec le Schema car pour récupérer l'id de la voiture
+        // Link with the car schema to get the car id
         type: mongoose.Schema.Types.ObjectId,
         ref: "Car",
         required: true,

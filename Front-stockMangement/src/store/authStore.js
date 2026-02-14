@@ -1,10 +1,12 @@
 import {create} from 'zustand'
 
-export const useAuthStore = create((set) => ({ //Création d'un store avec zustand
-    //On crée un state pour stocker notre utilisateur dans le localStorage
+//Creation of the store with zustand
+export const useAuthStore = create((set) => ({
+
+    // Creation of a state to stock our user in the localStorage
     userInfo : localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,
 
-    //Quand l'utilisateur se connecte, on enregistre ses infos dans le localStorage et dans notre state
+    // When the user logs in, the information are saved in the localStorage and in our state
     setCredentials: (data) => {
         set(() => ({userInfo: data}))
         localStorage.setItem('userInfo', JSON.stringify(data))

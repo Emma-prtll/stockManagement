@@ -1,4 +1,4 @@
-//On indique les ports/adresse qui on le droit de ce connecter à notre backend
+// Allowed adresses and ports for the backend connection
 const allowedOrigins = [
     'http://localhost:3000',
     'http://localhost:5174',

@@ -1,22 +1,17 @@
-//Import des librairies
 import axios from "axios"
 import {create} from "zustand"
 
-//On configure axios pour qu'il accepte les "credentials"
+// Configuration of axios to accept credentials
 axios.defaults.withCredentials = true
 
-//On crée notre store
-    //use nous permet (par react) de créer un hook
-    //create() = methode de zustand
 export const useUserStore = create((set) => ({
-    //Déclaration et initialisation des stats du store
-    users: [], //Utilisé pour stocker les données utilisateur qui vienne du backend
-    message: "", //Utilisé pour afficher les messages d'erreur ou de succès
-    userLoading: false, //Utilisé pour activer ou désactiver un loader
+    //State of the store declaration and initialization
+    users: [],  // Use to stock the user datas that are from the backend
+    message: "", // Use to display error or success messages
+    userLoading: false, // Use to display a loader
 
     login: async(data) => {
         set((state) => ({userLoading: !state.userLoading}))
-
         try {
             const response = await axios.post('http://localhost:8000/api/user/login', data)
             set(() => ({user: response.data}))
@@ -35,9 +30,7 @@ export const useUserStore = create((set) => ({
     },
 
     register: async (data) => {
-
         set((state) => ({userLoading: !state.userLoading}))
-
         try {
             const response = await axios.post('http://localhost:8000/api/user/register', data)
             set(() => ({user: response.data}))
@@ -53,19 +46,12 @@ export const useUserStore = create((set) => ({
     },
 
     updateProfile: async (data) => {
-        // set((state) => ({userLoading: !state.userLoading}))
-        // const response = await axios.put('http://localhost:8000/api/user/profile', data)
-        // set(() => ({user: response.data}))
-        // set((state) => ({userLoading: !state.userLoading}))
-
         set((state) => ({userLoading: !state.userLoading}))
-
         try {
             const response = await axios.put('http://localhost:8000/api/user/profile', data)
             set(() => ({user: response.data}))
             return response.data
         } catch (error) {
-            // set(() => ({message: error.response.data}))
             const message = error.response?.data?.message
             set({ message })
             throw new Error(message)
@@ -76,18 +62,11 @@ export const useUserStore = create((set) => ({
 
     updateUser: async (id, data) => {
         set((state) => ({userLoading: !state.userLoading}))
-
-        // set((state) => ({userLoading: !state.userLoading}))
-        // const response = await axios.put(`http://localhost:8000/api/user/updateUser/${id}`, data)
-        // set(() => ({user: response.data}))
-        // set((state) => ({userLoading: !state.userLoading}))
-
         try {
             const response = await axios.put(`http://localhost:8000/api/user/updateUser/${id}`, data)
             set(() => ({user: response.data}))
             return response.data
         } catch (error) {
-            // set(() => ({message: error.response.data}))
             const message = error.response?.data?.message
             set({ message })
             throw new Error(message)
@@ -121,18 +100,12 @@ export const useUserStore = create((set) => ({
     },
 
     deleteUser: async (id) => {
-
-        // set((state) => ({userLoading: !state.userLoading}))
-        // const response = await axios.delete(`http://localhost:8000/api/user/deleteUser/${id}`)
-        // set(() => ({message: response.data}))
-
             set((state) => ({userLoading: !state.userLoading}))
             try {
                 const response = await axios.delete(`http://localhost:8000/api/user/deleteUser/${id}`)
                 set({users: response.data})
                 return response.data
             } catch (error) {
-                // set((state) => ({message: error.response.data.message || error.response}))
                 const message = error.response?.data?.message
                 set({ message })
                 throw new Error(message)
@@ -140,10 +113,5 @@ export const useUserStore = create((set) => ({
                 set((state) => ({userLoading: !state.userLoading}))
             }
     },
-
-
-
-
-
 
 }))

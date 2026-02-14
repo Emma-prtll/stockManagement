@@ -1,29 +1,18 @@
 import EmployeeInfos from "../components/EmployeeInfos.jsx";
-import StockInfos from "../components/StockInfos.jsx";
-import {Button, Card, CardBody, CardFooter, Typography} from "@material-tailwind/react";
-import {FaArrowRightLong} from "react-icons/fa6";
-import React, {useEffect} from "react";
+import {Typography} from "@material-tailwind/react";
+import {useEffect} from "react";
 import {Helmet} from "react-helmet";
-import {useCarStore} from "../store/carStore.js";
 import {useUserStore} from "../store/userStore.js";
-
 import { useLocation } from "react-router-dom";
-// import { toast } from "react-toastify";
 import {Toaster} from "react-hot-toast";
-
-
 
 const Admin = () => {
 
-    const location = useLocation();
-
-    const users = useUserStore((state) => state.users);
     const getUsers = useUserStore((state) => state.getUsers)
 
     useEffect(() => {
         getUsers()
     }, [])
-
 
     return (
         <>
@@ -39,7 +28,6 @@ const Admin = () => {
 
                     <section className="flex justify-between px-8 mb-6 mt-4">
                         <Typography color="white" className="font-h1 text-3xl mb-2">Employee list</Typography>
-                        {/*<Button className="bg-red-200 mb-8">Add Employee</Button>*/}
                         <Typography
                             as="a"
                             href="/register"

@@ -1,22 +1,20 @@
-//Import des librairies et fichiers
 const jsw = require('jsonwebtoken')
 
-//Fonction pour gérer un token de sécurité et le mettre dans un cookie qui sera envoyé au frontend
-//Cette fonction doit prendre en paramètre le résultat et le userId
+//Fonction to generate a security token and put it in a cookie that will be sent to the frontend
+//This function must take as a parameter the result and the userId
 const generateToken = (res, userId) => {
-    //Générer le token jsw
+    //Generation of the jsw token
     const token = jsw.sign({userId}, process.env.JWT_SECRET, {
-        expiresIn : '30d' //Validité du token pdt 30 jours
+        expiresIn : '30d' //Validation of the token for 30 days
     })
 
-    //On crée le cookie pour le frontend
+    //Creation of the cookie for the frontend
     res.cookie('jwt', token, {
         httpOnly: true,
-        secure : process.env.NODE_ENV !== 'developpement', //Pour utiliser un httpsCookie en mode dev
-        sameSite : 'strict', //Dire qu'on ne peut pas avoir le site ouvert sur deux appareils en même temps
-        maxAge : 30 * 24 * 60 * 1000 // = 30 jours | temps de vie du cookie
+        secure : process.env.NODE_ENV !== 'developpement', //To use a httpsCookie in dev mode
+        sameSite : 'strict', //To not have the site open on two devices at the same time
+        maxAge : 30 * 24 * 60 * 1000 //= 30 days
     })
 }
 
-//Export de la fonction
 module.exports = {generateToken}

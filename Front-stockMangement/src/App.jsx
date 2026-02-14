@@ -10,7 +10,6 @@ import Register from "./pages/Register.jsx";
 import StockDetails from "./pages/StockDetails.jsx";
 import EmployeeEdit from "./pages/EmployeeEdit.jsx";
 import EmployeeInfos from "./components/EmployeeInfos.jsx";
-import { useAuthStore } from "./store/authStore.js";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import NotLogged from "./pages/notLogged.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
@@ -23,10 +22,9 @@ function App() {
                 {/*EVERYBODY*/}
                 <Route path="/login" element={<Login />} />
                 <Route path="/notLogged" element={<NotLogged />} />
-                <Route path="/*" element={<ErrorPage />} />
 
                 {/*IS LOGGED*/}
-                <Route path="/home" element={ <ProtectedRoute> <Home />  </ProtectedRoute>} />
+                <Route path="/" element={ <ProtectedRoute> <Home />  </ProtectedRoute>} />
                 <Route path="/stock" element={ <ProtectedRoute> <Stock />  </ProtectedRoute>} />
                 <Route path="/profile" element={ <ProtectedRoute> <Profile />  </ProtectedRoute>} />
                 <Route path="/stockDetails/:id" element={ <ProtectedRoute> <StockDetails />  </ProtectedRoute>} />
@@ -40,6 +38,9 @@ function App() {
                 <Route path="/register" element={ <ProtectedRoute allowedRoles={["Admin"]}> <Register /></ProtectedRoute> }/>
                 <Route path="/employeeInfos" element={ <ProtectedRoute allowedRoles={["Admin"]}> <EmployeeInfos/> </ProtectedRoute> }/>
                 <Route path="/employeeEdit/:id" element={ <ProtectedRoute allowedRoles={["Admin"]}> <EmployeeEdit/> </ProtectedRoute> }/>
+
+                {/*EVERYBODY*/}
+                <Route path="/*" element={<ErrorPage />} />
             </Routes>
         </BrowserRouter>
     );

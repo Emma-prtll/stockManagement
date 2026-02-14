@@ -1,40 +1,39 @@
-//Import des librairies et fichiers
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const connectDB = require('./config/dbConnection')
 const corsOptions = require('./config/corsOptions')
-//Variable de configuration | certain nécessite d'être configuré
+
+// Variable for configuration | some need to be configured
 const app = express()
-const PORT = process.env.PORT || 8000 //Si le port définit dans le .env est boucher, on lui donne un autre
+const PORT = process.env.PORT || 8000 // If the port in the .env is full, it will use this one
 require('dotenv').config()
 
-//Connection à la base de données
+// Database connection
 connectDB()
 
-//configuration du serveur
+// Server configuration
 app.use(cors(corsOptions))
 app.use(express.json())
-app.use(express.urlencoded({extended: false })) //On explique qu'il va recevoir des informations par l'URL et qu'il devra les accepters
+app.use(express.urlencoded({extended: false })) // Say that some infos will pass through the URL, need to be accepted
 
-//Route utilisée pour les users
-//On lui dit que quand il reçoit /api/user il doit aller dans userRoutes.js
+// Tell where to go depending of the user demande
+//Route use for the users
 app.use('/api/user', require('./routes/userRoutes'))
-//Route utilisée pour les voitures
+//Route use for the cars
 app.use('/api/car', require('./routes/carRoutes'))
-//Route utilisée pour les historiques de voitures
+//Route use for the carHistory
 app.use('/api/carHistory', require('./routes/carHistoryRoutes'))
 
-//On essaye de se connecter à la BDD de Mongo
-//Si la base de donnée n'est pas atteignable, on ne lance pas le serveur
+//Try to connect to the Mongo DB, if not possible, the server won't start
 mongoose.connection.once('open', () => {
-    //Ici, on a réussi à se connecter, on affiche un message dans la console du terminal
+    // Connection successful
     app.listen(PORT, () => {
-        console.log(`Serveur lancé sur le port ${PORT}`)
+        console.log(`Server has been start on ${PORT}`)
     })
 })
 
-//Si on a un problème de connexion, on affiche l'erreur dans le terminal
+//If there is a problem with the connection, informe in the console
 mongoose.connection.on('error', err => {
-    console.log(`Erreur de connexion Mongo: ${err}`)
+    console.log(`Connexion probleme on MongoDB: ${err}`)
 })

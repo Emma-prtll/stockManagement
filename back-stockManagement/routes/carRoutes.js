@@ -1,38 +1,30 @@
-//Import des librairies et fichiers
 const express = require('express')
 const router = express.Router()
 const carController = require('../controllers/carController')
 
 // @route Route Car (POST)
-// @desc Route pour créer un produit (formulaire sur le frontend)
-// @access Private (admin)
+// @desc Route to add a new item (Form in frontend)
+// @access Private (admin & manager)
 router.route('/addItem').post(carController.addItem)
 
 // @route Route Car (PUT)
-// @desc Route pour modifier un produit dans la BDD depuis son ID
-// @access Private (admin)
-// router.route('/updateItem').put(carController.updateItem) ANCIEN
+// @desc Route to update an item infos (Form in frontend)
+// @access Private (admin & manager)
 router.route('/updateItem/:id').put(carController.updateItem)
 
 // @route Route Car (DELETE)
-// @desc Route pour supprimer un produit dans la BDD depuis son ID
-// @access Private (admin)
-// router.put('/deleteItem:_id', (req, res) => {
-// })
+// @desc Route to delete an item (Button in frontend)
+// @access Private (admin & manager)
 router.route('/deleteItem/:id').delete(carController.deleteItem)
 
-
 // @route Route Car (GET)
-// @desc Route pour obtenir tous les produits de la BDD
-// @access Public
+// @desc Route to get ALL items
+// @access Private (everyone when logged in)
 router.route('/getCars').get(carController.getCars)
 
-
 // @route Route Car (GET)
-// @desc Route pour obtenir un produit de la BDD via son ID
-// @access Public
+// @desc Route to get ONE item
+// @access Private (everyone when logged in)
 router.route('/getACar/:id').get(carController.getACar)
 
-
-//Export des routes
 module.exports = router

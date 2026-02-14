@@ -1,7 +1,6 @@
-//Import des librairies et fichier
 const mongoose = require('mongoose')
 
-//On définit le schema de données que l'on souhaite pour nos users
+// Set the schema for the cars
 const carShema = mongoose.Schema({
     brand: {
         type: String,

@@ -1,13 +1,6 @@
-import {Card, CardHeader, CardBody, CardFooter, Typography, Input, Checkbox, Button, Spinner} from "@material-tailwind/react";
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {useAuthStore} from "../store/authStore.js";
-import {useUserStore} from "../store/userStore.js";
-// import {toast} from "react-toastify";
-import toast, { Toaster } from 'react-hot-toast';
+import {Typography} from "@material-tailwind/react";
 import {Helmet} from "react-helmet";
-import {FaArrowLeftLong, FaArrowRightLong} from "react-icons/fa6";
-
+import {FaArrowRightLong} from "react-icons/fa6";
 
 const Login = () => {
 

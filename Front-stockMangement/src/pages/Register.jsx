@@ -1,41 +1,14 @@
-import {
-    Button,
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
-    Input,
-    Select,
-    Typography,
-    Option,
-    Stepper,
-    Step,
-    Dialog, DialogHeader, DialogBody, DialogFooter, Tooltip
-} from "@material-tailwind/react";
-import React, {useEffect, useState} from "react";
+import {Button, Input, Select, Typography, Option, Dialog, DialogHeader, DialogBody, DialogFooter, Tooltip} from "@material-tailwind/react";
+import {useEffect, useState} from "react";
 import {useUserStore} from "../store/userStore.js";
-import navigation from "../components/Navigation.jsx";
 import {Link, useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet";
-// import {toast} from "react-toastify";
 import toast, { Toaster } from 'react-hot-toast';
 import isEmail from 'validator/lib/isEmail';
 
-
-
 const Register = () => {
 
-    // const message = useUserStore((state) => state.message)
-
-    // STEPPER
-    // const [activeStep, setActiveStep] = React.useState(0);
-    // const [isLastStep, setIsLastStep] = React.useState(false);
-    // const [isFirstStep, setIsFirstStep] = React.useState(false);
-
-    // const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
-    // const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
-
-    // STATE INPUTS
+    // State for the inputs
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
@@ -48,15 +21,13 @@ const Register = () => {
 
 
     useEffect(() => {
-        //Si on a un user
+        //If the user has been created, redirect to the admin page
         if(user) {
-            //Naviguer vers une autre page
             toast.success(user.message)
             navigate(`/admin`)
         }
     }, [user, navigate])
 
-    // SEND BUTTON
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -68,13 +39,12 @@ const Register = () => {
             role,
             sector
         };
-        //On appelle le store et la fonction
-        //On capture l'erreur s'il y en a une
+        // Call the store and the function | Catch the error if there is one
         if(!isEmail(email)) {
             toast.error("Email invalide")
         } else {
             try {
-                await register(data) //On transmet les infos d'inscription au store
+                await register(data) // Send the data to the store
             } catch (error) {
                 console.log(error)
                 toast.error(error.message)

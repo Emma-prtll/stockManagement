@@ -1,29 +1,28 @@
-import React from "react";
 import { Typography } from "@material-tailwind/react";
 import {useAuthStore} from "../store/authStore.js";
 
 const NavList = () => {
-    const userInfo = useAuthStore((state) => state.userInfo);
+    const userInfo = useAuthStore((state) => state.userInfo)
 
+    // Set all the variables needed to display the nav list
     const isLogged = !!userInfo
     const role = userInfo?.user.role
-
-    const isManager = role === "Manager";
-    const isAdmin = role === "Admin";
+    const isManager = role === "Manager"
+    const isAdmin = role === "Admin"
 
     return (
         <nav className="flex flex-col gap-2">
 
-            {/*USER CONNECTED*/}
+            {/*USER IS CONNECTED*/}
             {isLogged && (
                 <>
                     <Typography className="font-extrabold text-2xl pb-8 text-center" color="white" >
                         Hey, {userInfo?.user.firstName} !
                     </Typography>
-                    {/* COMMUN À TOUS */}
+                    {/* COMMON TO ALL */}
                     <Typography
                         as="a"
-                        href="/home"
+                        href="/"
                         color="white"
                         className="p-2 rounded-lg hover:bg-amber-700 transition-all cursor-pointer font-semibold"
                     >
@@ -52,7 +51,7 @@ const NavList = () => {
 
                     )}
 
-                    {/* ADMIN SEUL */}
+                    {/* ADMIN ONLY */}
                     {(isAdmin) && (
                         <Typography
                             as="a"
@@ -64,7 +63,7 @@ const NavList = () => {
                         </Typography>
                     )}
 
-                    {/* COMMUN */}
+                    {/* COMMON TO ALL */}
                     <Typography
                         as="a"
                         href="/profile"

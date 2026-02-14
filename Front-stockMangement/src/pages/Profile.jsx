@@ -1,6 +1,5 @@
-import {Button, Card, CardBody, Collapse, IconButton, Input, Option, Select, Typography} from "@material-tailwind/react";
-import {FaRegEdit} from "react-icons/fa";
-import React, {useEffect, useState} from "react";
+import {Button, Collapse, IconButton, Input, Typography} from "@material-tailwind/react";
+import {useEffect, useState} from "react";
 import {useAuthStore} from "../store/authStore.js";
 import {useUserStore} from "../store/userStore.js";
 import {Helmet} from "react-helmet";
@@ -9,49 +8,34 @@ import isEmpty from "validator/es/lib/isEmpty.js";
 import {MdEdit} from "react-icons/md";
 import toast, {Toaster} from "react-hot-toast";
 
-
 const Profile = () => {
 
-    // //State pour les collapse
-    // const [openFirstName, setOpenFirstName] = useState(true)
-    // const [openLastName, setOpenLastName] = useState(true)
-    // const [openEmail, setOpenEmail] = useState(true)
-    // const [openPassword, setOpenPassword] = useState(true)
+    // State for the collaps
     const [openCollaps, setOpenCollaps] = useState(true)
-
-    //Méthode pour ouvrir ou fermer les collapse
-    // const toggleOpenFirstName = () => setOpenFirstName((openFirstName) => !openFirstName)
-    // const toggleOpenLastName = () => setOpenLastName((openLastName) => !openLastName)
-    // const toggleOpenEmail = () => setOpenEmail((openEmail) => !openEmail)
-    // const toggleOpenPassword = () => setOpenPassword((openPassword) => !openPassword)
     const toggleOpenCollaps = () => setOpenCollaps((openCollaps) => !openCollaps)
 
-    //State pour les inputs
+    // State for the inputs
     const [firstName, setFirstname] = useState("")
     const [lastName, setLastname] = useState("")
     const [email, setEmail] = useState("")
     const [oldPassword, setOldPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
 
-    //Import des UserInfo depuis "authStore"
+    // Import of the UserInfo from "authStore"
     const userInfo = useAuthStore((state) => state.userInfo)
     const updateProfile = useUserStore((state) => state.updateProfile)
     const user = useUserStore((state) => state.user)
 
-    //Import des UserInfo depuis "userStore"
-    const message = useUserStore((state) => state.message)
-
-    //Méthode pour modifier notre localStorage après modification de l'utilisateur
+    // Methode to update our localStorage after modifying the user
     const setCredentials = useAuthStore((state) => state.setCredentials)
 
-    //Utilisé pour mettre à jour le composant si l'utilisateur est modifié
     useEffect(() => {
         if(user) {
             setCredentials({user})
         }
     }, [user, setCredentials])
 
-    //Méthode pour gérer l'update des infos de l'utilisateur
+    //Methode to update the user infos in the database
     const handleSubmit = async (e, data) => {
         e.preventDefault()
         if(mail===true && !isEmpty(email) && !isEmail(email)) {
@@ -63,7 +47,6 @@ const Profile = () => {
                     _id: userInfo.user._id,
                     input: data
                 }
-
                 if (data.firstName !== undefined){
                     setFirstname("")
                     setOpenFirstname(!openFirstname)
@@ -71,12 +54,10 @@ const Profile = () => {
                 if (data.lastName !== undefined) {
                     setLastname("")
                     setOpenLastname(!openLastname)
-
                 }
                 if (data.email !== undefined) {
                     setEmail("")
                     setOpenEmail(!openEmail)
-
                 }
                 if (data.oldPassword !== undefined) {
                     setOldPassword("")
@@ -111,8 +92,8 @@ const Profile = () => {
                 reverseOrder={false}
             />
 
-            {/*background*/}
             <div className="p-10 rounded-l-xl border h-full rounded-xl bg-blue-gray-600 ">
+
                 {/*Title*/}
                 <Typography className="font-h1 w-full text-center text-3xl pb-12" color="white">My profile</Typography>
 
@@ -272,7 +253,6 @@ const Profile = () => {
                 </section>
             </div>
         </section>
-
     );
 };
 

@@ -1,30 +1,21 @@
-import {
-    Button,
-    Dialog,
-    DialogBody,
-    DialogFooter,
-    DialogHeader,
-    IconButton,
-    Input,
-    Option,
-    Select, Step,
-    Stepper,
-    Typography
-} from "@material-tailwind/react"
-import React, {useEffect, useState} from "react";
+import {Button, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton, Input, Option, Select, Step, Stepper, Typography} from "@material-tailwind/react"
+import {useEffect, useState} from "react";
 import {useCarStore} from "../store/carStore.js";
 import {Link, useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet";
 import toast, {Toaster} from "react-hot-toast";
 import isInt from "validator/es/lib/isInt.js";
-import isEmail from "validator/lib/isEmail.js";
-import {CogIcon, HomeIcon, UserIcon} from "@heroicons/react/16/solid/index.js";
 import {FaCar, FaCheck} from "react-icons/fa";
 import {FiPackage} from "react-icons/fi";
 import isEmpty from "validator/es/lib/isEmpty.js";
 
 
 const AddItem = () => {
+
+    const addItem = useCarStore((state) => state.addItem)
+    const car = useCarStore((state) => state.car)
+
+    //State for the inputs
     const [currentStock, setCurrentStock] = useState(0)
     const [wishStock, setWishStock] = useState(0)
     const [dangerStock, setDangerStock] = useState(0)
@@ -32,17 +23,12 @@ const AddItem = () => {
     const [model, setModel] = useState("")
     const [type, setType] = useState("")
     const [year, setYear] = useState("")
-    // const [image, setImage] = useState("")
-    const addItem = useCarStore((state) => state.addItem)
-    const car = useCarStore((state) => state.car)
 
-    //Import de méthode de navigation de react
     const navigate = useNavigate()
 
     useEffect(() => {
-        //Si on a une voiture
+        // If there is a car, redirect to the stockDetails page
         if(car) {
-            //Naviguer vers une autre page
             navigate(`/stockDetails/${car.car._id}`)
         }
     }, [car, navigate])
@@ -60,13 +46,13 @@ const AddItem = () => {
             }
         }
 
-        const [open, setOpen] = React.useState(false);
+        const [open, setOpen] = useState(false);
         const handleOpen = () => setOpen(!open);
 
     //STEPPER
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [isLastStep, setIsLastStep] = React.useState(false);
-    const [isFirstStep, setIsFirstStep] = React.useState(false);
+    const [activeStep, setActiveStep] = useState(0);
+    const [isLastStep, setIsLastStep] = useState(false);
+    const [isFirstStep, setIsFirstStep] = useState(false);
 
     const handleNext = () => {
         if(activeStep === 0) {
@@ -108,7 +94,7 @@ const AddItem = () => {
                             >
                                 <span>Cancel</span>
                             </Button>
-                            <Link to="/home">
+                            <Link to="/">
                                 <Button
                                     variant="outlined"
                                     color="green"

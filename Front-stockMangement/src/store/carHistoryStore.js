@@ -1,15 +1,14 @@
-//Import des librairies
 import axios from "axios"
 import {create} from "zustand"
 
-//On configure axios pour qu'il accepte les "credentials"
+// Configuration of axios to accept credentials
 axios.defaults.withCredentials = true
 
 export const useCarHistoryStore = create((set) => ({
-    //Déclaration et initialisation des stats du store
-    carsHistory: [], //Utilisé pour stocker les données utilisateur qui vienne du backend
-    carHistory: null,
-    message: "", //Utilisé pour afficher les messages d'erreur ou de succès
+
+    //State of the store declaration and initialization
+    carsHistory: [], // Use to stock the user datas that are from the backend
+    message: "", // Use to display error or success messages
     historyLoading: false,
 
     getCarsHistorical: async () => {
@@ -22,12 +21,23 @@ export const useCarHistoryStore = create((set) => ({
             })
 
         } catch (error) {
-            const message = error.response?.data?.message || "Erreur lors du chargement de l'historique"
+            const message = error.response?.data?.message || "There was an error while loading the datas"
             set({
                 message,
                 historyLoading: false,
             })
 
-        }}
+        }},
+
+    getOneCarHistory: async (carId) => {
+        set({ historyLoading: true })
+        try {
+            const response = await axios.get(`http://localhost:8000/api/carHistory/getOneCarHistory/${carId}`)
+            set({ carHistory: response.data, historyLoading: false })
+        } catch (error) {
+            const message = error.response?.data?.message || "There was an error while loading the datas"
+            set({ message, historyLoading: false })
+        }
+    }
 
 }))

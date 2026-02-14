@@ -1,51 +1,50 @@
-//Import des librairies et fichiers
 const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/userController')
 
-// @route Route User (POST) /api/user/register
-// @desc Route pour créer un utilisateur (inscription sur le frontend)
+// @route Route User (POST)
+// @desc Route to add a new user (Form in frontend)
 // @access Private (admin)
 router.route('/register').post(userController.register)
 
-// @route Route User (POST) /api/user/login
-// @desc Route pour connecter un utilisateur (connection sur le frontend)
+// @route Route User (POST)
+// @desc Route to connect the user (Form in frontend)
 // @access Public
 router.route('/login').post(userController.login)
 
-// @route Route User (POST) /api/user/logout
-// @desc Route pour déconnecter un utilisateur (logout sur le frontend)
-// @access Private
+// @route Route User (POST)
+// @desc Route to log out (Button in frontend)
+// @access Public
 router.route('/logout').post(userController.logout)
 
-// @route Route User (GET) /api/user/profile:_id
-// @desc Route pour récupérer les informations d'un utilisateur (onglet profile sur le frontend)
-// @access Private
+// @route Route User (GET)
+// @desc Route to get ONE user
+// @access Private (everyone when logged in | own profile)
 router.route('/profile:_id').get(userController.getProfile)
 
-// @route Route User (PUT) /api/user/profile
-// @desc Route pour modifier les informations d'un utilisateur qui est connecté (onglet profile sur le frontend)
-// @access Private
+// @route Route User (PUT)
+// @desc Route to update profile's infos (Form in frontend)
+// @access Private (everyone when logged in | own profile)
 router.route('/profile').put(userController.updateProfile)
 
-// @route Route User (PUT) /api/user/userProfile
-// @desc Route pour modifier les informations d'un utilisateur (onglet admin sur le frontend)
-// @access Private
+// @route Route User (PUT)
+// @desc Route to update a user's infos (Form in frontend)
+// @access Private (admin)
 router.route('/updateUser/:id').put(userController.updateUser)
 
 // @route Route User (GET)
-// @desc Route pour obtenir tous les produits de la BDD
-// @access Public
+// @desc Route to get ALL user
+// @access Private (admin)
 router.route('/getUsers').get(userController.getUsers)
 
 // @route Route User (GET)
-// @desc Route pour obtenir un produit de la BDD via son ID
-// @access Public
+// @desc Route to get ONE user
+// @access Private (admin)
 router.route('/getAUser/:id').get(userController.getAUser)
 
-// @route Route User (GET)
-// @desc Route pour supprimer un produit de la BDD via son ID
-// @access Public
+// @route Route User (DELETE)
+// @desc Route to delete ONE user
+// @access Private (admin)
 router.route('/deleteUser/:id').delete(userController.deleteUser)
 
 

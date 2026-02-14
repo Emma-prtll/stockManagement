@@ -1,23 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {
-    Button,
-    Dialog,
-    DialogBody,
-    DialogFooter,
-    DialogHeader,
-    Input,
-    Option,
-    Select,
-    Typography
-} from "@material-tailwind/react";
+import { useState} from 'react';
+import {Button, Dialog, DialogBody, DialogFooter, DialogHeader, Input, Option, Select, Typography} from "@material-tailwind/react";
 import {useAuthStore} from "../store/authStore.js";
 import {useCarStore} from "../store/carStore.js";
 import {useNavigate, useParams} from "react-router-dom";
-import {useUserStore} from "../store/userStore.js";
 import toast from "react-hot-toast";
 import isInt from "validator/es/lib/isInt.js";
 import isEmpty from "validator/es/lib/isEmpty.js";
-import {MdDelete, MdDeleteOutline, MdEdit, MdOutlineEdit} from "react-icons/md";
+import {MdDeleteOutline, MdOutlineEdit} from "react-icons/md";
 
 const UpdateStockInfos = () => {
 
@@ -27,31 +16,33 @@ const UpdateStockInfos = () => {
     const deleteCar = useCarStore((state) => state.deleteItem)
     const car_id = useParams().id
 
-    //Suppression de la voiture
     const navigate = useNavigate();
 
     const handleDelete = async () => {
-        if(car._id) {
-            const result = await deleteCar(car._id)
-            toast.success(result.message)
-            navigate("/stock")
-
-            await deleteCar(car._id)
-        } else {
-            toast.error("There is a problem.... Please try again later.")
+        try {
+            if (car?._id) {
+                const result = await deleteCar(car._id);
+                toast.success(result.message);
+                navigate("/stock");
+            } else {
+                toast.error("There is a problem. Please try again later.");
+            }
+        } catch (error) {
+            toast.error(error.message || "Delete failed");
         }
+
     }
 
-    //GESTION DES ROLES
+    //Roles gestions
     const userInfo = useAuthStore((state) => state.userInfo);
     const role = userInfo?.user.role;
     const isManager = role === "Manager";
     const isAdmin = role === "Admin";
 
     //Dialogue
-    const [openCar, setOpenCar] = React.useState(false);
+    const [openCar, setOpenCar] = useState(false);
     const handleOpenCar = () => setOpenCar(!openCar);
-    const [openDelete, setOpenDelete] = React.useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
     const handleOpenDelete = () => setOpenDelete(!openDelete);
 
     const handleSubmit = async (e) => {
@@ -62,6 +53,7 @@ const UpdateStockInfos = () => {
             year,
             type
         }
+        // Check if the year is a number
         if(!isEmpty(year) && !isInt(year)) {
             toast.error("Year must be a number")
             handleOpenCar()
@@ -76,6 +68,7 @@ const UpdateStockInfos = () => {
                 handleOpenCar()
                 toast.success(result.message)
 
+                // Put the inputs back to empty
                 setBrand("")
                 setModel("")
                 setYear("")
@@ -88,7 +81,7 @@ const UpdateStockInfos = () => {
         } }
     }
 
-    //State pour les inputs
+    //State for the inputs
     const [brand, setBrand] = useState("")
     const [model, setModel] = useState("")
     const [type, setType] = useState("")
@@ -205,7 +198,7 @@ const UpdateStockInfos = () => {
                 </DialogFooter>
             </Dialog>
 
-        {/* DIALOGUE DE CONFIRMATION DE SUPPRESSION */}
+        {/* DIALOGUE : CONFIRMATION AND SUPPRESSION */}
             <Dialog open={openDelete} handler={handleOpenDelete}>
                 <DialogHeader>You are about to delete a car ! </DialogHeader>
                 <DialogBody className="flex flex-col">
