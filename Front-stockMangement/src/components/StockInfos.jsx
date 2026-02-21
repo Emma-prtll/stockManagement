@@ -24,8 +24,7 @@ const StockInfos = ({car}) => {
     const getStockIcon = () => {
         if (car.currentStock >= car.wishStock) {
             return <FaCheck />
-        }
-        else if (car.currentStock < car.wishStock && car.currentStock >= car.dangerStock) {
+        } else if (car.currentStock < car.wishStock && car.currentStock >= car.dangerStock) {
             return <IoAlertOutline />
         } else {
             return <ImCross />
