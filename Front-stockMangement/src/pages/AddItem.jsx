@@ -1,11 +1,14 @@
-import {Button, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton, Input, Option, Select, Step, Stepper, Typography} from "@material-tailwind/react"
+import {
+    Button, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton, Input, Option, Select, Step, Stepper,
+    Tooltip, Typography
+} from "@material-tailwind/react"
 import {useEffect, useState} from "react";
 import {useCarStore} from "../store/carStore.js";
 import {Link, useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet";
 import toast, {Toaster} from "react-hot-toast";
 import isInt from "validator/es/lib/isInt.js";
-import {FaCar, FaCheck} from "react-icons/fa";
+import {FaCar, FaCheck, FaInfoCircle} from "react-icons/fa";
 import {FiPackage} from "react-icons/fi";
 import isEmpty from "validator/es/lib/isEmpty.js";
 
@@ -165,7 +168,13 @@ const AddItem = () => {
                                 <Typography className="font-h1 text-2xl border-6 p-6 bg-blue-gray-700 rounded-xl" color="white">Stock infos</Typography>
                                 <div className="flex flex-col p-14 bg-gray-200">
                                 {/*CURRENT STOCK*/}
-                                <Typography color="black" className="pb-2">Current stock</Typography>
+                                    <div className="flex flex-row items-center">
+                                        <Typography color="black" className="pb-2">Current stock</Typography>
+                                        <Tooltip content="Current number of units available in stock" placement="right" className="z-[9999]">
+                                            <span className="pl-2 pb-2" ><FaInfoCircle /></span >
+                                        </Tooltip>
+                                    </div>
+
                                 <div className="relative w-full pb-8">
                                     <Input
                                         type="number"
@@ -211,9 +220,15 @@ const AddItem = () => {
                                             </svg>
                                         </IconButton>
                                     </div>
+
                                 </div>
                                 {/*WISH LIMIT*/}
-                                <Typography color="black" className="pb-2">Wish stock</Typography>
+                                    <div className="flex flex-row items-center">
+                                        <Typography color="black" className="pb-2">Wish stock</Typography>
+                                        <Tooltip content="Desired stock level used as a reference" placement="right" className="z-[9999]">
+                                            <span className="pl-2 pb-2" ><FaInfoCircle /></span >
+                                        </Tooltip>
+                                    </div>
                                 <div className="relative w-full pb-8">
                                     <Input
                                         type="number"
@@ -261,7 +276,12 @@ const AddItem = () => {
                                     </div>
                                 </div>
                                 {/*DANGER LIMIT*/}
-                                <Typography color="black" className="pb-2">Danger stock</Typography>
+                                    <div className="flex flex-row items-center">
+                                        <Typography color="black" className="pb-2">Danger stock</Typography>
+                                        <Tooltip content="Minimum quantity required to avoid stock shortages" placement="right" className="z-[9999]">
+                                            <span className="pl-2 pb-2" ><FaInfoCircle /></span >
+                                        </Tooltip>
+                                    </div>
                                 <div className="relative w-full">
                                     <Input
                                         type="number"

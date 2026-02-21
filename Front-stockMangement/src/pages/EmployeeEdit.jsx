@@ -56,7 +56,7 @@ const EmployeeEdit = () => {
         }
     }
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = useState(true);
     const handleOpen = () => setOpen(!open);
 
     const [openUpdateRole, setOpenUpdateRole] = useState(false)

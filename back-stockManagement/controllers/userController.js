@@ -109,7 +109,6 @@ const getProfile = handler (async (req, res) => {
 // @access Private (everyone when logged in | own profile)
 const updateProfile = handler(async (req, res) => {
     // Check if the user exists
-    console.log(req.body)
     const user = await User.findById(req.body._id)
 
     if(!user){
